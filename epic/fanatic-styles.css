@@ -1,8 +1,22 @@
 h1 {
-	color: goldenrod;
-	background-color: blue;
+	color: white;
+	background-color: black;
 }
 
 body {
+background-image: url("https://mcdn.wallpapersafari.com/medium/62/45/iWaR98.jpg");
+}
+h2 {
+	color: white;
+	background-color: black;
+}
+h3 {
+	color: white;
 
+}
+p {
+color: white;
+}
+li {
+color: white;
 }
