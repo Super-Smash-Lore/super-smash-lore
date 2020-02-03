@@ -3,30 +3,47 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Conceptual Model</title>
-
 </head>
 <body>
 <h1><strong>Character</strong></h1>
 <ul>
 	<li>characterId(primary key)</li>
-	<li>characterName</li>
 	<li>characterDescription</li>
-	<li>characterReleaseDate</li>
 	<li>characterMusic</li>
+	<li>characterMusicId</li>
+	<li>characterMusicName</li>
+	<li>characterName</li>
+	<li>characterPictureUrl</li>
+	<li>characterQuotes</li>
+	<li>characterReleaseDate</li>
 </ul>
-<h2><strong>Games</strong></h2>
+
+<h1><strong>Games</strong></h1>
 <ul>
 	<li>gamesId(primary key)</li>
-	<li>gamesUrl</li>
 	<li>gamesPicture</li>
+	<li>gamesUrl</li>
 </ul>
-<h3><strong>Music</strong></h3>
+
+<h1><strong>Profile</strong></h1>
 <ul>
-	<li>musicId(primary key)</li>
-	<li>musicName</li>
-	<li>musicReleaseDate</li>
-	<li>musicCharacterId</li>
+	<li>profileId(primary key)</li>
+	<li>profileEmail</li>
+	<li>profileDescription</li>
+	<li>profileDateJoined</li>
+	<li>profileUserName</li>
 </ul>
+
+<h1><strong>Favorites</strong></h1>
+<ul>
+	<li>favoritesCharacterId(foreign key 1)</li>
+	<li>favoritesCharacterDescription</li>
+	<li>favoritesCharacterName</li>
+	<li>favoritesCharacterPictureUrl</li>
+	<li>favoritesProfileId(foreign key 2</li>
+	<li>favoritesProfileUserName</li>
+</ul>
+
 </body>
 </html>
 
