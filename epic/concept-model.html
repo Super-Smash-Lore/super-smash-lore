@@ -9,20 +9,20 @@
 <ul>
 	<li>characterId(primary key)</li>
 	<li>characterDescription</li>
-	<li>characterMusic</li>
-	<li>characterMusicId</li>
-	<li>characterMusicName</li>
-	<li>characterName</li>
+	<li>characterMusicUrl</li>
+	<li>characterSong</li>
 	<li>characterPictureUrl</li>
 	<li>characterQuotes</li>
 	<li>characterReleaseDate</li>
 </ul>
 
-<h1><strong>Games</strong></h1>
+<h1><strong>Game</strong></h1>
 <ul>
-	<li>gamesId(primary key)</li>
-	<li>gamesPicture</li>
-	<li>gamesUrl</li>
+	<li>gameId(primary key)</li>
+	<li>gamePicture</li>
+	<li>gameUrl</li>
+	<li>gamePlatform/system</li>
+	<li>gameCharacterId</li>
 </ul>
 
 <h1><strong>Profile</strong></h1>
@@ -32,16 +32,14 @@
 	<li>profileDescription</li>
 	<li>profileDateJoined</li>
 	<li>profileUserName</li>
+	<li>profileHash</li>
 </ul>
 
-<h1><strong>Favorites</strong></h1>
+<h1><strong>Favorite</strong></h1>
 <ul>
-	<li>favoritesCharacterId(foreign key 1)</li>
-	<li>favoritesCharacterDescription</li>
-	<li>favoritesCharacterName</li>
-	<li>favoritesCharacterPictureUrl</li>
-	<li>favoritesProfileId(foreign key 2</li>
-	<li>favoritesProfileUserName</li>
+	<li>favoriteCharacterId(foreign key 1)</li>
+	<li>favoriteProfileId(foreign key 2</li>
+	<li>favoriteDate</li>
 </ul>
 
 </body>
