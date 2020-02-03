@@ -1,4 +1,21 @@
-
+/*
+global
+ */
 body {
 	background-color: azure;
 }
+body  {
+	font-family: cursive;
+	color: white;
+	background-image: url("https://assets1.ignimgs.com/2018/03/08/screen-shot-2018-03-08-at-24144-pm-2-1520550781828.png");
+}
+
+h1 {
+	color: white
+}
+
+img {
+	width: 500px;
+	border: 3px solid white;
+}
+
