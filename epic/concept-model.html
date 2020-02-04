@@ -28,6 +28,7 @@
 <h1><strong>Profile</strong></h1>
 <ul>
 	<li>profileId(primary key)</li>
+	<li>profileActivationToken</li>
 	<li>profileEmail</li>
 	<li>profileDescription</li>
 	<li>profileDateJoined</li>
@@ -42,6 +43,14 @@
 	<li>favoriteDate</li>
 </ul>
 
+<h1><strong>Relations</strong></h1>
+<ul>
+	<li>One Character can have many games. (1 to n)</li>
+	<li>One Profile can have many Favorites. (1 to n)</li>
+	<li>One Character can have many favorites. (1 to n)</li>
+</ul>
+
+<img src="Capstone%20ERD%20design%20Final.png">
 </body>
 </html>
 
