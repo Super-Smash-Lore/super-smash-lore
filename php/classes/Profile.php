@@ -1,5 +1,6 @@
 <?php
 
+
 class Profile{
 /*
  * id for profile: this is a primary key

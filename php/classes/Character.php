@@ -29,4 +29,24 @@ class Character {
 	 * song for the character
 	 */
 	private $characterSong;
+
+	/*
+	 * constructor for character
+	 */
+
+	public function __construct($characterId,$characterDescription,$characterMusicUrl,$characterPictureUrl,$characterQuotes,$characterReleaseDate,$characterSong) {
+		try {
+			$this->seCharacterId($newCharacterId);
+			$this->setCharacterDescription($newCharacterDescription);
+			$this->setCharacterMusicUrl($newCharacterMusicUrl);
+			$this->setCharacterPictureUrl($newCharacterPictureUrl);
+			$this->setCharacterQuotes($newCharacterQuotes);
+			$this->setCharacterReleaseDate($newCharacterReleaseDate);
+			$this->setCharacterSong($newCharacterSong);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError$exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0 ,$exception));
+		}
+	}
+
 }
