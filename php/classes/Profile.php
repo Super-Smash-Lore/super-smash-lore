@@ -152,6 +152,20 @@ class Profile{
 	}
 
 	/*
-	 * setter for
+	 * setter for profile Email
 	 */
+	public function setProfileEmail(string $newProfileEmail): void {
+		$newProfileEmail = trim($newProfileEmail);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($newProfileEmail) === true) {
+			throw (new \InvalidArgumentException("Email empty or insecure"));
+		}
+		if(strlen($newProfileEmail) > 128) {
+			throw (new \RangeException("Email must be fewer than 128 characters"));
+		}
+		$this->profileEmail = $newProfileEmail;
+	}
+
+
+
 }
