@@ -191,4 +191,28 @@ class Profile{
 		}
 		$this->profileHash = $newProfileHash;
 	}
+
+	/*
+	 * accessor method for profile UserName
+	 */
+	public function getProfileUserName (){
+		return $this->profileUserName;
+	}
+
+	/*
+	 * setter method for profile User Name
+	 */
+
+	public function setProfileUserName(string $NewProfileUserName) {
+		$newProfileUserName = trim($newProfileUserName);
+		$newProfileUserName = filter_var($newProfileUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newProfileUserName) === true) {
+			throw (new\InvalidArgumentException("Username is empty or insecure "));
+		}
+		if(strlen($newProfileUserName) > 32) {
+			throw (new\RangeException("Username must be less than 32 charcters"));
+		}
+		$this->profileUserName = $newProfileUserName;
+	}
+
 }
