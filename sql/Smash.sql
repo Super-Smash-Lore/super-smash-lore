@@ -1,7 +1,10 @@
-DROP TABLE IF EXISTS Character;
-DROP TABLE IF EXISTS Game;
-DROP TABLE IF EXISTS Favorite;
 DROP TABLE IF EXISTS Profile;
+DROP TABLE IF EXISTS Favorite;
+DROP TABLE IF EXISTS Game;
+DROP TABLE IF EXISTS Character;
+
+
+
 
 create table Character;{
 characterId binary(16) NOT NULL,
@@ -13,15 +16,17 @@ characterReleaseDate  DATETIME(6) NOT NULL,
 characterSong varchar (255),
 primary key(characterId)
 }
+
 create table Game;{
 gameId binary(16) NOT NULL,
 gameCharacterId binary (16) NOT NULL,
-gamePictures
+gamePictures varchar (512),
 gameSystem varchar (32),
 gameUrl varchar (512),
 primary key (gameId),
 foreign key (characterId)
 }
+
 create table Favorite;{
 favoriteCharacterId binary(16) NOT NULL,
 favoriteProfileId binary(16) NOT NULL,
@@ -29,12 +34,16 @@ fatoriteDate DATETIME(6) NOT NULL,
 foreign key (characterId),
 foreign key (profileId)
 }
+
 create table Profile;{
-profileId
-profileActivationToken
-profileDateJoined
-profileDescription
-profileEmail
-profileHash
-profileUserName
+profileId binary(16) NOT NULL,
+profileActivationToken char(32),
+profileDateJoined DATETIME(6) NOT NULL,
+profileDescription varchar (255),
+profileEmail varchar (128) NOT NULL,
+profileHash char (97) NOT NULL,
+profileUserName varchar (32) NOT NULL,
+unique(profileEmail),
+unique (profileUserName),
+primary key (profileId)
 }
