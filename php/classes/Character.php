@@ -60,5 +60,5 @@ class Character {
 	/*
 	 * setter for character Id
 	 */
-
+	public function set
 }

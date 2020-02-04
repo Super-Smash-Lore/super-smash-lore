@@ -14,10 +14,7 @@ class Profile{
  * date user joined
  */
 	private $dateJoined;
-/*
- *  description of the profile
- */
-	private $profileDescription;
+
 /*
  *  email for the profile
  */
@@ -51,7 +48,6 @@ class Profile{
 			$this->setProfileId($newProfileId);
 			$this->setActivationToken($newActivationToken);
 			$this->setDateJoined($newDateJoined);
-			$this->setProfileDescription($newProfileDescription);
 			$this->setProfileEmail($newProfileEmail);
 			$this->setProfileHash($newProfileHash);
 			$this->setProfileUserName($newProfileUserName);
@@ -121,30 +117,6 @@ class Profile{
 	public function setDateJoined(){
 
 	}
-
-	/*
-	 * accessor for profile description
-	 */
-	public function getProfileDescription() : ?string{
-		return $this->profileDescription;
-	}
-
-	/*
-	 * setter for profile description
-	 */
-
-	public function setProfileDescription(string $newProfileDescription): void {
-		$newProfileDescription = trim($newProfileDescription);
-		$newProfileDescription = filter_var($newProfileDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileDescription) === true) {
-			throw (new \InvalidArgumentException("description is empty or insecure");
-		}
-		if(strlen($newProfileDescription) > 255) {
-			throw (new \RangeException("Must be less than 255 characters"));
-		}
-		$this->profileDescription = $newProfileDescription;
-	}
-
 	/*
 	 * accessor for profile Email
 	 */

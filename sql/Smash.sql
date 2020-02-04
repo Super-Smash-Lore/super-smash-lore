@@ -7,7 +7,6 @@ create table Profile (
 	profileId binary(16) NOT NULL,
 	profileActivationToken char(32),
 	profileDateJoined DATETIME(6) NOT NULL,
-	profileDescription varchar (255),
 	profileEmail varchar (128) NOT NULL,
 	profileHash char (97) NOT NULL,
 	profileUserName varchar (32) NOT NULL,
@@ -25,6 +24,7 @@ characterPictureUrl varchar (512),
 characterQuotes varchar (255) NOT NULL,
 characterReleaseDate  DATETIME(6) NOT NULL,
 characterSong varchar (255),
+characterUniverse VARCHAR(255),
 primary key(characterId)
 );
 
