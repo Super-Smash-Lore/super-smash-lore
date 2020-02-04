@@ -23,16 +23,19 @@ gameCharacterId binary (16) NOT NULL,
 gamePictures varchar (512),
 gameSystem varchar (32),
 gameUrl varchar (512),
+INDEX(gameCharacterId),
 primary key (gameId),
-foreign key (characterId)
+foreign key (gameCharacterId) references character (characterId)
 }
 
 create table Favorite;{
 favoriteCharacterId binary(16) NOT NULL,
 favoriteProfileId binary(16) NOT NULL,
 fatoriteDate DATETIME(6) NOT NULL,
-foreign key (characterId),
-foreign key (profileId)
+INDEX(favoriteCharacterId),
+INDEX(favoriteProfileId),
+foreign key (favoriteCharacterId) references character(characterId),
+foreign key (favoriteProfileId) references profile(profileId)
 }
 
 create table Profile;{
