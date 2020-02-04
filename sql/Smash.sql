@@ -31,7 +31,7 @@ foreign key (gameCharacterId) references character (characterId)
 create table Favorite;{
 favoriteCharacterId binary(16) NOT NULL,
 favoriteProfileId binary(16) NOT NULL,
-fatoriteDate DATETIME(6) NOT NULL,
+favoriteDate DATETIME(6) NOT NULL,
 INDEX(favoriteCharacterId),
 INDEX(favoriteProfileId),
 foreign key (favoriteCharacterId) references character(characterId),
