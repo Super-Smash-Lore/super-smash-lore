@@ -20,7 +20,7 @@ primary key(characterId)
 create table Game;{
 gameId binary(16) NOT NULL,
 gameCharacterId binary (16) NOT NULL,
-gamePictures varchar (512),
+gamePictureUrl varchar (512),
 gameSystem varchar (32),
 gameUrl varchar (512),
 INDEX(gameCharacterId),

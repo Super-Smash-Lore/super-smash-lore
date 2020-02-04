@@ -166,6 +166,29 @@ class Profile{
 		$this->profileEmail = $newProfileEmail;
 	}
 
+	/*
+	 *accessor for profile hash
+	 */
+	public function getProfileHash() {
+		return $this->profileHash;
+	}
 
+	/*
+	 * setter for profile Hash
+	 */
 
+	public function setProfileHash(string $newProfileHash) : void {
+		$newProfileHash = trim($newProfileHash);
+		if(empty($newProfileHash) === true) {
+			throw (new\ InvalidArgumentException("Hash is empty or insecure"));
+		}
+		$profileHashInfo = password_get_info($newProfileHash);
+		if($newProfileHash["algoName"] !== "argon2i") {
+			throw (new\ InvalidArgumentException("hash is not valid hash"));
+		}
+		if(strlen($newProfileHash) !== 97) {
+			throw (new \RangeException("Hash must be 97 characters"));
+		}
+		$this->profileHash = $newProfileHash;
+	}
 }
