@@ -43,10 +43,22 @@ class Character {
 			$this->setCharacterQuotes($newCharacterQuotes);
 			$this->setCharacterReleaseDate($newCharacterReleaseDate);
 			$this->setCharacterSong($newCharacterSong);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError$exception) {
+		}
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError$exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0 ,$exception));
 		}
 	}
+
+	/*
+	 * accessor for character id
+	 */
+	public function getCharacterId() {
+		return $this->characterId;
+	}
+
+	/*
+	 * setter for character Id
+	 */
 
 }
