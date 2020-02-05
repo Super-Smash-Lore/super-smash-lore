@@ -75,6 +75,7 @@ class Profile{
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
+		$profileId = 16;
 		$this->$profileId = $uuid;
 	}
 
