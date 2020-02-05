@@ -1,6 +1,6 @@
 <?php
 
-namespace ;
+namespace SSBULoreApp\SuperSmashLore;
 require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "/classes/autoloader.php");
 
