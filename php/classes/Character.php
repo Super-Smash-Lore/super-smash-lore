@@ -164,5 +164,25 @@ class Character {
 		$this->characterQuotes = $newCharacterQuotes;
 	}
 
+	/*
+	 * getter for release date
+	 */
+	public function getCharacterReleaseDate() {
+		return $this->characterReleaseDate;
+	}
+
+	/*
+	 * setter for release date
+	 */
+	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
+		try {
+			$releaseDate = self::validateDate($newCharacterReleaseDate);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->characterReleaseDate = $releaseDate;
+	}
+
 
 }
