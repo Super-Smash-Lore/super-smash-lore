@@ -184,5 +184,28 @@ class Character {
 		$this->characterReleaseDate = $releaseDate;
 	}
 
+	/*
+	 * getter for character song
+	 */
+	public function getCharacterSong() {
+		return $this->characterSong;
+	}
 
+	/*
+	 * setter for character song
+	 */
+	public function setCharacterSong ($newCharacterSong)  {
+		$newCharacterSong = trim($newCharacterSong);
+		$newCharacterSong = filter_var($newCharacterSong, FILTER_VALIDATE_URL, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCharacterSong) === true) {
+			throw (new \InvalidArgumentException("Song is empty or insecure"));
+		}
+		if(strlen($newCharacterSong) > 255) {
+			throw (new \RangeException("Song must be fewer then 255 characters"));
+		}
+
+		/*
+		 *
+		 */
+	}
 }
