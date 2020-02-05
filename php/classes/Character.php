@@ -37,7 +37,7 @@ class Character {
 	 * constructor for character
 	 */
 
-	public function __construct($characterId,$characterDescription,$characterMusicUrl,$characterPictureUrl,$characterQuotes,$characterReleaseDate,$characterSong) {
+	public function __construct($newCharacterId,$newCharacterDescription,$newCharacterMusicUrl,$newCharacterPictureUrl,$newCharacterQuotes,$newCharacterReleaseDate,$newCharacterSong, $newCharacterUniverse) {
 		try {
 			$this->setCharacterId($newCharacterId);
 			$this->setCharacterDescription($newCharacterDescription);
@@ -71,7 +71,7 @@ class Character {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->$characterId = $uuid;
+		$this->characterId = $uuid;
 	}
 
 	/*
@@ -108,7 +108,7 @@ class Character {
 	/*
 	 * setter for character music url
 	 */
-	public function setCharacterMusicUrl () {
+	public function setCharacterMusicUrl (string $newCharacterMusicUrl) {
 		$newCharacterMusicUrl = trim($newCharacterMusicUrl);
 		$newCharacterMusicUrl = filter_var($newCharacterMusicUrl, FILTER_VALIDATE_URL);
 		if(empty($newCharacterMusicUrl) === true) {
@@ -120,5 +120,27 @@ class Character {
 		$this->characterMusicUrl = $newCharacterMusicUrl;
 	}
 
+	/*
+	 * accessor for character picture url
+	 */
+	public function getCharacterPictureUrl(){
+		return $this->characterPictureUrl;
+	}
 
+	/*
+	 * setter for character picture url
+	 */
+	public function setCharacterPictureUrl (string $newCharacterPictureUrl) {
+		$newCharacterPictureUrl = trim($newCharacterPictureUrl);
+		$newCharacterPictureUrl = filter_var($newCharacterPictureUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCharacterPictureUrl) === true) {
+			throw (new \InvalidArgumentException("picture url is empty or insecure"));
+		}
+		if(strlen($newCharacterPictureUrl) > 512) {
+			throw (new \RangeException("Picture Url must be fewer than 512 characters"));
+		}
+		$this->characterPictureUrl = $newCharacterPictureUrl;
+	}
+
+	/*
 }
