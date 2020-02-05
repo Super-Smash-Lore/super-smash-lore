@@ -77,7 +77,7 @@ class Game {
 
 	/*
 	 * setter for character Id
-	 *
+	 */
 	public function setCharacterId($newCharacterId): void {
 		try {
 			$uuid = self::validateUuid($newCharacterId);
@@ -88,6 +88,28 @@ class Game {
 		$this->characterId = $uuid;
 	}
 
-	*/
+
+	/*
+	 * getter for game picture
+	 */
+	public function getGamePicture () {
+		return $this->gamePicture;
+	}
+
+	/*
+	 * mutator for game picture
+	 */
+	public function setGamePicture (string $newGamePicture) : void {
+		$newGamePicture = trim($newGamePicture);
+		$newGamePicture = filter_var($newGamePicture, FILTER_VALIDATE_URL, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newGamePicture) === true) {
+			throw (new \InvalidArgumentException("picture url empty or insecure"));
+		}
+		if(strlen($newGamePicture) > 512) {
+			throw (new \RangeException("picture url must be fewer than 512 characters"));
+		}
+		$this->gamePicture = $newGamePicture;
+	}
+
 
 }
