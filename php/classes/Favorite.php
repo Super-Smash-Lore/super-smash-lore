@@ -3,8 +3,13 @@
 namespace ;
 require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "/classes/autoloader.php");
+
+use Jmashke4\SuperSmashLore\validateDate;
+use Jmashke4\SuperSmashLore\validateUuid;
 use Ramsey\Uuid\Uuid;
 class Favorite {
+	use validateUuid;
+	use validateDate;
 	/*
 	 * favorite character Id
 	 */
@@ -70,22 +75,22 @@ public function setProfileId( $newProfileId) : void {
 }
 
 /*
- *  getter for profileId
+ *  getter for character release date
  */
-	public function getFavoriteProfileId(): string {
-		return $this->favoriteProfileId;
+	public function getFavoriteDate(): string {
+		return $this->favoriteDate;
 	}
 /*
  *
  */
 
-	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
+	public function setFavoriteDate ($newFavoriteDate) : void {
 		try {
-			$releaseDate = self::validateDate($newCharacterReleaseDate);
+			$favoriteDate = self::validateDate($newFavoriteDate);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->characterReleaseDate = $releaseDate;
+		$this->characterReleaseDate = $favoriteDate;
 	}
 }
