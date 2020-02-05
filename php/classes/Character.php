@@ -98,4 +98,27 @@ class Character {
 		$this->characterDescription = $newCharacterDescription;
 	}
 
+	/*
+	 * accessor for character music url
+	 */
+	public function getCharacterMusicUrl () {
+		return $this->characterMusicUrl;
+	}
+
+	/*
+	 * setter for character music url
+	 */
+	public function setCharacterMusicUrl () {
+		$newCharacterMusicUrl = trim($newCharacterMusicUrl);
+		$newCharacterMusicUrl = filter_var($newCharacterMusicUrl, FILTER_VALIDATE_URL);
+		if(empty($newCharacterMusicUrl) === true) {
+			throw (new \InvalidArgumentException("Music Url is empty or insecure"));
+		}
+		if(strlen($newCharacterMusicUrl) > 512) {
+			throw (new \RangeException("music url must be fewer then 512 characters"));
+		}
+		$this->characterMusicUrl = $newCharacterMusicUrl;
+	}
+
+
 }
