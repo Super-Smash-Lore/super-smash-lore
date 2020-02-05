@@ -46,6 +46,7 @@ favoriteDate DATETIME(6) NOT NULL,
 INDEX(favoriteCharacterId),
 INDEX(favoriteProfileId),
 foreign key (favoriteCharacterId) references `Character`(characterId),
-foreign key (favoriteProfileId) references Profile(profileId)
+foreign key (favoriteProfileId) references Profile(profileId),
+primary key (favoriteCharacterId, favoriteProfileId)
 );
 
