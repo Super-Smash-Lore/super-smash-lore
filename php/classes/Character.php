@@ -203,9 +203,27 @@ class Character {
 		if(strlen($newCharacterSong) > 255) {
 			throw (new \RangeException("Song must be fewer then 255 characters"));
 		}
+	}
 
-		/*
-		 *
-		 */
+	/*
+	 *accessor for character universe
+	 */
+	public function getCharacterUniverse () {
+		return $this->characterUniverse;
+	}
+
+	/*
+	 * setter for character universe
+	 */
+	public function setCharacterUniverse ($newCharacterUniverse) {
+		$newCharacterUniverse = trim($newCharacterUniverse);
+		$newCharacterUniverse = filter_var($newCharacterUniverse, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCharacterUniverse) === true) {
+			throw (new \InvalidArgumentException("universe is empty or insecure"));
+		}
+		if(strlen($newCharacterUniverse) > 255) {
+			throw (new \RangeException("Universe too big"));
+		}
+		$this->characterUniverse = $newCharacterUniverse;
 	}
 }
