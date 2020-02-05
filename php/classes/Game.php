@@ -41,8 +41,7 @@ class Game {
 			$this->setGamePicture($newGamePicture);
 			$this->setGameSystem($newGameSystem);
 			$this->setGameUrl($newGameUrl);
-		}
-		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -50,6 +49,45 @@ class Game {
 
 
 	/*
-	 *
+	 *accessor for game Id
 	 */
+	public function getGameId(): Uuid {
+		return $this->gameId;
+	}
+
+	/*
+	 * setter for game id
+	 */
+	public function setGameId($newGameId): void {
+		try {
+			$uuid = self::validateUuid($newGameId);
+		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->gameId = $uuid;
+	}
+
+	/*
+	 * accessor for gameCharacterId
+	 */
+	public function getGameCharacterId() {
+		return $this->gameCharacterId;
+	}
+
+	/*
+	 * setter for character Id
+	 *
+	public function setCharacterId($newCharacterId): void {
+		try {
+			$uuid = self::validateUuid($newCharacterId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->characterId = $uuid;
+	}
+
+	*/
+
 }
