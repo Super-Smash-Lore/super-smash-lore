@@ -2,7 +2,7 @@
 namespace Jmashke4\SuperSmashLore;
 use http\Exception\InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
-trait ValidateDate {
+trait validateDate {
 
 	private static function validateDate($newDate) : \DateTime {
 		if(is_object($newDate) === true && get_class($newDate) === "DateTime") {
