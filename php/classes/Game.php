@@ -125,7 +125,7 @@ class Game {
 		$newGameSystem = trim($newGameSystem);
 		$newGameSystem = filter_var($newGameSystem, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newGameSystem) === true) {
-			throw (new \InvalidArgumentException())
+			throw (new \InvalidArgumentException());
 		}
 	}
 
