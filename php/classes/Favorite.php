@@ -36,7 +36,7 @@ class Favorite {
 	 **/
 
 	/**
- 	** setter for character Id
+ 	 * setter for new character Id
  	**/
 	public function setFavoriteCharacterId( $newFavoriteCharacterId) : void {
 		try {
@@ -47,7 +47,9 @@ class Favorite {
 		}
 		$this->favoriteCharacterId = $uuid;
 	}
-
+/*
+ *  getter for profileId
+ */
 	public function getFavoriteProfileId(): string {
 		return $this->favoriteProfileId;
 	}
@@ -66,10 +68,16 @@ public function setProfileId( $newProfileId) : void {
 	$profileId = 16;
 	$this->$profileId = $uuid;
 }
-	public function getFavoriteDate(): string {
-		return $this->favoriteDate;
-	}
 
+/*
+ *  getter for profileId
+ */
+	public function getFavoriteProfileId(): string {
+		return $this->favoriteProfileId;
+	}
+/*
+ *
+ */
 
 	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
 		try {
