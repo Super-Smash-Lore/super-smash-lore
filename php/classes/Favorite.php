@@ -1,5 +1,9 @@
 <?php
 
+namespace ;
+require_once ("autoloader.php");
+require_once (dirname(__DIR__) . "/classes/autoloader.php");
+use Ramsey\Uuid\Uuid;
 class Favorite {
 	/*
 	 * favorite character Id
