@@ -1,7 +1,15 @@
 <?php
 
+namespace ;
+require_once ("autoloader.php");
+require_once (dirname(__DIR__) . "\classes\autoloader.php");
 
+use Jmashke4\SuperSmashLore\validateDate;
+use Jmashke4\SuperSmashLore\validateUuid;
+use Ramsey\Uuid\Uuid;
 class Profile{
+	use validateDate;
+	use validateUuid;
 /*
  * id for profile: this is a primary key
  */
