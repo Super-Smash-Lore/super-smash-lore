@@ -185,7 +185,7 @@ class Profile{
 	 * setter method for profile User Name
 	 */
 
-	public function setProfileUserName(string $NewProfileUserName) {
+	public function setProfileUserName(string $newProfileUserName) {
 		$newProfileUserName = trim($newProfileUserName);
 		$newProfileUserName = filter_var($newProfileUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newProfileUserName) === true) {
