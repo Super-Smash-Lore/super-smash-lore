@@ -101,7 +101,7 @@ class Game {
 	 */
 	public function setGamePicture (string $newGamePicture) : void {
 		$newGamePicture = trim($newGamePicture);
-		$newGamePicture = filter_var($newGamePicture, FILTER_VALIDATE_URL, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newGamePicture = filter_var($newGamePicture, FILTER_VALIDATE_URL);
 		if(empty($newGamePicture) === true) {
 			throw (new \InvalidArgumentException("picture url empty or insecure"));
 		}
@@ -111,5 +111,43 @@ class Game {
 		$this->gamePicture = $newGamePicture;
 	}
 
+	/*
+	 * accessor for game system
+	 */
+	public function getGameSystem () {
+		return $this->gameSystem;
+	}
 
+	/*
+	 * mutator for game system
+	 */
+	public function setGameSystem (string $newGameSystem) : void {
+		$newGameSystem = trim($newGameSystem);
+		$newGameSystem = filter_var($newGameSystem, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newGameSystem) === true) {
+			throw (new \InvalidArgumentException())
+		}
+	}
+
+	/*
+	 * getter for game url
+	 */
+	public function getGameUrl () {
+		return $this->gameUrl;
+	}
+
+	/*
+	 * mutator for game url
+	 */
+	public function setGameUrl (string $newGameUrl) :void {
+		$newGameUrl = trim($newGameUrl);
+		$newGameUrl = filter_var($newGameUrl, FILTER_VALIDATE_URL, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newGameUrl) === true) {
+			throw (new \InvalidArgumentException("game url empty or insecure"));
+		}
+		if(strlen($newGameUrl) > 512) {
+			throw (new \RangeException("Game Url must be fewer than 512 characters"));
+		}
+		$this->gameUrl = $newGameUrl;
+	}
 }
