@@ -62,8 +62,8 @@ public function setProfileId( $newProfileId) : void {
 	$profileId = 16;
 	$this->$profileId = $uuid;
 }
-	public function getFavoriteDateId(): string {
-		return $this->favoriteDateId;
+	public function getFavoriteDate(): string {
+		return $this->favoriteDate;
 	}
 
 
