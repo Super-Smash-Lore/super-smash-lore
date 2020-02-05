@@ -132,7 +132,7 @@ class Character {
 	 */
 	public function setCharacterPictureUrl (string $newCharacterPictureUrl) {
 		$newCharacterPictureUrl = trim($newCharacterPictureUrl);
-		$newCharacterPictureUrl = filter_var($newCharacterPictureUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newCharacterPictureUrl = filter_var($newCharacterPictureUrl, FILTER_VALIDATE_URL, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newCharacterPictureUrl) === true) {
 			throw (new \InvalidArgumentException("picture url is empty or insecure"));
 		}
@@ -143,4 +143,26 @@ class Character {
 	}
 
 	/*
+	 * accessor for character quotes
+	 */
+	public function getCharacterQuotes() {
+		return $this->characterQuotes;
+	}
+
+	/*
+	 * setter for character quotes
+	 */
+	public function setCharacterQuotes(string $newCharacterQuotes) {
+		$newCharacterQuotes = trim($newCharacterQuotes);
+		$newCharacterQuotes = filter_var($newCharacterQuotes, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCharacterQuotes) === true) {
+			throw (new \InvalidArgumentException("quote empty or insecure"));
+		}
+		if(strlen($newCharacterQuotes) > 255) {
+			throw (new \RangeException("quote must be fewer than 255 characters"));
+		}
+		$this->characterQuotes = $newCharacterQuotes;
+	}
+
+
 }
