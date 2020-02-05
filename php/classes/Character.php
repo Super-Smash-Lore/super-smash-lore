@@ -171,7 +171,7 @@ class Character {
 		return $this->characterReleaseDate;
 	}
 
-	/*
+	/**
 	 * setter for release date
 	 */
 	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
