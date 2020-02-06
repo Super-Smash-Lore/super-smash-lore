@@ -116,16 +116,22 @@ class Profile{
 	 */
 
 	public function getDateJoined() {
-
+		return $this->dateJoined;
 	}
 
 	/*
 	 * setter for date Joined
 	 */
-
-	public function setDateJoined(){
-
+	public function setDateJoined ($newDateJoined) : void {
+		try {
+			$dateJoined = self::validateDate($newDateJoined);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->dateJoinede = $dateJoined;
 	}
+
 	/*
 	 * accessor for profile Email
 	 */
