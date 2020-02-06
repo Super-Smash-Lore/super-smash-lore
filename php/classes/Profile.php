@@ -17,7 +17,7 @@ class Profile{
 /*
  * activation token for profile
  */
-	private $activationToken;
+	private $profileActivationToken;
 /*
  * date user joined
  */
@@ -51,10 +51,10 @@ class Profile{
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newProfileId, $newActivationToken, $newDateJoined, $newProfileDescription, $newProfileEmail, $newProfileHash, $newProfileUserName = null) {
+	public function __construct($newProfileId, $newProfileActivationToken, $newDateJoined, $newProfileEmail, $newProfileHash, $newProfileUserName = null) {
 		try {
 			$this->setProfileId($newProfileId);
-			$this->setActivationToken($newActivationToken);
+			$this->setProfileActivationToken($newProfileActivationToken);
 			$this->setDateJoined($newDateJoined);
 			$this->setProfileEmail($newProfileEmail);
 			$this->setProfileHash($newProfileHash);
@@ -91,24 +91,24 @@ class Profile{
 	 * accessor method for activation token
 	 */
 
-	public function getActivationToken() : ?string {
-		return $this->activationToken;
+	public function getProfileActivationToken() : ?string {
+		return $this->profileActivationToken;
 	}
 
 	/*
 	 * setter for activation token
 	 */
 
-	public function setActivationToken(string $newActivationToken) : void {
-		if($newActivationToken === null) {
+	public function setProfileActivationToken(string $newProfileActivationToken) : void {
+		if($newProfileActivationToken === null) {
 			$this->activationToken = null;
 			return;
 		}
-		$newActivationToken = strtolower(trim($newActivationToken));
-		if(strlen($newActivationToken) !== 32) {
+		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		if(strlen($newProfileActivationToken) !== 32) {
 			throw (new\RangeException("Activation token has to be 32 character"));
 		}
-		$this->activationToken = $newActivationToken;
+		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
 	/*
@@ -202,5 +202,17 @@ class Profile{
 		}
 		$this->profileUserName = $newProfileUserName;
 	}
+
+	/*
+	 * insert profile for profile table
+	 */
+	public function insert(\PDO $pdo) : void {
+		$query = "INSERT INTO profile(profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName) VALUES(:profileId, :profileActivationToken, :profileDateJoined, :profileEmail, :profileHash, :profileUserName) ";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->dateJoined, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,
+							"profileUserName" => $this->profileUserName];
+		$statement->execute($parameters);
+	}
+	
 
 }
