@@ -87,7 +87,7 @@ class Game {
 	/*
 	 * setter for character Id
 	 */
-	public function setCharacterId($newCharacterId): void {
+	public function setGameCharacterId($newCharacterId): void {
 		try {
 			$uuid = self::validateUuid($newCharacterId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
