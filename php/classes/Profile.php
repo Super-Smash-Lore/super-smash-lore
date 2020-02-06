@@ -21,7 +21,7 @@ class Profile{
 /*
  * date user joined
  */
-	private $dateJoined;
+	private $profileDateJoined;
 
 /*
  *  email for the profile
@@ -51,11 +51,11 @@ class Profile{
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newProfileId, $newProfileActivationToken, $newDateJoined, $newProfileEmail, $newProfileHash, $newProfileUserName = null) {
+	public function __construct($newProfileId, $newProfileActivationToken, $newProfileDateJoined, $newProfileEmail, $newProfileHash, $newProfileUserName = null) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileActivationToken($newProfileActivationToken);
-			$this->setDateJoined($newDateJoined);
+			$this->setProfileDateJoined($newProfileDateJoined);
 			$this->setProfileEmail($newProfileEmail);
 			$this->setProfileHash($newProfileHash);
 			$this->setProfileUserName($newProfileUserName);
@@ -115,21 +115,21 @@ class Profile{
 	 * accessor for dateJoined
 	 */
 
-	public function getDateJoined() {
-		return $this->dateJoined;
+	public function getProfileDateJoined() {
+		return $this->profileDateJoined;
 	}
 
 	/*
 	 * setter for date Joined
 	 */
-	public function setDateJoined ($newDateJoined) : void {
+	public function setProfileDateJoined ($newProfileDateJoined) : void {
 		try {
-			$dateJoined = self::validateDate($newDateJoined);
+			$profileDateJoined = self::validateDate($newProfileDateJoined);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->dateJoinede = $dateJoined;
+		$this->profileDateJoined = $profileDateJoined;
 	}
 
 	/*
@@ -209,10 +209,20 @@ class Profile{
 	public function insert(\PDO $pdo) : void {
 		$query = "INSERT INTO profile(profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName) VALUES(:profileId, :profileActivationToken, :profileDateJoined, :profileEmail, :profileHash, :profileUserName) ";
 		$statement = $pdo->prepare($query);
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->dateJoined, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->profileDateJoined, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,
 							"profileUserName" => $this->profileUserName];
 		$statement->execute($parameters);
 	}
-	
+
+	/*
+	 * update profile for profile table
+	 */
+	public function update(\PDO $pdo) : void {
+		$query = "UPDATE profile SET profileId = :profileId, profileActivationToken = :profileActivationToken, profileDateJoined = :profileDateJoined, profileEmail = :profileEmail, profileHash = :profileHash, profileUserName = :profileUserName";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->profileDateJoined, "profileEmail" => $this->profileEmail,
+							"profileHash" => $this->profileHash, "profileUserName" => $this->profileUserName];
+		$statement->execute($parameters);
+	}
 
 }
