@@ -107,4 +107,8 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		}
 		$this->characterReleaseDate = $favoriteDate;
 	}
+
+	/*
+	 * inserts
+	 */
 }
