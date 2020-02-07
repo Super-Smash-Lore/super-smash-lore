@@ -21,7 +21,7 @@ class Game {
 	/*
 	 * pictures of the games
 	 */
-	private $gamePicture;
+	private $gamePictureUrl;
 	/*
 	 * systems the games can be played on
 	 */
@@ -43,11 +43,11 @@ class Game {
 	 * @throws \TypeError if data type violates a data hint
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct($newGameId, $newGameCharacterId, $newGamePicture, $newGameSystem, $newGameUrl) {
+	public function __construct($newGameId, $newGameCharacterId, $newGamePictureUrl, $newGameSystem, $newGameUrl) {
 		try {
 			$this->setGameId($newGameId);
 			$this->setGameCharacterId($newGameCharacterId);
-			$this->setGamePicture($newGamePicture);
+			$this->setGamePictureUrl($newGamePictureUrl);
 			$this->setGameSystem($newGameSystem);
 			$this->setGameUrl($newGameUrl);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -87,7 +87,7 @@ class Game {
 	/*
 	 * setter for character Id
 	 */
-	public function setCharacterId($newCharacterId): void {
+	public function setGameCharacterId($newCharacterId): void {
 		try {
 			$uuid = self::validateUuid($newCharacterId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -102,22 +102,22 @@ class Game {
 	 * getter for game picture
 	 */
 	public function getGamePicture () {
-		return $this->gamePicture;
+		return $this->gamePictureUrl;
 	}
 
 	/*
 	 * mutator for game picture
 	 */
-	public function setGamePicture (string $newGamePicture) : void {
-		$newGamePicture = trim($newGamePicture);
-		$newGamePicture = filter_var($newGamePicture, FILTER_VALIDATE_URL);
-		if(empty($newGamePicture) === true) {
+	public function setGamePictureUrl (string $newGamePictureUrl) : void {
+		$newGamePictureUrl = trim($newGamePictureUrl);
+		$newGamePictureUrl = filter_var($newGamePictureUrl, FILTER_VALIDATE_URL);
+		if(empty($newGamePictureUrl) === true) {
 			throw (new \InvalidArgumentException("picture url empty or insecure"));
 		}
-		if(strlen($newGamePicture) > 512) {
+		if(strlen($newGamePictureUrl) > 512) {
 			throw (new \RangeException("picture url must be fewer than 512 characters"));
 		}
-		$this->gamePicture = $newGamePicture;
+		$this->gamePicture = $newGamePictureUrl;
 	}
 
 	/*
@@ -164,10 +164,10 @@ class Game {
 	 * insert game for game table
 	 */
 	public function insert(\PDO $pdo) :void {
-		$query = "INSERT INTO game (gameId, gameCharacterId, gamePicture, gameSystem, gameUrl) 
+		$query = "INSERT INTO game (gameId, gameCharacterId, gamePictureUrl, gameSystem, gameUrl) 
 						VALUES (:gameId, :gameCharacterId, :gamePicture, :gameSystem, :gameUrl)";
 		$statement = $pdo->prepare($query);
-		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId->getBytes(), "gamePicture" => $this->gamePicture,
+		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId->getBytes(), "gamePictureUrl" => $this->gamePictureUrl,
 							"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
 		$statement->execute($parameters);
 	}
@@ -175,5 +175,12 @@ class Game {
 	/*
 	 * update game for game table
 	 */
+	public function update(\PDO $pdo) : void {
+		$query = "UPDATE game SET gameId = :gameId, gameCharacterId = :gameCharacterId, gamePictureUrl = :gamePictureUrl, gameSystem = :gameSystem, gameUrl = :gameUrl";
+		$statement = $pdo->prepare($query);
+		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId, "gamePictureUrl" => $this->gamePictureUrl,
+								"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
+		$statement->execute($parameters);
+	}
 	
 }
