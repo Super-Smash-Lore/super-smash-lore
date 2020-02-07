@@ -17,11 +17,11 @@ class Profile{
 /*
  * activation token for profile
  */
-	private $activationToken;
+	private $profileActivationToken;
 /*
  * date user joined
  */
-	private $dateJoined;
+	private $profileDateJoined;
 
 /*
  *  email for the profile
@@ -51,11 +51,11 @@ class Profile{
 	 * @throws \Exception if some other exception occurs
 	 */
 
-	public function __construct($newProfileId, $newActivationToken, $newDateJoined, $newProfileDescription, $newProfileEmail, $newProfileHash, $newProfileUserName = null) {
+	public function __construct($newProfileId, $newProfileActivationToken, $newProfileDateJoined, $newProfileEmail, $newProfileHash, $newProfileUserName = null) {
 		try {
 			$this->setProfileId($newProfileId);
-			$this->setActivationToken($newActivationToken);
-			$this->setDateJoined($newDateJoined);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileDateJoined($newProfileDateJoined);
 			$this->setProfileEmail($newProfileEmail);
 			$this->setProfileHash($newProfileHash);
 			$this->setProfileUserName($newProfileUserName);
@@ -91,46 +91,49 @@ class Profile{
 	 * accessor method for activation token
 	 */
 
-	public function getActivationToken() : ?string {
-		return $this->activationToken;
+	public function getProfileActivationToken() : ?string {
+		return $this->profileActivationToken;
 	}
 
 	/*
 	 * setter for activation token
 	 */
 
-	public function setActivationToken(string $newActivationToken) : void {
-		if($newActivationToken === null) {
+	public function setProfileActivationToken(string $newProfileActivationToken) : void {
+		if($newProfileActivationToken === null) {
 			$this->activationToken = null;
 			return;
 		}
-		$newActivationToken = strtolower(trim($newActivationToken));
-		if(strlen($newActivationToken) !== 32) {
+		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		if(strlen($newProfileActivationToken) !== 32) {
 			throw (new\RangeException("Activation token has to be 32 character"));
 		}
-		$this->activationToken = $newActivationToken;
+		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
 	/*
 	 * accessor for dateJoined
 	 */
 
-	public function getDateJoined() {
-		return $this->dateJoined;
+
+	public function getProfileDateJoined() {
+		return $this->profileDateJoined;
 	}
 
 	/*
 	 * setter for date Joined
 	 */
 
-	public function setDateJoined($newDateJoined) : void{
+	public function setProfileDateJoined ($newProfileDateJoined) : void {
 		try {
-			$date = self::validateDate($newDateJoined);
-			} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception){
+			$profileDateJoined = self::validateDate($newProfileDateJoined);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
+		$this->profileDateJoined = $profileDateJoined;
 	}
+
 	/*
 	 * accessor for profile Email
 	 */
@@ -200,6 +203,38 @@ class Profile{
 			throw (new\RangeException("Username must be less than 32 charcters"));
 		}
 		$this->profileUserName = $newProfileUserName;
+	}
+
+	/*
+	 * insert profile for profile table
+	 */
+	public function insert(\PDO $pdo) : void {
+		$query = "INSERT INTO profile(profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName) VALUES(:profileId, :profileActivationToken, :profileDateJoined, :profileEmail, :profileHash, :profileUserName) ";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->profileDateJoined, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,
+							"profileUserName" => $this->profileUserName];
+		$statement->execute($parameters);
+	}
+
+	/*
+	 * update profile for profile table
+	 */
+	public function update(\PDO $pdo) : void {
+		$query = "UPDATE profile SET profileId = :profileId, profileActivationToken = :profileActivationToken, profileDateJoined = :profileDateJoined, profileEmail = :profileEmail, profileHash = :profileHash, profileUserName = :profileUserName";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->profileDateJoined, "profileEmail" => $this->profileEmail,
+							"profileHash" => $this->profileHash, "profileUserName" => $this->profileUserName];
+		$statement->execute($parameters);
+	}
+
+	/*
+	 * delete method for profile table
+	 */
+	public function delete(\PDO $pdo) : void {
+		$query = "DELETE FROM character WHERE characterId = :characterId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
 	}
 
 }
