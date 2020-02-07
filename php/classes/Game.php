@@ -159,4 +159,21 @@ class Game {
 		}
 		$this->gameUrl = $newGameUrl;
 	}
+
+	/*
+	 * insert game for game table
+	 */
+	public function insert(\PDO $pdo) :void {
+		$query = "INSERT INTO game (gameId, gameCharacterId, gamePicture, gameSystem, gameUrl) 
+						VALUES (:gameId, :gameCharacterId, :gamePicture, :gameSystem, :gameUrl)";
+		$statement = $pdo->prepare($query);
+		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId->getBytes(), "gamePicture" => $this->gamePicture,
+							"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
+		$statement->execute($parameters);
+	}
+
+	/*
+	 * update game for game table
+	 */
+	
 }
