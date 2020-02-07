@@ -182,5 +182,14 @@ class Game {
 								"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
 		$statement->execute($parameters);
 	}
-	
+
+	/*
+	 * delete game for game table
+	 */
+	public function delete(\PDO $pdo) : void {
+		$query = "DELETE FROM game WHERE gameId = :gameId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["gameId" => $this->gameId->getBytes()];
+		$statement->execute($parameters);
+	}
 }
