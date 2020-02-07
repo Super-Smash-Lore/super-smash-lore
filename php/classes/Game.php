@@ -192,4 +192,30 @@ class Game {
 		$parameters = ["gameId" => $this->gameId->getBytes()];
 		$statement->execute($parameters);
 	}
+
+	/*
+	 * get game by game Id
+	 */
+	public static function getGameByGameId(\PDO $pdo, $gameId) :?Game {
+		try {
+			$gameId = self::validateUuid($gameId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		$query = "SELECT gameId, gameCharacterId, gamePictureUrl, gameSystem, gameUrl FROM game WHERE gameId = :gameId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["gameId" => $gameId->getBytes()];
+		$statement->execute($parameters);
+		try {
+			$game = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$game = new Game($row["gameId"], $row["gameCharacterId"], $row["gamePictureUrl"], $row["gameSystem"], $row["gameUrl"]);
+			}
+		} catch(\Exception $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($game);
+	}
 }
