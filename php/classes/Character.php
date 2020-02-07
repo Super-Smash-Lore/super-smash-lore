@@ -270,4 +270,79 @@ class Character {
 		$parameters = ["characterId" => $this->characterId->getBytes()];
 		$statement->execute($parameters);
 	}
+	/**
+	 * gets Character by characterId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $characterId character id to search for
+	 * @return Character|null Character found or null if not found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getCharacterByCharacterId(\PDO $pdo, $characterId) : ?Character {
+		//sanitize the characterId before searching
+		try {
+			$characterId = self::validateUuid($characterId);
+		} catch(\InvalidArgumentException| \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create query template
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterId";
+		$statement =$pdo->prepare($query);
+		//bind the character id to the place holder in the template
+		$parameters = ["characterId" => $characterId->getBytes()];
+		$statement->execute($parameters);
+		//grab character from MySQL
+		try {
+			$character =  null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($character);
+	}
+	/**
+	 * gets Character by characterUniverse
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string characterUniverse to search by
+	 * @return \SplFixedArray SplFixedArray of characters found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getCharacterByCharacterUniverse(\PDO $pdo, $characterUniverse) : \SplFixedArray {
+		//sanitize the description before searching
+		$characterUniverse = trim($characterUniverse);
+		$characterUniverse = filter_var($characterUniverse, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		//escape anyMySQL wild cards
+		$result = str_replace("%", "\\%", $characterUniverse);
+		$characterUniverse = str_replace("_", "\\_", $result);
+		//create a query template
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterUniverse LIKE :characterUniverse";
+		$statement = $pdo->prepare($query);
+		//bind the character universe to the place holder in the template
+		$characterUniverse = "%$characterUniverse%";
+		$parameters = ["characterUniverse" => $characterUniverse];
+		$statement->execute($parameters);
+		//build array of characters
+		$characterUniverseArray = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
+				$characterUniverseArray[$characterUniverseArray->key()] = $character;
+				$characterUniverseArray->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($characterUniverseArray);
+	}
+
 }
