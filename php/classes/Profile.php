@@ -236,5 +236,43 @@ class Profile{
 		$parameters = ["profileId" => $this->profileId->getBytes()];
 		$statement->execute($parameters);
 	}
+	/**
+	 * gets the Profile by profile id
+	 *
+	 * @param \PDO $pdo $pdo PDO connection object
+	 * @param  $profileId profile Id to search for (the data type should be mixed/not specified)
+	 * @return Profile|null Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getProfileByProfileId(\PDO $pdo, $profileId) :?Profile {
+//		sanitize the profile id before searching
+	try {
+		$profileId = self::validateUuid($profileId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+//create query template
+		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
 
+// bind the profile id to the place holder in the template
+		$parameters = ["SELECT profileId" => $profileId->getBytes()];
+		$statement->execute($parameters);
+
+// grab the Profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileDateJoined"], $row["profileEmail"], $row["profileHash"], $row["profileUserName"]);
+			}
+		} catch(\Exception $exception) {
+// if the row couldn't be converted, rethrow ir
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
+}
 }
