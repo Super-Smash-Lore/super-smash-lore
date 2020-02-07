@@ -18,9 +18,9 @@ create table profile (
 
 create table `character`(
 characterId binary(16) NOT NULL,
-characterDescription varchar (255),
-characterMusicUrl varchar (512),
-characterPictureUrl varchar (512),
+characterDescription varchar (1600),
+characterMusicUrl varchar (255),
+characterPictureUrl varchar (255),
 characterQuotes varchar (255) NOT NULL,
 characterReleaseDate  DATETIME(6) NOT NULL,
 characterSong varchar (255),
@@ -31,12 +31,12 @@ primary key(characterId)
 create table game (
 gameId binary(16) NOT NULL,
 gameCharacterId binary (16) NOT NULL,
-gamePictureUrl varchar (512),
+gamePictureUrl varchar (255),
 gameSystem varchar (32),
 gameUrl varchar (512),
 INDEX(gameCharacterId),
-primary key (gameId),
-foreign key (gameCharacterId) references `character` (characterId)
+foreign key (gameCharacterId) references `character` (characterId),
+primary key (gameId)
 );
 
 create table favorite(
