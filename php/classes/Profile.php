@@ -225,4 +225,14 @@ class Profile{
 		$statement->execute($parameters);
 	}
 
+	/*
+	 * delete method for profile table
+	 */
+	public function delete(\PDO $pdo) : void {
+		$query = "DELETE FROM character WHERE characterId = :characterId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+
 }
