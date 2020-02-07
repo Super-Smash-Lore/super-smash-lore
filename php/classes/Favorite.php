@@ -23,7 +23,21 @@ class Favorite {
 	 */
 	private $favoriteDate;
 
-/**
+	/*
+	 * constructor for favorite
+	 */
+	public function __construct($newFavoriteCharacterId, $newFavoriteProfileId, $newFavoriteDate) {
+		try {
+			$this->setFavoriteCharacterId($newFavoriteCharacterId);
+			$this->setFavoriteProfileId($newFavoriteProfileId);
+			$this->setFavoriteDate($newFavoriteDate);
+		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+	/**
  * accesor method for favorite characters
  *
  * @return string value of favorite characters
@@ -63,9 +77,9 @@ class Favorite {
  * setter method for profile Id
  */
 
-public function setProfileId( $newProfileId) : void {
+public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 	try {
-		$uuid = self::validateUuid($newProfileId);
+		$uuid = self::validateUuid($newFavoriteProfileId);
 	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 		$exceptionType = get_class($exception);
 		throw (new $exceptionType($exception->getMessage(), 0, $exception));
@@ -93,4 +107,8 @@ public function setProfileId( $newProfileId) : void {
 		}
 		$this->characterReleaseDate = $favoriteDate;
 	}
+
+	/*
+	 * inserts
+	 */
 }

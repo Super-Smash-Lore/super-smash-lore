@@ -235,4 +235,19 @@ class Character {
 		}
 		$this->characterUniverse = $newCharacterUniverse;
 	}
+
+	/*
+	 * inserts into character in MySQL
+	 */
+	public function insert(\PDO $pdo) : void {
+		$query = "INSERT INTO character(characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse) 
+					VALUES (:characterId, :charcterDescription, :characterMusicUrl, :characterPictureUrl, :characterQuotes, :characterReleaseDate, :characterSong, :characterUnivers)";
+		$statement = $pdo->prepare($query);
+		$parameters = ["characterId" => $this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl,
+							"characterPictureUrl" => $this->characterPictureUrl, "characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate,
+							"characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
+		$statement->execute($parameters);
+	}
+
+
 }
