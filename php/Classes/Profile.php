@@ -2,14 +2,14 @@
 
 namespace SSBULoreApp\SuperSmashLore;
 require_once ("autoloader.php");
-require_once (dirname(__DIR__) . "\classes\autoloader.php");
+require_once (dirname(__DIR__) . "\Classes\autoloader.php");
 
-use Jmashke4\SuperSmashLore\validateDate;
-use Jmashke4\SuperSmashLore\validateUuid;
+use Jmashke4\SuperSmashLore\ValidateDate;
+use Jmashke4\SuperSmashLore\ValidateUuid;
 use Ramsey\Uuid\Uuid;
 class Profile{
-	use validateDate;
-	use validateUuid;
+	use ValidateDate;
+	use ValidateUuid;
 /*
  * id for profile: this is a primary key
  */
