@@ -244,10 +244,30 @@ class Character {
 					VALUES (:characterId, :charcterDescription, :characterMusicUrl, :characterPictureUrl, :characterQuotes, :characterReleaseDate, :characterSong, :characterUnivers)";
 		$statement = $pdo->prepare($query);
 		$parameters = ["characterId" => $this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl,
-							"characterPictureUrl" => $this->characterPictureUrl, "characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate,
-							"characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
+			"characterPictureUrl" => $this->characterPictureUrl, "characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate,
+			"characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
 		$statement->execute($parameters);
 	}
 
+	/*
+	 * updates character in character table
+	 */
+	public function update(\PDO $pdo) : void {
+		$query = "UPDATE character SET characterId = :characterId, characterDescription = :characterDescription, characterMusicUrl = :characterMusicUrl, characterPictureUrl = :characterPictureUrl,
+					characterQuotes = :characterQuotes, characterReleaseDate = :characterReleaseDate, characterSong = :characterSong, characterUniverse = :characterSong";
+		$statement = $pdo->prepare($query);
+		$parameters = ["characterId" =>$this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl, "characterPictureUrl" => $this->characterPictureUrl,
+							"characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate, "characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
+		$statement->execute($parameters);
+	}
 
+	/*
+	 * deletes a character from character table
+	 */
+	public function delete(\PDO $pdo) : void {
+		$query = "DELETE FROM character WHERE characterId = :characterId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["characterId" => $this->characterId->getBytes()];
+		$statement->execute($parameters);
+	}
 }
