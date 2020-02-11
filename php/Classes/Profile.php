@@ -1,11 +1,9 @@
 <?php
 
-namespace OdysseyOfUltimate\SuperSmashLore;
+namespace SuperSmashLore\SuperSmashLore;
 require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "\Classes\autoloader.php");
 
-use OdysseyOfUltimate\ValidateDate;
-use OdysseyOfUltimate\ValidateUuid;
 use Ramsey\Uuid\Uuid;
 class Profile{
 	use ValidateDate;
