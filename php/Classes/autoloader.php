@@ -15,7 +15,7 @@ spl_autoload_register(function($class) {
 * prefix: the prefix for all the Classes (i.e., the namespace)
 * baseDir: the base directory for all Classes (default = current directory)
 **/
-$prefix = "Jmashke4\\SuperSmashLore";
+$prefix = "OdysseyOfUltimate";
 $baseDir = __DIR__;
 
 // does the class use the namespace prefix?

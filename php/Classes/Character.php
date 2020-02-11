@@ -1,11 +1,11 @@
 <?php
 
-namespace SSBULoreApp\SuperSmashLore;
+namespace OdysseyOfUltimate;
 require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "\Classes\autoloader.php");
 
-use Jmashke4\SuperSmashLore\ValidateDate;
-use Jmashke4\SuperSmashLore\ValidateUuid;
+use OdysseyOfUltimate\ValidateDate;
+use OdysseyOfUltimate\ValidateUuid;
 use Ramsey\Uuid\Uuid;
 class Character {
 	use ValidateUuid;

@@ -1,11 +1,11 @@
 <?php
 
-namespace SSBULoreApp\SuperSmashLore;
+namespace OdysseyOfUltimate;
 require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "/Classes/autoloader.php");
 
-use Jmashke4\SuperSmashLore\ValidateDate;
-use Jmashke4\SuperSmashLore\ValidateUuid;
+use OdysseyOfUltimate\ValidateDate;
+use OdysseyOfUltimate\ValidateUuid;
 use Ramsey\Uuid\Uuid;
 class Favorite {
 	use ValidateUuid;
@@ -111,6 +111,33 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 	/*
 	 * inserts
 	 */
+	public function insert(\PDO $pdo) : void {
+		$query = "INSERT INTO favorite(favoriteCharacterId, favoriteProfileId, favoriteDate); 
+					VALUES (:favoriteCharacterId, :favoriteProfileId, :favoriteDate)";
+		$statement = $pdo->prepare($query);
+		$parameters = ["favoriteCharacterId" => $this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId, "favoriteDate" => $this->favoriteDate];
+		$statement->execute($parameters);
+	}
+
+	/*
+	 * update
+	 */
+	public function update(\PDO $pdo) : void {
+		$query = "UPDATE favorite SET favoriteCharacterId = :favoriteCharacterId, favoriteProfileId = :favoriteProfileId, favoriteDate = :favoriteDate";
+		$statement = $pdo->prepare($query);
+		$parameters = ["favoriteCharacterId" =>$this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId, "favoriteProfileId" => $this->favoriteProfileId, "favoriteDate" => $this->favoriteDate];
+		$statement->execute($parameters);
+	}
+
+	/*
+	 * deletes
+	 */
+	public function delete(\PDO $pdo) : void {
+		$query = "DELETE FROM favorite WHERE favoriteCharacterId = :favoriteCharacterId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["favoriteCharacterId" => $this->favoriteCharacterId->getBytes()];
+		$statement->execute($parameters);
+	}
 
 	//getFavoriteByFavoriteCharacterId
 

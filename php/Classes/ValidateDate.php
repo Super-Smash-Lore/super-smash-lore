@@ -1,5 +1,5 @@
 <?php
-namespace Jmashke4\SuperSmashLore;
+namespace OdysseyOfUltimate;
 use http\Exception\InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 trait ValidateDate {

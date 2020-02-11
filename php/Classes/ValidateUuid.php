@@ -1,5 +1,5 @@
 <?php
-namespace Jmashke4\SuperSmashLore;
+namespace OdysseyOfUltimate;
 require_once (dirname(__DIR__, 1) . "/Classes/autoloader.php");
 use http\Exception\InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
