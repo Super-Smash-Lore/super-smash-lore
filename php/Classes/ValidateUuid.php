@@ -4,7 +4,7 @@ require_once (dirname(__DIR__, 1) . "/Classes/autoloader.php");
 use http\Exception\InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 
-trait validateUuid {
+trait ValidateUuid {
 	private static function validateUuid($newUuid) : \Ramsey\Uuid\Uuid {
 		if(gettype($newUuid) === "string") {
 			if(strlen($newUuid) === 16) {

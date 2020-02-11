@@ -111,4 +111,115 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 	/*
 	 * inserts
 	 */
+
+	//getFavoriteByFavoriteCharacterId
+
+	/*
+	 * Gets the Favorite by Favorite Character Id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $favoriteCharacterId favorite character id to search for
+	 * @return Favorite| null Favorite found or null if not found
+	 * @throws \PDOException when MySql related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 */
+	public static function getFavoriteByFavoriteCharacterId(\PDO $pdo, $favoriteCharacterId) : ?Favorite {
+		//sanitize the favorite character id before searching
+		try {
+			$favoriteCharacterId = self::ValidateUuid($favoriteCharacterId);
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create query template
+		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM Favorite WHERE favoriteCharacterId = :favoriteCharacterId";
+		$statement = $pdo->prepare($query);
+
+		//Bind the favorite character id to the place holder in template
+		$parameters = ["favoriteCharacterId" => $favoriteCharacterId->getBytes()];
+		$statement->execute($parameters);
+
+		//Grab the favorite from mySql
+		try {
+			$favorite = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$favorite = new Favorite($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($favorite);
+	}
+
+//getFavoriteByFavoriteProfileId
+
+	/*
+	 * gets the Favorite by FavoriteProfileId
+	 *
+	 * @param \PDO $pdo PDO connection
+	 * @param Uuid| string  $FavoriteProfileId favorite profile id to search for
+	 * @return Favorite|null Favorite found or null if not found
+	 * @throws \PDOException when mysql related errors occur
+	 * @throws \TypeError when variable is not the correct data type
+	 */
+
+	public static function getFavoriteByFavoriteProfileId(\PDO $pdo, $favoriteProfileId) : ?Favorite {
+		// sanitize the FavoriteProfileId before searching
+		try {
+			$favoriteProfileId = self::ValidateUuid($favoriteProfileId);
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create a query template
+		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM Favorite WHERE favoriteProfileId = :favoriteProfileId";
+		$statement = $pdo->prepare($query);
+
+		//bind the favorite profile id to the place holder in the template
+		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
+		$statement->execute($parameters);
+
+		//grab the favorite from mysql
+		try {
+			$favorite = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$favorite = new Favorite($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($favorite);
+	}
+	public static function getFavoriteByFavoriteProfileIdAndFavoriteCharacterId(\PDO $pdo, string $favoriteProfileId, string $favoriteCharacterId) : ?Favorite {
+		//creating throw error codes.
+		try {
+			$favoriteCharacterId = self::ValidateUuid($favoriteCharacterId);
+			$favoriteProfileId = self::ValidateUuid($favoriteProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create query template.
+		$query = "SELECT favoriteProfileId, favoriteCharacterId, favoriteDate FROM `favorite` WHERE favoriteProfileId = :favoriteProfileId AND favoriteCharacterId= :favoritecharacterId";
+		$statement = $pdo->prepare($query);
+		//bind the profile id and the character id to the place holder in the template.
+		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes(), "favoriteCharacterId" => $favoriteCharacterId->getBytes()];
+		$statement->execute($parameters);
+		//grab the favorite from MySQL.
+		try {
+			$favorite = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteCharacterId"], $row["favoriteDate"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($favorite);
+	}
 }
