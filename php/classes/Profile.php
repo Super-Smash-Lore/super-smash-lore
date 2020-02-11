@@ -2,7 +2,7 @@
 
 namespace SSBULoreApp\SuperSmashLore;
 require_once ("autoloader.php");
-require_once (dirname(__DIR__) . "\classes\autoloader.php");
+require_once (dirname(__DIR__) . "\Classes\autoloader.php");
 
 use Jmashke4\SuperSmashLore\validateDate;
 use Jmashke4\SuperSmashLore\validateUuid;
@@ -312,5 +312,42 @@ class Profile{
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($profile);
+	}
+	//getProfileByProfileEmail
+	/*
+	 * Gets the profile by the profile email
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileId
+	 * @return Profile|null Profile found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 */
+	public static function getProfileByProfileEmail(\PDO $pdo, $profileEmail) : ?Profile {
+		//sanitize the profileId before searching
+		try {
+			$profileEmail = self::string($profileEmail);
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception)  {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create query template
+		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUsername FROM Profile WHERE profileEmail = :profileEmail";
+		$statement = $pdo->prepare($query);
+		//bind the Profile from mysql
+		$parameters = ["profileEmail" => $profileEmail->getBytes()];
+		$statement->execute($parameters);
+		//grab the profile from mysql
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileDateJoined"], $row["profileEmail"], $row["profileHash"], $row["profileUsername"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
 	}
 }
