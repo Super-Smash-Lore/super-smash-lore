@@ -218,4 +218,30 @@ class Game {
 		}
 		return ($game);
 	}
+
+	/*
+	 * get game by character Id
+	 */
+	public static function getGameByCharacterId(\PDO $pdo, $gameCharacterId) :?Game {
+		try {
+			$gameCharacterId = self::validateUuid($gameCharacterId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		$query = "SELECT gameId, gameCharacterId, gamePictureUrl, gameSystem, gameUrl FROM game WHERE gameCharacterId = :gameCharacterId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["gameCharacterId" => $gameCharacterId->getBytes()];
+		$statement->execute($parameters);
+		try {
+			$game = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$game = new Game($row["gameId"], $row["gameCharacterId"], $row["gamePictureUrl"], $row["gameSystem"], $row["gameUrl"]);
+			}
+		} catch(\Exception $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($game);
+	}
 }
