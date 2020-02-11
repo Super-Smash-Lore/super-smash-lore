@@ -8,21 +8,32 @@ use Ramsey\Uuid\Uuid;
 class Favorite {
 	use ValidateUuid;
 	use ValidateDate;
-	/*
+	/**
 	 * favorite character Id
+	 * @var Uuid $favoriteCharacterId
 	 */
 	private $favoriteCharacterId;
-	/*
+	/**
 	 * profile Id for favorite
+	 * @var Uuid $favoriteProfileId
 	 */
 	private $favoriteProfileId;
-	/*
+	/**
 	 * date favorited
+	 * @var \DateTime $favoriteDate
 	 */
 	private $favoriteDate;
 
-	/*
+	/**
 	 * constructor for favorite
+	 *
+	 * @param string|Uuid $newFavoriteCharacterId id of the favorite or null if new favorite
+	 * @param string|Uuid $newFavoriteProfileId if of the profile that added the favorite
+	 * @param \DateTime|string|null $newFavoriteDate date and time the favorite was added or null if set to current date and time
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds or too large
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if any other form of exception occurs
 	 */
 	public function __construct($newFavoriteCharacterId, $newFavoriteProfileId, $newFavoriteDate) {
 		try {
@@ -36,25 +47,22 @@ class Favorite {
 	}
 
 	/**
- * accesor method for favorite characters
- *
- * @return string value of favorite characters
- **/
+ 	* getter method for favorite characters
+ 	* @return string value of favorite characters
+ 	**/
 	public function getFavoriteCharacterId(): string {
 		return $this->favoriteCharacterId;
 	}
 	/**
-	 * mutator method for favorites
+	 * setter method for favorite character id
 	 *
 	 * @param string $favoriteCharacterId for favorite characters
 	 * @throws \InvalidArgumentException if $favoriteProfileId is not a valid or secure profile
 	 * @throws \RangeException if $favoriteCharacterId is > 16 characters
 	 * @throws \TypeError if $favoriteCharacterId is not a string
+	 * @throws \Exception if some other exception occurs
 	 **/
 
-	/**
- 	 * setter for new character Id
- 	**/
 	public function setFavoriteCharacterId( $newFavoriteCharacterId) : void {
 		try {
 			$uuid = self::validateUuid($newFavoriteCharacterId);
@@ -64,17 +72,23 @@ class Favorite {
 		}
 		$this->favoriteCharacterId = $uuid;
 	}
-/*
- *  getter for profileId
+/**
+ * getter for favorite profile id
+ * @return Uuid value of favorite profile Id
  */
 	public function getFavoriteProfileId(): string {
 		return $this->favoriteProfileId;
 	}
 
-/*
- * setter method for profile Id
+/**
+ * setter method for favorite profile Id
+ *
+ * @param Uuid|string $newFavoriteProfileId new value of favorite id
+ * @throws \InvalidArgumentException if data types are not valid
+ * @throws \RangeException if the values are out of bounds or too long
+ * @throws \Exception if some other exception occurs
+ * @throws \TypeError if data types violate type hints
  */
-
 public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 	try {
 		$uuid = self::validateUuid($newFavoriteProfileId);
@@ -83,17 +97,25 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		throw (new $exceptionType($exception->getMessage(), 0, $exception));
 	}
 	$profileId = 16;
+	//convert and store the favorite profile id
 	$this->$profileId = $uuid;
 }
 
-/*
- *  getter for character release date
+/**
+ * getter for favorite character release date
+ * @return Uuid value of favorite date
  */
 	public function getFavoriteDate(): string {
 		return $this->favoriteDate;
 	}
-/*
+/**
+ *setter method for favorite character release date
  *
+ * @param \DateTime|string|null $newFavoriteDate favorite date as a DateTime object or a string
+ * @throws \InvalidArgumentException if data types do not match
+ * @throws \RangeException if the data values are out of bounds or too long
+ * @throws \Exception if some other form of exception occurs
+ * @throws \TypeError if data types violate the type hints
  */
 
 	public function setFavoriteDate ($newFavoriteDate) : void {
@@ -106,40 +128,63 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		$this->characterReleaseDate = $favoriteDate;
 	}
 
-	/*
-	 * inserts
+	/**
+	 * inserts this favorite into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo in not PDO connection object
 	 */
 	public function insert(\PDO $pdo) : void {
-		$query = "INSERT INTO favorite(favoriteCharacterId, favoriteProfileId, favoriteDate); 
-					VALUES (:favoriteCharacterId, :favoriteProfileId, :favoriteDate)";
+
+		//create a query template
+		$query = "INSERT INTO favorite(favoriteCharacterId, favoriteProfileId, favoriteDate) VALUES (:favoriteCharacterId, :favoriteProfileId, :favoriteDate)";
 		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
 		$parameters = ["favoriteCharacterId" => $this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId, "favoriteDate" => $this->favoriteDate];
 		$statement->execute($parameters);
 	}
 
-	/*
-	 * update
+	/**
+	 * updates the favorite in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 */
 	public function update(\PDO $pdo) : void {
+
+		//create a query template
 		$query = "UPDATE favorite SET favoriteCharacterId = :favoriteCharacterId, favoriteProfileId = :favoriteProfileId, favoriteDate = :favoriteDate";
 		$statement = $pdo->prepare($query);
+
+		//bind member variables to the place holder in the template
 		$parameters = ["favoriteCharacterId" =>$this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId, "favoriteProfileId" => $this->favoriteProfileId, "favoriteDate" => $this->favoriteDate];
 		$statement->execute($parameters);
 	}
 
-	/*
-	 * deletes
+	/**
+	 * deletes a favorite from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection
 	 */
 	public function delete(\PDO $pdo) : void {
+
+		//crete a query template
 		$query = "DELETE FROM favorite WHERE favoriteCharacterId = :favoriteCharacterId";
 		$statement = $pdo->prepare($query);
+
+		//bind the variables to the place holder in the template
 		$parameters = ["favoriteCharacterId" => $this->favoriteCharacterId->getBytes()];
 		$statement->execute($parameters);
 	}
 
 	//getFavoriteByFavoriteCharacterId
 
-	/*
+	/**
 	 * Gets the Favorite by Favorite Character Id
 	 *
 	 * @param \PDO $pdo PDO connection object
@@ -180,14 +225,17 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 
 //getFavoriteByFavoriteProfileId
 
-	/*
+	/**
 	 * gets the Favorite by FavoriteProfileId
 	 *
 	 * @param \PDO $pdo PDO connection
 	 * @param Uuid| string  $FavoriteProfileId favorite profile id to search for
 	 * @return Favorite|null Favorite found or null if not found
 	 * @throws \PDOException when mysql related errors occur
+	 * @throws \RangeException if the data values are out of bounds or too long
+	 * @throws \InvalidArgumentException if the data types are not valid
 	 * @throws \TypeError when variable is not the correct data type
+	 * @throws \Exception if some other exceptions occurs
 	 */
 
 	public static function getFavoriteByFavoriteProfileId(\PDO $pdo, $favoriteProfileId) : ?Favorite {
@@ -219,6 +267,21 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		}
 		return($favorite);
 	}
+
+
+	/**
+	 * gets the favorite by favorite profile id and favorite character id
+	 *
+	 * @param \PDO $pdo PDO connection
+	 * @param Uuid| string  $FavoriteProfileId favorite profile id to search for
+	 * @return Favorite|null Favorite found or null if not found
+	 * @throws \PDOException when mysql related errors occur
+	 * @throws \RangeException if the data values are out of bounds or too long
+	 * @throws \InvalidArgumentException if the data types are not valid
+	 * @throws \TypeError when variable is not the correct data type
+	 * @throws \Exception if some other exceptions occurs
+	 */
+
 	public static function getFavoriteByFavoriteProfileIdAndFavoriteCharacterId(\PDO $pdo, string $favoriteProfileId, string $favoriteCharacterId) : ?Favorite {
 		//creating throw error codes.
 		try {
