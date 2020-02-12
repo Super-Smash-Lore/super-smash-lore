@@ -1,6 +1,13 @@
 {
   "require": {
-    "ramsey/uuid": "^3.9",
+    "phpunit/dbunit": "@stable",
+    "phpunit/phpunit": "@stable",
+    "swiftmailer/swiftmailer": "@stable",
+    "lcobucci/jwt": "3.2",
+    "ramsey/uuid": "@stable",
     "ext-pdo": "*"
+  },
+  "scripts":{
+    "phpunit": "./vendor/bin/phpunit -c ./Classes/Test --coverage-html coverage"
   }
 }
