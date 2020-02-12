@@ -24,6 +24,11 @@ class Character {
 	 */
 	private $characterMusicUrl;
 	/**
+	 * name for character
+	 * @var $characterName
+	 */
+	private $characterName;
+	/**
 	 * picture for character
 	 * @var $characterPictureUrl
 	 */
@@ -53,6 +58,7 @@ class Character {
 	 * @param string|Uuid $newCharacterId id of this Character or null if a new Character
 	 * @param string $newCharacterDescription description of the Character
 	 * @param string $newCharacterMusicUrl music url for Character
+	 * @param string $newCharacterName name of the Character
 	 * @param string $newCharacterPictureUrl picture url for Character
 	 * @param string $newCharacterQuotes quotes for the Character
 	 * @param string $newCharacterReleaseDate original release date for Character
@@ -64,11 +70,12 @@ class Character {
 	 * @throws \Exception is some other exception occurs
 	 */
 
-	public function __construct($newCharacterId,$newCharacterDescription,$newCharacterMusicUrl,$newCharacterPictureUrl,$newCharacterQuotes,$newCharacterReleaseDate,$newCharacterSong, $newCharacterUniverse) {
+	public function __construct($newCharacterId,$newCharacterDescription,$newCharacterMusicUrl,$newCharacterName,$newCharacterPictureUrl,$newCharacterQuotes,$newCharacterReleaseDate,$newCharacterSong, $newCharacterUniverse) {
 		try {
 			$this->setCharacterId($newCharacterId);
 			$this->setCharacterDescription($newCharacterDescription);
 			$this->setCharacterMusicUrl($newCharacterMusicUrl);
+			$this->setCharacterName($newCharacterName);
 			$this->setCharacterPictureUrl($newCharacterPictureUrl);
 			$this->setCharacterQuotes($newCharacterQuotes);
 			$this->setCharacterReleaseDate($newCharacterReleaseDate);
@@ -173,6 +180,37 @@ class Character {
 		}
 		//store the music url
 		$this->characterMusicUrl = $newCharacterMusicUrl;
+	}
+
+	/**
+	 * accessor for the character name
+	 *
+	 * @return string value of character name
+	 */
+	public function getCharacterName () {
+		return $this->characterName;
+	}
+
+	/**
+	 * mutator (setter) for the character name
+	 *
+	 * @param string $newCharacterName
+	 * @throws \InvalidArgumentException if the character name is not a string or insecure
+	 * @throws \RangeException if the character name is over 32 characters
+	 * @throws \TypeError if the character name is not a string
+	 */
+	public function setCharacterName(string $newCharacterName){
+		$newCharacterName = trim($newCharacterName);
+		$newCharacterName = filter_var($newCharacterName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCharacterName) === true) {
+			throw (new\InvalidArgumentException("description is empty or insecure"));
+		}
+		//checking if the character name is under 32 characters
+		if(strlen($newCharacterName) > 32) {
+			throw (new\RangeException("Description must be 32 characters or less"));
+		}
+		//store the name
+		$this->characterName = $newCharacterName;
 	}
 
 	/**
@@ -341,49 +379,49 @@ class Character {
 	 */
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO character(characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse) 
-					VALUES (:characterId, :charcterDescription, :characterMusicUrl, :characterPictureUrl, :characterQuotes, :characterReleaseDate, :characterSong, :characterUnivers)";
+		$query = "INSERT INTO character(characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse) 
+					VALUES (:characterId, :charcterDescription, :characterMusicUrl, :characterName, :characterPictureUrl, :characterQuotes, :characterReleaseDate, :characterSong, :characterUnivers)";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the place holders in the template
 		$parameters = ["characterId" => $this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl,
-			"characterPictureUrl" => $this->characterPictureUrl, "characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate,
+			"characterName" => $this->characterName, "characterPictureUrl" => $this->characterPictureUrl, "characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate,
 			"characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
 		$statement->execute($parameters);
 	}
 
-	/**
-	 * updates character in character table
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when MySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
-	public function update(\PDO $pdo) : void {
-		//create query template
-		$query = "UPDATE character SET characterId = :characterId, characterDescription = :characterDescription, characterMusicUrl = :characterMusicUrl, characterPictureUrl = :characterPictureUrl,
-					characterQuotes = :characterQuotes, characterReleaseDate = :characterReleaseDate, characterSong = :characterSong, characterUniverse = :characterSong";
-		$statement = $pdo->prepare($query);
-		//binds the updated member variables to the place holders in the template
-		$parameters = ["characterId" =>$this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl, "characterPictureUrl" => $this->characterPictureUrl,
-							"characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate, "characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
-		$statement->execute($parameters);
-	}
-
-	/**
-	 * deletes a character from character table
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when MySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
-	public function delete(\PDO $pdo) : void {
-		//create the query template
-		$query = "DELETE FROM character WHERE characterId = :characterId";
-		$statement = $pdo->prepare($query);
-		//sets up motion to delete said member variables in the template
-		$parameters = ["characterId" => $this->characterId->getBytes()];
-		$statement->execute($parameters);
-	}
+//	/**
+//	 * updates character in character table
+//	 *
+//	 * @param \PDO $pdo PDO connection object
+//	 * @throws \PDOException when MySQL related errors occur
+//	 * @throws \TypeError if $pdo is not a PDO connection object
+//	 */
+//	public function update(\PDO $pdo) : void {
+//		//create query template
+//		$query = "UPDATE character SET characterId = :characterId, characterDescription = :characterDescription, characterMusicUrl = :characterMusicUrl, characterPictureUrl = :characterPictureUrl,
+//					characterQuotes = :characterQuotes, characterReleaseDate = :characterReleaseDate, characterSong = :characterSong, characterUniverse = :characterSong";
+//		$statement = $pdo->prepare($query);
+//		//binds the updated member variables to the place holders in the template
+//		$parameters = ["characterId" =>$this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl, "characterPictureUrl" => $this->characterPictureUrl,
+//							"characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate, "characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
+//		$statement->execute($parameters);
+//	}
+//
+//	/**
+//	 * deletes a character from character table
+//	 *
+//	 * @param \PDO $pdo PDO connection object
+//	 * @throws \PDOException when MySQL related errors occur
+//	 * @throws \TypeError if $pdo is not a PDO connection object
+//	 */
+//	public function delete(\PDO $pdo) : void {
+//		//create the query template
+//		$query = "DELETE FROM character WHERE characterId = :characterId";
+//		$statement = $pdo->prepare($query);
+//		//sets up motion to delete said member variables in the template
+//		$parameters = ["characterId" => $this->characterId->getBytes()];
+//		$statement->execute($parameters);
+//	}
 	/**
 	 * gets Character by characterId
 	 *
@@ -401,7 +439,7 @@ class Character {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterId";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterId";
 		$statement =$pdo->prepare($query);
 		//bind the character id to the place holder in the template
 		$parameters = ["characterId" => $characterId->getBytes()];
@@ -412,7 +450,7 @@ class Character {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterName"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
 			}
 		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
@@ -437,7 +475,7 @@ class Character {
 		$result = str_replace("%", "\\%", $characterUniverse);
 		$characterUniverse = str_replace("_", "\\_", $result);
 		//create a query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterUniverse LIKE :characterUniverse";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterUniverse LIKE :characterUniverse";
 		$statement = $pdo->prepare($query);
 		//bind the character universe to the place holder in the template
 		$characterUniverse = "%$characterUniverse%";
@@ -448,7 +486,7 @@ class Character {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterName"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
 				$characterUniverseArray[$characterUniverseArray->key()] = $character;
 				$characterUniverseArray->next();
 			} catch(\Exception $exception) {
