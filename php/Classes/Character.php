@@ -458,6 +458,48 @@ class Character {
 		}
 		return ($character);
 	}
+
+	//getCharacterByCharacterName
+	/**
+	 * Gets the Character by Character name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $characterName character name to search for
+	 * @return \null Character found or null if not found
+	 * @throws \PDOException when MySql related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 * @throws \InvalidArgumentException if Character name is not
+	 * @throws \Exception if some other exception occurs
+	 * @throws \RangeException if the character name is too long
+	 * */
+	public static function getCharacterByCharacterName(\PDO $pdo, $characterName) : ?Character {
+		//sanitize the character name before searching
+		try {
+			$characterName = self::string($characterName);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create a query template
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse, characterName FROM Character WHERE characterName = :charaterName";
+		$statement = $pdo->prepare($query);
+		//bind the favorite profile id to the place holder in the template
+		$parameters = ["characterName" => $characterName->getBytes()];
+		$statement->execute($parameters);
+		//grab the character from mySQL
+		try {
+			$character = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"], $row["characterName"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($character);
+	}
+
 	/**
 	 * gets Character by characterUniverse
 	 *
