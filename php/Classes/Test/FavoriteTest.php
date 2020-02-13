@@ -2,7 +2,7 @@
 namespace SuperSmashLore\SuperSmashLore\Test;
 use DateTime;
 use SuperSmashLore\SuperSmashLore\{
-	Profile, Character
+	Profile, Character, Favorite
 };
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoloader.php");
@@ -82,7 +82,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$numRows = $this->getConnection()->getRowCount("favorite");
 
 		//create a new Favorite and insert it into mySQL
-		$favorite = new Favorite($this->profile->getProfileId(), $this->favorite->getFavoriteCharacterId(), $this->favorite->getFavoriteProfileId, $this->VALID_FAVORITEDATE);//add all aspects of favorite
+		$favorite = new Favorite($this->profile->getProfileId(), $this->character->getCharacterId(),VALID_FAVORITEDATE);//add all aspects of favorite
 		$favorite->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
@@ -171,13 +171,13 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$this->assertEquals($pdoFavorite->getFavoriteDate()->getTimestamp(), $this->VALID_FAVORITEDATE->getTimestamp());
 	}
 
-	/**
-	 * test grabbing a favorite by a profile id that does not exist
-	 */
-	public function testGetInvalidFavoriteByProfileId() : void {
-		//grab a character id that exceeds the maximum allowable profile id
-		$favorite = Favorite::getFavoriteByFavoritProfileId($this->getPDO(), generateUuidV4());
-		$this->assertCount(0, $favorite);
-	}
+//	/**
+//	 * test grabbing a favorite by a profile id that does not exist
+//	 */
+//	public function testGetInvalidFavoriteByProfileId() : void {
+//		//grab a character id that exceeds the maximum allowable profile id
+//		$favorite = Favorite::getFavoriteByFavoritProfileId($this->getPDO(), generateUuidV4());
+//		$this->assertCount(0, $favorite);
+//	}
 
 }
