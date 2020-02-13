@@ -19,7 +19,7 @@ class GameTest extends SuperSmashLoreTest {
 	 * game Id
 	 * @var Uuid game Id
 	 */
-	
+
 	/**
 	 * game that a character comes from; This is for foreign kew relations
 	 **/
