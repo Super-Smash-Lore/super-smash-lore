@@ -81,7 +81,7 @@ abstract class SuperSmashLoreTest extends TestCase {
 		if($this->connection === null) {
 			//connect to MySQL and provide the interface to the PHPUnit Test.
 			//TODO: Double-check what goes into the parentheses below:
-			$secrets = new \Secrets("SuperSmashLore/SuperSmashLore/sql/smash.sql");
+			$secrets = new \Secrets("/etc/apache2/capstone-mysql/smash.ini");
 			$pdo = $secrets->getPdoObject();
 			$this->connection = $this->createDefaultDBConnection($pdo, $secrets->getDatabase());
 		}
