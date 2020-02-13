@@ -28,19 +28,19 @@ class GameTest extends SuperSmashLoreTest {
 	  * valid picture url
 	  * @var string $VALID_PICTURE_URL
 	  **/
-	protected $VALID_PICTURE_URL;
+	protected $VALID_PICTURE_URL = "https://www.iybujnewf.com";
 
 	/**
 	 *valid game system
 	 * @var string $VALID_GAME_SYSTEM
 	 **/
-	protected $VALID_GAME_SYSTEM;
+	protected $VALID_GAME_SYSTEM = "Nintendo Switch";
 
 	/**
 	 * valid game url
 	 * @var string $VALID_GAME_URL
 	 **/
-	protected $VALID_GAME_URL;
+	protected $VALID_GAME_URL = "https://www.wergsdv.com";
 
 	/**
 	 * create dependent objects before running each test
@@ -158,5 +158,5 @@ class GameTest extends SuperSmashLoreTest {
 		$this->assertEquals($pdoGame->getGameId(), $gameId);
 		$this->assertEquals($pdoGame->getGameCharacterId(), $this->characterId->getCharacterId);
 	}
-	
+
 }
