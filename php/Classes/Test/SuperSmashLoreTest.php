@@ -1,5 +1,5 @@
 <?php
-namespace SuperSmashLore\SuperSmashLore;
+namespace SuperSmashLore\SuperSmashLore\Test;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
@@ -28,7 +28,7 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
  *
  * @author Ryan Buchholz <rbuchholz1@cnm.edu>
  */
-abstract class SuperSmashLoreTest extends TestCase {
+ abstract class SuperSmashLoreTest extends TestCase {
 	use TestCaseTrait;
 	/**
 	 * PHPUnit database connection interface
@@ -40,14 +40,14 @@ abstract class SuperSmashLoreTest extends TestCase {
 	 *
 	 * @return QueryDataSet assembled model for PHPUnit
 	 */
-	public final function getDatSet() : QueryDataSet {
+	public final function getDataSet() : QueryDataSet {
 		$dataset = new QueryDataSet($this->getConnection());
 		/**
 		 * add all the tables for our project here
 		 * Tables are (should be) listed below in the order that they were created:
 		 */
 		$dataset->addTable("profile");
-		$dataset->addTable("character");
+		$dataset->addTable("character", "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character`");
 		$dataset->addTable("game");
 		$dataset->addTable("favorite");
 		return ($dataset);

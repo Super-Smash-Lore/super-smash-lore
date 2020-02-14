@@ -1,11 +1,11 @@
 <?php
 namespace SuperSmashLore\SuperSmashLore\Test;
 
-use Ramsey\Uuid\Uuid;
-use SuperSmashLore\SuperSmashLore\{Game};
+//use Ramsey\Uuid\Uuid;
+use SuperSmashLore\SuperSmashLore\{Game, Character};
 
 //grab the class under scrutiny
-require_once(dirname(__DIR__) . "autoloader.php");
+require_once(dirname(__DIR__) . "/autoloader.php");
 //grab the uuid generator
 require_once (dirname(__DIR__, 2) . "/lib/uuid.php");
 /**

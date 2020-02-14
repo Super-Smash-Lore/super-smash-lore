@@ -2,7 +2,7 @@
 
 namespace SuperSmashLore\SuperSmashLore;
 require_once ("autoloader.php");
-require_once (dirname(__DIR__) . "\Classes\autoloader.php");
+require_once (dirname(__DIR__) . "/Classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
 class Character {
