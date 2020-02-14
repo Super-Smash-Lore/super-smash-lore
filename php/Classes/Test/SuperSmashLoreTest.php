@@ -1,5 +1,5 @@
 <?php
-namespace SuperSmashLore\SuperSmashLore\Test;
+namespace SuperSmashLore\SuperSmashLore;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
@@ -80,7 +80,6 @@ abstract class SuperSmashLoreTest extends TestCase {
 		//if the connection hasn't been established we will need to create it.
 		if($this->connection === null) {
 			//connect to MySQL and provide the interface to the PHPUnit Test.
-			//TODO: Double-check what goes into the parentheses below:
 			$secrets = new \Secrets("/etc/apache2/capstone-mysql/smash.ini");
 			$pdo = $secrets->getPdoObject();
 			$this->connection = $this->createDefaultDBConnection($pdo, $secrets->getDatabase());

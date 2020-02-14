@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS favorite;
 DROP TABLE IF EXISTS game;
-DROP TABLE IF EXISTS `character`;
+DROP TABLE IF EXISTS character;
 DROP TABLE IF EXISTS profile;
 
 create table profile (
@@ -16,7 +16,7 @@ create table profile (
 );
 
 
-create table `character`(
+create table character(
 characterId binary(16) NOT NULL,
 characterDescription varchar (1600),
 characterMusicUrl varchar (255),
@@ -36,7 +36,7 @@ gamePictureUrl varchar (255),
 gameSystem varchar (32),
 gameUrl varchar (512),
 INDEX(gameCharacterId),
-foreign key (gameCharacterId) references `character` (characterId),
+foreign key (gameCharacterId) references character (characterId),
 primary key (gameId)
 );
 
@@ -46,7 +46,7 @@ favoriteProfileId binary(16) NOT NULL,
 favoriteDate DATETIME(6) NOT NULL,
 INDEX(favoriteCharacterId),
 INDEX(favoriteProfileId),
-foreign key (favoriteCharacterId) references `character`(characterId),
+foreign key (favoriteCharacterId) references character(characterId),
 foreign key (favoriteProfileId) references profile(profileId),
 primary key (favoriteCharacterId, favoriteProfileId)
 );

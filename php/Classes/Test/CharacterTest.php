@@ -1,6 +1,6 @@
 <?php
 namespace SuperSmashLore\SuperSmashLore\Test;
-use SuperSmashLore\SuperSmashLore\Character;
+use SuperSmashLore\SuperSmashLore\{Character};
 
 //grab the class under scrutiny
 require_once (dirname(__DIR__) . "/autoloader.php");
