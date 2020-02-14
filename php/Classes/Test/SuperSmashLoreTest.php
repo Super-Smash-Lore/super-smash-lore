@@ -28,7 +28,7 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
  *
  * @author Ryan Buchholz <rbuchholz1@cnm.edu>
  */
-abstract class SuperSmashLoreTest extends TestCase {
+ abstract class SuperSmashLoreTest extends TestCase {
 	use TestCaseTrait;
 	/**
 	 * PHPUnit database connection interface
@@ -40,14 +40,14 @@ abstract class SuperSmashLoreTest extends TestCase {
 	 *
 	 * @return QueryDataSet assembled model for PHPUnit
 	 */
-	public final function getDatSet() : QueryDataSet {
+	public final function getDataSet() : QueryDataSet {
 		$dataset = new QueryDataSet($this->getConnection());
 		/**
 		 * add all the tables for our project here
 		 * Tables are (should be) listed below in the order that they were created:
 		 */
 		$dataset->addTable("profile");
-		$dataset->addTable("character");
+		$dataset->addTable("character", "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character`");
 		$dataset->addTable("game");
 		$dataset->addTable("favorite");
 		return ($dataset);
@@ -80,7 +80,6 @@ abstract class SuperSmashLoreTest extends TestCase {
 		//if the connection hasn't been established we will need to create it.
 		if($this->connection === null) {
 			//connect to MySQL and provide the interface to the PHPUnit Test.
-			//TODO: Double-check what goes into the parentheses below:
 			$secrets = new \Secrets("/etc/apache2/capstone-mysql/smash.ini");
 			$pdo = $secrets->getPdoObject();
 			$this->connection = $this->createDefaultDBConnection($pdo, $secrets->getDatabase());
