@@ -23,7 +23,7 @@ characterMusicUrl varchar (255),
 characterName VARCHAR(32),
 characterPictureUrl varchar (255),
 characterQuotes varchar (255) NOT NULL,
-characterReleaseDate  DATETIME(6) NOT NULL,
+characterReleaseDate VARCHAR(128),
 characterSong varchar (255),
 characterUniverse VARCHAR(255),
 primary key(characterId)

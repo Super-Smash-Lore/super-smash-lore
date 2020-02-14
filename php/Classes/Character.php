@@ -292,19 +292,32 @@ class Character {
 	 * @throws \RangeException if the release date is over 6 characters
 	 * @throws \TypeError if the release date is not a string
 	 *
-	 * TODO: REWORK THIS FUNCTION TO MATCH A DATE/TIME METHOD POSSIBLY...?
 	 */
-	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
-		//checking to see if the date is a valid date and fits the format
-		try {
-			$releaseDate = self::validateDate($newCharacterReleaseDate);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+	public function setCharacterReleaseDate(string $newCharacterReleaseDate) {
+		$newCharacterReleaseDate = trim($newCharacterReleaseDate);
+		$newCharacterReleaseDate = filter_var($newCharacterReleaseDate, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCharacterReleaseDate) === true) {
+			throw (new \InvalidArgumentException("date empty or insecure"));
 		}
-		//store the release date
-		$this->characterReleaseDate = $releaseDate;
+		//checking to see if the date is under 32 characters
+		if(strlen($newCharacterReleaseDate) > 128) {
+			throw (new \RangeException("quote must be fewer than 128 characters"));
+		}
+		//store the date
+		$this->characterReleaseDate = $newCharacterReleaseDate;
 	}
+
+//	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
+//		//checking to see if the date is a valid date and fits the format
+//		try {
+//			$releaseDate = self::validateDate($newCharacterReleaseDate);
+//		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+//			$exceptionType = get_class($exception);
+//			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+//		}
+//		//store the release date
+//		$this->characterReleaseDate = $releaseDate;
+//	}
 
 	/**
 	 * getter for character song
