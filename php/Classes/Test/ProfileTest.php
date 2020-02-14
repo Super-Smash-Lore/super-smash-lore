@@ -1,7 +1,7 @@
 <?php
-namespace SuperSmashLore\SuperSmashLore;
+namespace SuperSmashLore\SuperSmashLore\Test;
 
-use SuperSmashLore\SuperSmashLore\Profile;
+use SuperSmashLore\SuperSmashLore\{Profile};
 
 
 
@@ -9,7 +9,7 @@ use SuperSmashLore\SuperSmashLore\Profile;
 require_once(dirname(__DIR__) . "/autoloader.php");
 
 // grab the uuid generator
-require_once(dirname(__DIR__,2) . "ValidateUuid.php");
+require_once(dirname(__DIR__,2) . "/lib/uuid.php");
 
 /**
  * Full PHPUnit test for Profile class

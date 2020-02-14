@@ -1,13 +1,13 @@
 <?php
-namespace SuperSmashLore\SuperSmashLore;
+namespace SuperSmashLore\SuperSmashLore\Test;
 
-use Ramsey\Uuid\Uuid;
-use SuperSmashLore\SuperSmashLore\Game;
+//use Ramsey\Uuid\Uuid;
+use SuperSmashLore\SuperSmashLore\{Game, Character};
 
 //grab the class under scrutiny
-require_once(dirname(__DIR__) . "autoloader.php");
+require_once(dirname(__DIR__) . "/autoloader.php");
 //grab the uuid generator
-require_once (dirname(__DIR__, 2) . "/ValidateUuid.php");
+require_once (dirname(__DIR__, 2) . "/lib/uuid.php");
 /**
  * Full PHPUnit test of Game class. It is complete because all mySQL/PDO enabled methods are tested for both invalid and valid inputs
  *
@@ -153,6 +153,9 @@ class GameTest extends SuperSmashLoreTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("game"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore", $results);
+
+		//grab the result from array and validate it
+		$pdoGame = $results[0];
 
 		//grab results from array and validate it
 		$this->assertEquals($pdoGame->getGameId(), $gameId);

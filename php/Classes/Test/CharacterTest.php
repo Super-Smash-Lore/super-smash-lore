@@ -1,6 +1,7 @@
 <?php
 namespace SuperSmashLore\SuperSmashLore\Test;
-use SuperSmashLore\SuperSmashLore\Character;
+use SuperSmashLore\SuperSmashLore\{Character};
+use PHPUnit\DbUnit\DataSet\IDataSet;
 
 //grab the class under scrutiny
 require_once (dirname(__DIR__) . "/autoloader.php");
@@ -157,4 +158,6 @@ class CharacterTest extends SuperSmashLoreTest {
 //		$character = Character::getCharacterByCharacterUniverse($this->getPDO(), "Universe is invalid");
 //		$this->assertNull($character);
 //	}
+
+
 }
