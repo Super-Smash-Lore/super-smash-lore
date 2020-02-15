@@ -63,7 +63,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert the mocked profile
-		$this->profile = new Profile(generateUuidV4(), null, "01/20/2020", "test@phpunit.de", $this->VALID_HASH, "RyanTorske");
+		$this->profile = new Profile(generateUuidV4(), "12345678901234567890123456789012", null, "test@phpunit.de", $this->VALID_HASH, "RyanTorske");
 		$this->profile->insert($this->getPDO());
 
 		//create the and insert the mocked character
@@ -71,7 +71,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$this->character->insert($this->getPDO());
 
 		//calculate the date (just use the time the unit test is setup)
-		$this->VALID_FAVORITEDATE = new DateTime();
+		$this->VALID_FAVORITEDATE = new \DateTime();
 	}
 
 	/**

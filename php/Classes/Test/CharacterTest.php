@@ -33,7 +33,7 @@ class CharacterTest extends SuperSmashLoreTest {
 	 * valid name of the character
 	 * @var $validCharacterName
 	 */
-	protected $validCharacterName ="Ganondorf";
+	protected $validCharacterName= "Ganondorf";
 	/**
 	 * valid character picture url
 	 * @var $validCharacterPictureUrl

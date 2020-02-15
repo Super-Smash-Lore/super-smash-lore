@@ -105,7 +105,7 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
  * getter for favorite character release date
  * @return Uuid value of favorite date
  */
-	public function getFavoriteDate(): string {
+	public function getFavoriteDate(): \DateTime {
 		return $this->favoriteDate;
 	}
 /**
@@ -118,14 +118,18 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
  * @throws \TypeError if data types violate the type hints
  */
 
-	public function setFavoriteDate ($newFavoriteDate) : void {
+	public function setFavoriteDate ($newFavoriteDate = null) : void {
+		if($newFavoriteDate === null) {
+			$this-> favoriteDate = new\DateTime();
+			return;
+		}
 		try {
 			$favoriteDate = self::validateDate($newFavoriteDate);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->characterReleaseDate = $favoriteDate;
+		$this->favoriteDate = $favoriteDate;
 	}
 
 	/**

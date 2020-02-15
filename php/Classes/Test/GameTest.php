@@ -47,8 +47,8 @@ class GameTest extends SuperSmashLoreTest {
 	 **/
 	public final function setUp() : void {
 		// create and insert character to own the test game
-		$this->characterId = new Character(generateUuidV4(), null, "characterMusic.com", "britneyBitch",
-			"characterPicture.com", "whatever", "right now", 215, "iurgieuni");
+		$this->characterId = new Character(generateUuidV4(), "The King of Thieves", "https://characterMusic.com", "britneyBitch",
+			"https://characterPicture.com", "whatever", "right now", "Gerudo Theme", "iurgieuni");
 		$this->characterId->insert($this->getPDO());
 	}
 

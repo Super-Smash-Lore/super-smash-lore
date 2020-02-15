@@ -21,11 +21,11 @@ require_once(dirname(__DIR__,2) . "/lib/uuid.php");
  * @author Daniel Gonzales <dgonzales371@cnm.edu>
  **/
 class ProfileTest extends SuperSmashLoreTest {
-	/**
-	 * valid profile to use
-	 * @var string $VALID_PROFILEID
-	 */
-	protected $VALID_PROFILEID;
+//	/**
+//	 * valid profile to use
+//	 * @var string $VALID_PROFILEID
+//	 */
+//	protected $VALID_PROFILEID;
 	/**
 	 * valid activation for profile
 	 * @var string $VALID_ACTIVATIONTOKEN
@@ -35,12 +35,12 @@ class ProfileTest extends SuperSmashLoreTest {
 	 *valid date joined
 	 * @var string $VALID_DATEJOINED
 	 */
-	protected $VALID_DATE_JOINED;
+	protected $VALID_DATE_JOINED= "02/14/20";
 	/**
 	 * valid email for profile
 	 * @var string $VALID_EMAIL
 	 */
-	protected $VALID_EMAIL;
+	protected $VALID_EMAIL= "Smash@gmail.com";
 	/**
 	 * valid hash for profile
 	 * @var string $VALID_HASH
@@ -50,7 +50,7 @@ class ProfileTest extends SuperSmashLoreTest {
 	 * valid username for profile
 	 * @var string $VALID_USERNAME
 	 */
-	protected $VALID_USERNAME;
+	protected $VALID_USERNAME= "DORIYAH247";
 
 
 	/**
