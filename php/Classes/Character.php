@@ -455,14 +455,14 @@ class Character {
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
 	public static function getCharacterByCharacterId(\PDO $pdo, string $characterId) : ?Character {
-		//sanitize the characterId before searching
+		//sanitize the characterId before searching\
 		try {
 			$characterId = self::validateUuid($characterId);
 		} catch(\InvalidArgumentException| \RangeException | \Exception | \TypeError $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterId";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterId = :characterId";
 		$statement =$pdo->prepare($query);
 		//bind the character id to the place holder in the template
 		$parameters = ["characterId" => $characterId->getBytes()];
@@ -508,7 +508,7 @@ class Character {
 //			throw(new \PDOException($exception->getMessage(), 0, $exception));
 //		}
 		//create a query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterName = :characterName";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterName = :characterName";
 		$statement = $pdo->prepare($query);
 		//bind the favorite profile id to the place holder in the template
 		$parameters = ["characterName" => $characterName];
