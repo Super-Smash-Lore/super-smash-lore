@@ -1,7 +1,7 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="SuperSmashLore">
-<!--			<file>ProfileTest</file>-->
+			<file>ProfileTest.php</file>
 			<file>CharacterTest.php</file>
 <!--			<file>GameTest.php</file>-->
 <!--			<file>FavoriteTest.php</file>-->
