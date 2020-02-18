@@ -140,7 +140,7 @@ class Profile implements \JsonSerializable {
 	 **/
 
 
-	public function getProfileDateJoined(): \DateTime {
+	public function getProfileDateJoined() {
 		return $this->profileDateJoined;
 	}
 
@@ -273,7 +273,7 @@ class Profile implements \JsonSerializable {
 		$query = "INSERT INTO profile(profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName) VALUES(:profileId, :profileActivationToken, :profileDateJoined, :profileEmail, :profileHash, :profileUserName) ";
 		$statement = $pdo->prepare($query);
 		//bind the member to the place holder in the template
-		$formattedDate = $this->profileDateJoined->format("Y-m-d H:i:s.u");
+		$formattedDate = $this->profileDateJoined->format("Y-m-d");
 		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $formattedDate, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileUserName" => $this->profileUserName];
 		$statement->execute($parameters);
 	}
@@ -287,10 +287,11 @@ class Profile implements \JsonSerializable {
 	 **/
 	public function update(\PDO $pdo): void {
 		//create query template
-		$query = "UPDATE profile SET profileId = :profileId, profileActivationToken = :profileActivationToken, profileDateJoined = :profileDateJoined, profileEmail = :profileEmail, profileHash = :profileHash, profileUserName = :profileUserName";
+		$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileDateJoined = :profileDateJoined, profileEmail = :profileEmail, profileHash = :profileHash, profileUserName = :profileUserName WHERE profileId= :profileId";
 		$statement = $pdo->prepare($query);
 		//bind the member to the place holder in the template
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->profileDateJoined, "profileEmail" => $this->profileEmail,
+		$formattedDate = $this->profileDateJoined->format("Y-m-d");
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $formattedDate, "profileEmail" => $this->profileEmail,
 			"profileHash" => $this->profileHash, "profileUserName" => $this->profileUserName];
 		$statement->execute($parameters);
 	}
@@ -304,7 +305,7 @@ class Profile implements \JsonSerializable {
 	 **/
 	public function delete(\PDO $pdo): void {
 		//create query template
-		$query = "DELETE FROM character WHERE characterId = :characterId";
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 		//bind the member to the place holder in the template
 		$parameters = ["profileId" => $this->profileId->getBytes()];
@@ -341,7 +342,6 @@ class Profile implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-
 				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileDateJoined"], $row["profileEmail"], $row["profileHash"], $row["profileUserName"]);
 			}
 		} catch(\Exception $exception) {
@@ -400,18 +400,21 @@ class Profile implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	public static function getProfileByProfileEmail(\PDO $pdo, $profileEmail): ?Profile {
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail): ?Profile {
 		//sanitize the profileId before searching
-		try {
-			$profileEmail = self::string($profileEmail);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		$profileEmail = trim($profileEmail);
+		$profileEmail = filter_var($profileEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($profileEmail) === true) {
+			throw (new  \PDOException("not a valid email"));
+		}
+		if(strlen($profileEmail) > 128) {
+			throw (new \RangeException("email is too long"));
 		}
 		//create query template
-		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUsername FROM Profile WHERE profileEmail = :profileEmail";
+		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUsername FROM profile WHERE profileEmail = :profileEmail";
 		$statement = $pdo->prepare($query);
 		//bind the Profile from mysql
-		$parameters = ["profileEmail" => $profileEmail->getBytes()];
+		$parameters = ["profileEmail" => $profileEmail];
 		$statement->execute($parameters);
 		//grab the profile from mysql
 		try {
