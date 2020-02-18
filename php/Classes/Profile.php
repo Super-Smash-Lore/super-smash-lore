@@ -181,9 +181,9 @@ class Profile implements \JsonSerializable {
 	/**
 	 * setter for profile Email
 	 *
-	 * @param \DateTime|string|null $newTweetDate tweet date as a DateTime object or string (or null to load the current time)
+	 * @param string $newProfileEmail string showing correlating email
 	 * @throws \InvalidArgumentException if $newProfileEmail is not a valid object or string
-	 * @throws \RangeException if $newTweetDate is a date that does not exist
+	 * @throws \RangeException if profile email is more than 128 characters
 	 **/
 	public function setProfileEmail(string $newProfileEmail): void {
 		$newProfileEmail = trim($newProfileEmail);
@@ -210,9 +210,9 @@ class Profile implements \JsonSerializable {
 	/**
 	 * setter for profile Hash
 	 *
-	 * @param \DateTime|string|void $newProfileHash as an object or string
+	 * @param string $newProfileHash as an object or string
 	 * @throws \InvalidArgumentException if $newProfileHash is empty
-	 * @throws \RangeException if $newTweetDate is a date that does not exist
+	 * @throws \RangeException if hash is more than 97 characters
 	 **/
 
 	public function setProfileHash(string $newProfileHash): void {
