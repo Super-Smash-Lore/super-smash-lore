@@ -165,7 +165,8 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		$statement = $pdo->prepare($query);
 
 		//bind member variables to the place holder in the template
-		$parameters = ["favoriteCharacterId" =>$this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId, "favoriteProfileId" => $this->favoriteProfileId, "favoriteDate" => $this->favoriteDate];
+		$formattedDate = $this->favoriteDate->format("Y-m-d");
+		$parameters = ["favoriteCharacterId" =>$this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteDate" => $formattedDate];
 		$statement->execute($parameters);
 	}
 
