@@ -240,15 +240,15 @@ class Game {
 	 * @throws \PDOException when MYSQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 */
-	public function update(\PDO $pdo) : void {
-		//create query template
-		$query = "UPDATE game SET gameId = :gameId, gameCharacterId = :gameCharacterId, gamePictureUrl = :gamePictureUrl, gameSystem = :gameSystem, gameUrl = :gameUrl";
-		$statement = $pdo->prepare($query);
-		//bind the member to the place holder in the template
-		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId, "gamePictureUrl" => $this->gamePictureUrl,
-								"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
-		$statement->execute($parameters);
-	}
+//	public function update(\PDO $pdo) : void {
+//		//create query template
+//		$query = "UPDATE game SET gameId = :gameId, gameCharacterId = :gameCharacterId, gamePictureUrl = :gamePictureUrl, gameSystem = :gameSystem, gameUrl = :gameUrl";
+//		$statement = $pdo->prepare($query);
+//		//bind the member to the place holder in the template
+//		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId, "gamePictureUrl" => $this->gamePictureUrl,
+//								"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
+//		$statement->execute($parameters);
+//	}
 
 	/**
 	 * delete game for game table

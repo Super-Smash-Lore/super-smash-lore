@@ -2,9 +2,9 @@
 	<testsuites>
 		<testsuite name="SuperSmashLore">
 <!--			<file>ProfileTest.php</file>-->
-			<file>CharacterTest.php</file>
-			<file>GameTest.php</file>
-<!--			<file>FavoriteTest.php</file>-->
+<!--			<file>CharacterTest.php</file>-->
+<!--			<file>GameTest.php</file>-->
+			<file>FavoriteTest.php</file>
 		</testsuite>
 	</testsuites>
 	<filter>

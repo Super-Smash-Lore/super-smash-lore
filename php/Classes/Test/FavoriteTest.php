@@ -59,7 +59,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 
 		//create a salt and hash for the mocked profile
 		$password = "abc123";
-		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 7]);
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert the mocked profile
@@ -82,7 +82,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$numRows = $this->getConnection()->getRowCount("favorite");
 
 		//create a new Favorite and insert it into mySQL
-		$favorite = new Favorite($this->profile->getProfileId(), $this->character->getCharacterId(),VALID_FAVORITEDATE);//add all aspects of favorite
+		$favorite = new Favorite($this->profile->getProfileId(), $this->character->getCharacterId(),$this->VALID_FAVORITEDATE);//add all aspects of favorite
 		$favorite->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
