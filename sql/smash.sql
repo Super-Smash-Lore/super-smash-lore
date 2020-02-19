@@ -43,7 +43,7 @@ primary key (gameId)
 create table favorite(
 favoriteCharacterId binary(16) NOT NULL,
 favoriteProfileId binary(16) NOT NULL,
-favoriteDate DATETIME(6) NOT NULL,
+favoriteDate DATE NOT NULL,
 INDEX(favoriteCharacterId),
 INDEX(favoriteProfileId),
 foreign key (favoriteCharacterId) references `character`(characterId),
