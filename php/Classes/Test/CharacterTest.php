@@ -33,7 +33,7 @@ class CharacterTest extends SuperSmashLoreTest {
 	 * valid name of the character
 	 * @var $validCharacterName
 	 */
-	protected $validCharacterName ="Ganondorf";
+	protected $validCharacterName= "Ganondorf";
 	/**
 	 * valid character picture url
 	 * @var $validCharacterPictureUrl
@@ -94,20 +94,15 @@ class CharacterTest extends SuperSmashLoreTest {
 	/**
 	 * test grabbing a character by the character's name
 	 */
-	public function testGetValidCharacterByCharacterName() {
+	public function testGetValidCharacterByCharacterName() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("character");
 		//character id
 		$characterId = generateUuidV4();
 		$character = new Character($characterId, $this->validCharacterDescription, $this->validCharacterMusicUrl, $this->validCharacterName, $this->validCharacterPictureUrl, $this->validCharacterQuotes, $this->validCharacterReleaseDate, $this->validCharacterSong, $this->validCharacterUniverse);
 		$character->insert($this->getPDO());
-		//grab the data from MySQL
-		$results =Character::getCharacterByCharacterName($this->getPDO(), $this->validCharacterName);
-		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("character"));
-		//enforce no other objects are bleeding into the character
-		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Character", $character);
 		//enforce the results meet expectations
-		$pdoCharacter = $results[0];
+		$pdoCharacter = Character::getCharacterByCharacterName($this->getPDO(),$character->getCharacterName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("character"));
 		$this->assertEquals($pdoCharacter->getCharacterId(), $characterId);
 		$this->assertEquals($pdoCharacter->getCharacterDescription(), $this->validCharacterDescription);
@@ -137,8 +132,13 @@ class CharacterTest extends SuperSmashLoreTest {
 		$characterId = generateUuidV4();
 		$character = new Character($characterId, $this->validCharacterDescription, $this->validCharacterMusicUrl, $this->validCharacterName, $this->validCharacterPictureUrl, $this->validCharacterQuotes, $this->validCharacterReleaseDate, $this->validCharacterSong, $this->validCharacterUniverse);
 		$character->insert($this->getPDO());
+//		grab the data from MySQL
+		$results = Character::getCharacterByCharacterUniverse($this->getPDO(), $this->validCharacterUniverse);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("character"));
+		//enforce no other objects are bleeding into the character
+		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Character", $results);
 		//grab the data from MySQL and enforce the fields match our expectations
-		$pdoCharacter = Character::getCharacterByCharacterUniverse($this->getPDO(), $character->getCharacterUniverse());
+		$pdoCharacter = $results[0];
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("character"));
 		$this->assertEquals($pdoCharacter->getCharacterId(), $characterId);
 		$this->assertEquals($pdoCharacter->getCharacterDescription(), $this->validCharacterDescription);

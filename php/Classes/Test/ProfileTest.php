@@ -1,7 +1,7 @@
 <?php
 namespace SuperSmashLore\SuperSmashLore\Test;
 
-use SuperSmashLore\SuperSmashLore\{Profile};
+use SuperSmashLore\SuperSmashLore\Profile;
 
 
 
@@ -21,36 +21,41 @@ require_once(dirname(__DIR__,2) . "/lib/uuid.php");
  * @author Daniel Gonzales <dgonzales371@cnm.edu>
  **/
 class ProfileTest extends SuperSmashLoreTest {
-	/**
-	 * valid profile to use
-	 * @var string $VALID_PROFILEID
-	 */
-	protected $VALID_PROFILEID;
+//	/**
+//	 * valid profile to use
+//	 * @var string $VALID_PROFILEID
+//	 */
+//	protected $VALID_PROFILEID;
 	/**
 	 * valid activation for profile
-	 * @var string $VALID_ACTIVATIONTOKEN
+	 * @var string $VALID_ACTIVATION_TOKEN
 	 */
-	protected $VALID_ACTIVATION_TOKEN;
+	protected $VALID_ACTIVATION_TOKEN="12345678901234567890123456789012";
 	/**
 	 *valid date joined
-	 * @var string $VALID_DATEJOINED
+	 * @var string $VALID_DATE_JOINED
 	 */
 	protected $VALID_DATE_JOINED;
 	/**
 	 * valid email for profile
 	 * @var string $VALID_EMAIL
 	 */
-	protected $VALID_EMAIL;
+	protected $VALID_EMAIL= "Smash@gmail.com";
 	/**
 	 * valid hash for profile
 	 * @var string $VALID_HASH
 	 */
 	protected $VALID_HASH;
 	/**
+	 * valid email for profile 2
+	 * @var string $VALID_EMAIL2;
+	 */
+	protected $VALID_EMAIL2= "Smash247@gmail.com";
+	/**
 	 * valid username for profile
 	 * @var string $VALID_USERNAME
 	 */
-	protected $VALID_USERNAME;
+	protected $VALID_USERNAME= "DORIYAH247";
 
 
 	/**
@@ -61,8 +66,9 @@ class ProfileTest extends SuperSmashLoreTest {
 
 		//
 	$password = "abc123";
-	$this->VALID_HASH = password_hash($password, PASSWORD_FIGHTER2424, ["time_cost" => 384]);
-	$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+	$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 7]);
+	$this->VALID_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
+	$this->VALID_DATE_JOINED = new \DateTime("2020-02-18");
 }
 
 /**
@@ -73,15 +79,18 @@ public function testInsertValidProfile() : void {
 	$numRows = $this->getConnection()->getRowCount("profile");
 
 	$profileId = generateUuidV4();
-	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED, $this->VALID_EMAIL,$this->VALID_HASH, $this->VALID_USERNAME);
+	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
 	$profile->insert($this->getPDO());
 
 	// grab the data from mySQL and enforce the fields match our expectations
 	$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
-	$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertsEquals($pdoProfile->getProfileId(), $this->VALID_PROFILEID);
-		$this->assertsEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILEEMAIL);
-		$this->assertsEquals($pdoProfile->getProfileUserName(), $this->VALID_PROFILEUSERNAME);
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+	$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+	$this->assertEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
+	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+	$this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
 }
 /**
  * test inserting a Profile, editing it, and then updating it
@@ -92,24 +101,24 @@ public function testUpdateValidProfile() {
 
 //create a new profile ad insert it in mySQL
 	$profileId = generateUuidV4();
-	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN,  $this->VALID_DATE_JOINED, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
+	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
 	$profile->insert($this->getPDO());
 
 //edit the Profile and update it in mySQL
-	$profile->setProfileActivationToken($this->VALID_HASH);
+	$profile->setProfileEmail($this->VALID_EMAIL2);
 	$profile->update($this->getPDO());
 
 // grab the data from mySQL and enforce the fields match our expectations
 	$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 
 
-	$this->assertsEquals($numRows +1, $this->getConnection()->getRowCount("profile"));
-	$this->assertsEquals($pdoProfile->getProfileId(), $profileId);
-	$this->assertsEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
-	$this->assertsEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
-	$this->assertsEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertsEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertsEquals($pdoProfile->getProfileUserName(), $this->VALID_HASH);
+	$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("profile"));
+	$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+	$this->assertEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
+	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL2);
+	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+	$this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
 }
 
 /**
@@ -125,13 +134,13 @@ public function testDeleteValidProfile() : void {
 
 
 //delete the Profile from mySQL
-	$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 	$profile->delete($this->getPDO());
 
 //grab the data from mySQL and enforce the Profile does not exist
 	$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
-	$this->assertsNull($pdoProfile);
-	$this->assertsEquals($numRows, $this->getConnection()->getRowCount("profile"));
+	$this->assertNull($pdoProfile);
+	$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 }
 
 /**
@@ -147,76 +156,76 @@ public function testGetValidProfileByProfileId() : void {
 
 // grab the data from mySQL and enforce the fields match our expectations
 	$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
-	$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertsEquals($pdoProfile->getProfileId(), $profileId);
-	$this->assertsEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
-	$this->assertsEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
-	$this->assertsEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertsEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertsEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+	$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+	$this->assertEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
+	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+	$this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
 }
 
 /**
  * test grabbing a Profile that does not exist
  */
-public function testGetInvalidProfileByProfileId() : void {
-//count the number of rows and save it for later
-	$numRows = $this->getConnection()->getRowCount("profile");
-
-	$profileId = generateUuidV4();
-	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
-	$profile->insert($this->getPDO());
-
-//grab the data from MySQL
-	$results = Profile::getProfileByProfileId($this->getPDO(), $this->VALID_ACTIVATION_TOKEN);
-	$this->assertsEquals($numRows +1, $this->getConnection()->getRowCount("profile"));
-
-//enforce no other objects and bleeding into profile
-	$this->assertsContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Profile");
-
-//enforce the results meet expectations
-	$pdoProfile = $results[0];
-	$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertsEquals($pdoProfile->getProfileId(), $profileId);
-	$this->assertsEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
-	$this->assertsEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
-	$this->assertsEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertsEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertsEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
-}
-
-/**
- * test grabbing a Profile by at handle that does not exist
- */
-public function testGetInvalidProfileByAtHandle() : void {
-// count the number of rows and save it for later
-	$numRows = $this->getConnection()->getRowCount("profile");
-
-	$profileId = generateUuidV4();
-	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED,$this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
-	$profile->insert(($this->getPDO()));
-
-// grab the data from mySQL and enforce the fields match our expectations
-	$pdoProfile = Profile::getProfileByProfileEmail($this->getConnection);
-	$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertsEquals($pdoProfile->getProfileId(), $profileId);
-	$this->assertsEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
-	$this->assertsEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
-	$this->assertsEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertsEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertsEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
-}
-/**
- *  test grabbing a Profile by an email that does not exists
- */
-public function testGetInvalidProfileByEmail() : void {
-//grab an email that does not exist
-	$profile = Profile::getProfileByProfileEmail($this->getPDO(), "does@not.exist");
-	$this->assertNull($profile);
-}
-/**
- * test grabbing a profile bu its activation
- */
+//public function testGetInvalidProfileByProfileId() : void {
+////count the number of rows and save it for later
+//	$numRows = $this->getConnection()->getRowCount("profile");
+//
+//	$profileId = generateUuidV4();
+//	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
+//	$profile->insert($this->getPDO());
+//
+////grab the data from MySQL
+//	$results = Profile::getProfileByProfileId($this->getPDO(), $this->VALID_ACTIVATION_TOKEN);
+//	$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("profile"));
+//
+////enforce no other objects and bleeding into profile
+//	$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Profile");
+//
+////enforce the results meet expectations
+//	$pdoProfile = $results[0];
+//	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+//	$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+//	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+//	$this->assertEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED->getTimestamp());
+//	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+//	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+//	$this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
+//}
+//
+///**
+// * test grabbing a Profile by at handle that does not exist
+// */
+//public function testGetInvalidProfileByAtHandle() : void {
+//// count the number of rows and save it for later
+//	$numRows = $this->getConnection()->getRowCount("profile");
+//
+//	$profileId = generateUuidV4();
+//	$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED,$this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
+//	$profile->insert(($this->getPDO()));
+//
+//// grab the data from mySQL and enforce the fields match our expectations
+//	$pdoProfile = Profile::getProfileByProfileEmail($this->getConnection);
+//	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+//	$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+//	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+//	$this->assertEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED->getTimestamp());
+//	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+//	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+//	$this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
+//}
+///**
+// *  test grabbing a Profile by an email that does not exists
+// */
+//public function testGetInvalidProfileByEmail() : void {
+////grab an email that does not exist
+//	$profile = Profile::getProfileByProfileEmail($this->getPDO(), "does@not.exist");
+//	$this->assertNull($profile);
+//}
+///**
+// * test grabbing a profile bu its activation
+// */
 public function testGetValidProfileByActivationToken() : void {
 //count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("profile");
@@ -227,13 +236,31 @@ public function testGetValidProfileByActivationToken() : void {
 
 //grab the data from mySQL and enforce the fields match our expectations
 	$pdoProfile = Profile::getProfileByProfileActivationToken($this->getPDO(), $profile->getProfileActivationToken());
-	$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertsEquals($pdoProfile->getProfileId(), $profileId);
-	$this->assertsEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
-	$this->assertsEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
-	$this->assertsEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertsEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertsEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+	$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+	$this->assertEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
+	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+	$this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
 }
 
+	public function testGetValidProfileByProfileEmail() : void {
+//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		$profileId = generateUuidV4();
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION_TOKEN, $this->VALID_DATE_JOINED,$this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
+		$profile->insert($this->getPDO());
+
+//grab the data from mySQL and enforce the fields match our expectations
+		$pdoProfile = Profile::getProfileByProfileEmail($this->getPDO(), $profile->getProfileEmail());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileDateJoined(), $this->VALID_DATE_JOINED);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
+	}
 }

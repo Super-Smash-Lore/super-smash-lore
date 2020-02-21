@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS profile;
 create table profile (
 	profileId binary(16) NOT NULL,
 	profileActivationToken char(32),
-	profileDateJoined DATETIME(6) NOT NULL,
+	profileDateJoined DATE NOT NULL,
 	profileEmail varchar (128) NOT NULL,
 	profileHash char (97) NOT NULL,
 	profileUserName varchar (32) NOT NULL,
@@ -22,8 +22,8 @@ characterDescription varchar (1600),
 characterMusicUrl varchar (255),
 characterName VARCHAR(32),
 characterPictureUrl varchar (255),
-characterQuotes varchar (255) NOT NULL,
-characterReleaseDate  DATETIME(6) NOT NULL,
+characterQuotes varchar (255),
+characterReleaseDate VARCHAR(128),
 characterSong varchar (255),
 characterUniverse VARCHAR(255),
 primary key(characterId)
@@ -43,7 +43,7 @@ primary key (gameId)
 create table favorite(
 favoriteCharacterId binary(16) NOT NULL,
 favoriteProfileId binary(16) NOT NULL,
-favoriteDate DATETIME(6) NOT NULL,
+favoriteDate DATE NOT NULL,
 INDEX(favoriteCharacterId),
 INDEX(favoriteProfileId),
 foreign key (favoriteCharacterId) references `character`(characterId),

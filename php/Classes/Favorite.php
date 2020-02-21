@@ -5,7 +5,7 @@ require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "/Classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
-class Favorite {
+class Favorite implements \JsonSerializable{
 	use ValidateUuid;
 	use ValidateDate;
 	/**
@@ -50,7 +50,7 @@ class Favorite {
  	* getter method for favorite characters
  	* @return string value of favorite characters
  	**/
-	public function getFavoriteCharacterId(): string {
+	public function getFavoriteCharacterId(): Uuid {
 		return $this->favoriteCharacterId;
 	}
 	/**
@@ -76,7 +76,7 @@ class Favorite {
  * getter for favorite profile id
  * @return Uuid value of favorite profile Id
  */
-	public function getFavoriteProfileId(): string {
+	public function getFavoriteProfileId(): Uuid {
 		return $this->favoriteProfileId;
 	}
 
@@ -96,16 +96,15 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		$exceptionType = get_class($exception);
 		throw (new $exceptionType($exception->getMessage(), 0, $exception));
 	}
-	$profileId = 16;
 	//convert and store the favorite profile id
-	$this->$profileId = $uuid;
+	$this->favoriteProfileId = $uuid;
 }
 
 /**
  * getter for favorite character release date
  * @return Uuid value of favorite date
  */
-	public function getFavoriteDate(): string {
+	public function getFavoriteDate(): \DateTime {
 		return $this->favoriteDate;
 	}
 /**
@@ -118,14 +117,18 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
  * @throws \TypeError if data types violate the type hints
  */
 
-	public function setFavoriteDate ($newFavoriteDate) : void {
+	public function setFavoriteDate ($newFavoriteDate = null) : void {
+		if($newFavoriteDate === null) {
+			$this-> favoriteDate = new\DateTime();
+			return;
+		}
 		try {
 			$favoriteDate = self::validateDate($newFavoriteDate);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->characterReleaseDate = $favoriteDate;
+		$this->favoriteDate = $favoriteDate;
 	}
 
 	/**
@@ -142,7 +145,8 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-		$parameters = ["favoriteCharacterId" => $this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId, "favoriteDate" => $this->favoriteDate];
+		$formattedDate = $this->favoriteDate->format("Y-m-d");
+		$parameters = ["favoriteCharacterId" => $this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteDate" => $formattedDate];
 		$statement->execute($parameters);
 	}
 
@@ -160,7 +164,8 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		$statement = $pdo->prepare($query);
 
 		//bind member variables to the place holder in the template
-		$parameters = ["favoriteCharacterId" =>$this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId, "favoriteProfileId" => $this->favoriteProfileId, "favoriteDate" => $this->favoriteDate];
+		$formattedDate = $this->favoriteDate->format("Y-m-d");
+		$parameters = ["favoriteCharacterId" =>$this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteDate" => $formattedDate];
 		$statement->execute($parameters);
 	}
 
@@ -193,79 +198,27 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 	 * @throws \PDOException when MySql related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 */
-	public static function getFavoriteByFavoriteCharacterId(\PDO $pdo, $favoriteCharacterId) : ?Favorite {
-		//sanitize the favorite character id before searching
-		try {
-			$favoriteCharacterId = self::ValidateUuid($favoriteCharacterId);
-		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		//create query template
-		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM Favorite WHERE favoriteCharacterId = :favoriteCharacterId";
+	public static function getFavoriteByFavoriteProfileId(\PDO $pdo) : \SPLFixedArray {
+
+		// create query template
+		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM favorite";
 		$statement = $pdo->prepare($query);
-
-		//Bind the favorite character id to the place holder in template
-		$parameters = ["favoriteCharacterId" => $favoriteCharacterId->getBytes()];
-		$statement->execute($parameters);
-
-		//Grab the favorite from mySql
-		try {
-			$favorite = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// bind the favorite profile id to the place holder in the template
+		$statement->execute();
+		// build an array of favorites
+		$favorites = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$favorite = new Favorite($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
+				$favorites[$favorites->key()] = $favorite;
+				$favorites->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			//if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($favorite);
-	}
-
-//getFavoriteByFavoriteProfileId
-
-	/**
-	 * gets the Favorite by FavoriteProfileId
-	 *
-	 * @param \PDO $pdo PDO connection
-	 * @param Uuid| string  $FavoriteProfileId favorite profile id to search for
-	 * @return Favorite|null Favorite found or null if not found
-	 * @throws \PDOException when mysql related errors occur
-	 * @throws \RangeException if the data values are out of bounds or too long
-	 * @throws \InvalidArgumentException if the data types are not valid
-	 * @throws \TypeError when variable is not the correct data type
-	 * @throws \Exception if some other exceptions occurs
-	 */
-
-	public static function getFavoriteByFavoriteProfileId(\PDO $pdo, $favoriteProfileId) : ?Favorite {
-		// sanitize the FavoriteProfileId before searching
-		try {
-			$favoriteProfileId = self::ValidateUuid($favoriteProfileId);
-		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		//create a query template
-		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM Favorite WHERE favoriteProfileId = :favoriteProfileId";
-		$statement = $pdo->prepare($query);
-
-		//bind the favorite profile id to the place holder in the template
-		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
-		$statement->execute($parameters);
-
-		//grab the favorite from mysql
-		try {
-			$favorite = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$favorite = new Favorite($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
-			}
-		} catch(\Exception $exception) {
-			//if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return($favorite);
+		return($favorites);
 	}
 
 
@@ -282,7 +235,7 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 	 * @throws \Exception if some other exceptions occurs
 	 */
 
-	public static function getFavoriteByFavoriteProfileIdAndFavoriteCharacterId(\PDO $pdo, string $favoriteProfileId, string $favoriteCharacterId) : ?Favorite {
+	public static function getFavoriteByFavoriteProfileIdAndFavoriteCharacterId(\PDO $pdo, string $favoriteCharacterId, string $favoriteProfileId) : ?Favorite {
 		//creating throw error codes.
 		try {
 			$favoriteCharacterId = self::ValidateUuid($favoriteCharacterId);
@@ -291,10 +244,10 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		//create query template.
-		$query = "SELECT favoriteProfileId, favoriteCharacterId, favoriteDate FROM `favorite` WHERE favoriteProfileId = :favoriteProfileId AND favoriteCharacterId= :favoritecharacterId";
+		$query = "SELECT  favoriteCharacterId, favoriteProfileId, favoriteDate FROM favorite WHERE  favoriteCharacterId= :favoriteCharacterId AND favoriteProfileId = :favoriteProfileId ";
 		$statement = $pdo->prepare($query);
 		//bind the profile id and the character id to the place holder in the template.
-		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes(), "favoriteCharacterId" => $favoriteCharacterId->getBytes()];
+		$parameters = [ "favoriteCharacterId" => $favoriteCharacterId->getBytes(), "favoriteProfileId" => $favoriteProfileId->getBytes()];
 		$statement->execute($parameters);
 		//grab the favorite from MySQL.
 		try {
@@ -302,12 +255,25 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$favorite = new Favorite($row["favoriteProfileId"], $row["favoriteCharacterId"], $row["favoriteDate"]);
+				$favorite = new Favorite ($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
 			}
 		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($favorite);
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["favoriteCharacterId"] = $this->favoriteCharacterId->toString();
+		$fields["favoriteProfileId"] = $this->favoriteProfileId->toString();
+		$fields ["favoriteDate"] = round(floatval($this->favoriteDate->format("U.u")) * 1000);
+		return ($fields);
+
 	}
 }

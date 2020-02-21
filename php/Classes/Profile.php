@@ -1,43 +1,44 @@
 <?php
 
 namespace SuperSmashLore\SuperSmashLore;
-require_once ("autoloader.php");
-require_once (dirname(__DIR__) . "/Classes/autoloader.php");
+require_once("autoloader.php");
+require_once(dirname(__DIR__) . "/Classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
-class Profile{
+
+class Profile implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
-/**
- * id for profile: this is a primary key
- * @var Uuid $profileId
- **/
+	/**
+	 * id for profile: this is a primary key
+	 * @var Uuid $profileId
+	 **/
 	private $profileId;
-/**
- * activation token for profile
- * @var  $profileActivationToken
- **/
+	/**
+	 * activation token for profile
+	 * @var  $profileActivationToken
+	 **/
 	private $profileActivationToken;
-/**
- * date user joined
- * @var  $profileDateJoined
- **/
+	/**
+	 * date user joined
+	 * @var  $profileDateJoined
+	 **/
 	private $profileDateJoined;
 
-/**
- *  email for the profile
- * @var  $profileEmail
- **/
+	/**
+	 *  email for the profile
+	 * @var  $profileEmail
+	 **/
 	private $profileEmail;
-/**
- * hash for the profile
- * @var  $profileHash
- **/
+	/**
+	 * hash for the profile
+	 * @var  $profileHash
+	 **/
 	private $profileHash;
-/**
- *  username for the profile
- * @var  $profileUserName
- **/
+	/**
+	 *  username for the profile
+	 * @var  $profileUserName
+	 **/
 	private $profileUserName;
 
 	/**
@@ -55,7 +56,7 @@ class Profile{
 	 * @throws \Exception if some other exception occurs
 	 **/
 
-	public function __construct($newProfileId, $newProfileActivationToken, $newProfileDateJoined, $newProfileEmail, $newProfileHash, $newProfileUserName ) {
+	public function __construct($newProfileId, $newProfileActivationToken, $newProfileDateJoined = null, $newProfileEmail, $newProfileHash, $newProfileUserName) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileActivationToken($newProfileActivationToken);
@@ -65,7 +66,7 @@ class Profile{
 			$this->setProfileUserName($newProfileUserName);
 
 			//determines what exception type is thrown
-		} catch(\InvalidArgumentException | \RangeException |\Exception |\TypeError $exception){
+		} catch(\InvalidArgumentException | \RangeException |\Exception |\TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -76,7 +77,7 @@ class Profile{
 	 *
 	 * @return Uuid for profile Id
 	 **/
-	public function getProfileId() : Uuid {
+	public function getProfileId(): Uuid {
 		return ($this->profileId);
 	}
 
@@ -88,16 +89,15 @@ class Profile{
 	 * @throws \RangeException if $newProfileId $newProfileId is not valid
 	 **/
 
-	public function setProfileId( $newProfileId) : void {
+	public function setProfileId($newProfileId): void {
 		try {
 			$uuid = self::validateUuid($newProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$profileId = 16;
 		//convert to store profile id
-		$this->$profileId = $uuid;
+		$this->profileId = $uuid;
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Profile{
 	 * @return string for activation token
 	 **/
 
-	public function getProfileActivationToken() : ?string {
+	public function getProfileActivationToken(): ?string {
 		return $this->profileActivationToken;
 	}
 
@@ -117,12 +117,15 @@ class Profile{
 	 * @returns $newProfileActivationToken as null
 	 * */
 
-	public function setProfileActivationToken(string $newProfileActivationToken) : void {
+	public function setProfileActivationToken(string $newProfileActivationToken): void {
 		if($newProfileActivationToken === null) {
-			$this->activationToken = null;
+			$this->profileActivationToken = null;
 			return;
 		}
 		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		if(ctype_xdigit($newProfileActivationToken) === false) {
+			throw(new\RangeException("Activation not valid"));
+		}
 		if(strlen($newProfileActivationToken) !== 32) {
 			throw (new\RangeException("Activation token has to be 32 character"));
 		}
@@ -147,9 +150,15 @@ class Profile{
 	 * @param \Self validate|Date|void $newProfileDateJoined date as a DateTime object
 	 * @throws \InvalidArgumentException if $newProfileDateJoined is not a valid object or string
 	 * @throws \RangeException if $newProfileDateJoined is a date that does not exist
+	 * @throws \Exception
+	 * @throws \TypeError
 	 **/
 
-	public function setProfileDateJoined ($newProfileDateJoined) : void {
+	public function setProfileDateJoined($newProfileDateJoined = null): void {
+		if($newProfileDateJoined === null) {
+			$this->profileDateJoined = new \DateTime();
+			return;
+		}
 		try {
 			$profileDateJoined = self::validateDate($newProfileDateJoined);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -172,9 +181,9 @@ class Profile{
 	/**
 	 * setter for profile Email
 	 *
-	 * @param \DateTime|string|null $newTweetDate tweet date as a DateTime object or string (or null to load the current time)
-	 * @throws \InvalidArgumentException if $newTweetDate is not a valid object or string
-	 * @throws \RangeException if $newTweetDate is a date that does not exist
+	 * @param string $newProfileEmail string showing correlating email
+	 * @throws \InvalidArgumentException if $newProfileEmail is not a valid object or string
+	 * @throws \RangeException if profile email is more than 128 characters
 	 **/
 	public function setProfileEmail(string $newProfileEmail): void {
 		$newProfileEmail = trim($newProfileEmail);
@@ -201,21 +210,21 @@ class Profile{
 	/**
 	 * setter for profile Hash
 	 *
-	 * @param \DateTime|string|void $newProfileHash as an object or string
+	 * @param string $newProfileHash as an object or string
 	 * @throws \InvalidArgumentException if $newProfileHash is empty
-	 * @throws \RangeException if $newTweetDate is a date that does not exist
+	 * @throws \RangeException if hash is more than 97 characters
 	 **/
 
-	public function setProfileHash(string $newProfileHash) : void {
-		$newProfileHash = trim($newProfileHash);
+	public function setProfileHash(string $newProfileHash): void {
+//		$newProfileHash = trim($newProfileHash);
 		if(empty($newProfileHash) === true) {
 			throw (new\ InvalidArgumentException("Hash is empty or insecure"));
 		}
 		$profileHashInfo = password_get_info($newProfileHash);
-		if($newProfileHash["algoName"] !== "argon2i") {
+		if($profileHashInfo["algoName"] !== "argon2i") {
 			throw (new\ InvalidArgumentException("hash is not valid hash"));
 		}
-		if(strlen($newProfileHash) !== 97) {
+		if(strlen($newProfileHash) > 97) {
 			throw (new \RangeException("Hash must be 97 characters"));
 		}
 		//convert to store new profile hash
@@ -227,14 +236,14 @@ class Profile{
 	 *
 	 * @return string for profile User Name
 	 **/
-	public function getProfileUserName (){
+	public function getProfileUserName() {
 		return $this->profileUserName;
 	}
 
 	/**
 	 * setter method for profile User Name
 	 *
-	 * @param \set $newProfileUserName|string $newProfileUserName profile username as a string
+	 * @param \set $newProfileUserName |string $newProfileUserName profile username as a string
 	 * @throws \InvalidArgumentException if $newProfileUserName if user name is empty or insecure
 	 * @throws \RangeException if $newProfileUserName is less than 32 characters
 	 **/
@@ -259,13 +268,13 @@ class Profile{
 	 * @throws \PDOException when MYSQL related errors occur
 	 * @throws \TypeError if $pdo is no PDO connection object
 	 **/
-	public function insert(\PDO $pdo) : void {
+	public function insert(\PDO $pdo): void {
 		//create query template
 		$query = "INSERT INTO profile(profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName) VALUES(:profileId, :profileActivationToken, :profileDateJoined, :profileEmail, :profileHash, :profileUserName) ";
 		$statement = $pdo->prepare($query);
 		//bind the member to the place holder in the template
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->profileDateJoined, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,
-							"profileUserName" => $this->profileUserName];
+		$formattedDate = $this->profileDateJoined->format("Y-m-d");
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $formattedDate, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileUserName" => $this->profileUserName];
 		$statement->execute($parameters);
 	}
 
@@ -276,13 +285,14 @@ class Profile{
 	 * @throws \PDOException when MYSQL related errors occur
 	 * @throws \TypeError if $pdo is no PDO connection object
 	 **/
-	public function update(\PDO $pdo) : void {
+	public function update(\PDO $pdo): void {
 		//create query template
-		$query = "UPDATE profile SET profileId = :profileId, profileActivationToken = :profileActivationToken, profileDateJoined = :profileDateJoined, profileEmail = :profileEmail, profileHash = :profileHash, profileUserName = :profileUserName";
+		$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileDateJoined = :profileDateJoined, profileEmail = :profileEmail, profileHash = :profileHash, profileUserName = :profileUserName WHERE profileId= :profileId";
 		$statement = $pdo->prepare($query);
 		//bind the member to the place holder in the template
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $this->profileDateJoined, "profileEmail" => $this->profileEmail,
-							"profileHash" => $this->profileHash, "profileUserName" => $this->profileUserName];
+		$formattedDate = $this->profileDateJoined->format("Y-m-d");
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileDateJoined" => $formattedDate, "profileEmail" => $this->profileEmail,
+			"profileHash" => $this->profileHash, "profileUserName" => $this->profileUserName];
 		$statement->execute($parameters);
 	}
 
@@ -293,14 +303,15 @@ class Profile{
 	 * @throws \PDOException when MYSQL related errors occur
 	 * @throws \TypeError if $pdo is no PDO connection object
 	 **/
-	public function delete(\PDO $pdo) : void {
+	public function delete(\PDO $pdo): void {
 		//create query template
-		$query = "DELETE FROM character WHERE characterId = :characterId";
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 		//bind the member to the place holder in the template
 		$parameters = ["profileId" => $this->profileId->getBytes()];
 		$statement->execute($parameters);
 	}
+
 	/**
 	 * gets the Profile by profile id
 	 *
@@ -310,19 +321,19 @@ class Profile{
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getProfileByProfileId(\PDO $pdo, $profileId) :?Profile {
+	public static function getProfileByProfileId(\PDO $pdo, $profileId): ?Profile {
 //		sanitize the profile id before searching
-	try {
-		$profileId = self::validateUuid($profileId);
-	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-		throw(new \PDOException($exception->getMessage(), 0, $exception));
-	}
+		try {
+			$profileId = self::validateUuid($profileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
 //create query template
-		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName WHERE profileId = :profileId";
+		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUserName FROM profile WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 
 // bind the profile id to the place holder in the template
-		$parameters = ["SELECT profileId" => $profileId->getBytes()];
+		$parameters = ["profileId" => $profileId->getBytes()];
 		$statement->execute($parameters);
 
 // grab the Profile from mySQL
@@ -331,7 +342,6 @@ class Profile{
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-
 				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileDateJoined"], $row["profileEmail"], $row["profileHash"], $row["profileUserName"]);
 			}
 		} catch(\Exception $exception) {
@@ -339,17 +349,18 @@ class Profile{
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($profile);
-}
-/**
- * get the profile by profile activation token
- *
- * @param string $profileActivationToken
- * @param \PDO object $pdo
- * @returns Profile|null Profile or null if not found
- * @throws /\PDOException when mySQL related errors occur
- * @throws /\TypeError when variables are not the correct data type
- **/
-	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken) : ?Profile {
+	}
+
+	/**
+	 * get the profile by profile activation token
+	 *
+	 * @param string $profileActivationToken
+	 * @param \PDO object $pdo
+	 * @returns Profile|null Profile or null if not found
+	 * @throws /\PDOException when mySQL related errors occur
+	 * @throws /\TypeError when variables are not the correct data type
+	 **/
+	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken): ?Profile {
 // make sure activation token is in the right format and that it is a string representation of a hexadecimal
 		$profileActivationToken = trim($profileActivationToken);
 		if(ctype_xdigit($profileActivationToken) === false) {
@@ -379,6 +390,7 @@ class Profile{
 		return ($profile);
 	}
 	//getProfileByProfileEmail
+
 	/**
 	 * Gets the profile by the profile email
 	 *
@@ -388,18 +400,21 @@ class Profile{
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	public static function getProfileByProfileEmail(\PDO $pdo, $profileEmail) : ?Profile {
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail): ?Profile {
 		//sanitize the profileId before searching
-		try {
-			$profileEmail = self::string($profileEmail);
-		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception)  {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		$profileEmail = trim($profileEmail);
+		$profileEmail = filter_var($profileEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($profileEmail) === true) {
+			throw (new  \PDOException("not a valid email"));
+		}
+		if(strlen($profileEmail) > 128) {
+			throw (new \RangeException("email is too long"));
 		}
 		//create query template
-		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUsername FROM Profile WHERE profileEmail = :profileEmail";
+		$query = "SELECT profileId, profileActivationToken, profileDateJoined, profileEmail, profileHash, profileUsername FROM profile WHERE profileEmail = :profileEmail";
 		$statement = $pdo->prepare($query);
 		//bind the Profile from mysql
-		$parameters = ["profileEmail" => $profileEmail->getBytes()];
+		$parameters = ["profileEmail" => $profileEmail];
 		$statement->execute($parameters);
 		//grab the profile from mysql
 		try {
@@ -413,6 +428,21 @@ class Profile{
 			//if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($profile);
+		return ($profile);
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["profileId"] = $this->profileId->toString();
+		$fields ["profileDateJoined"] = round(floatval($this->profileDateJoined->format("U.u")) * 1000);
+		unset($fields["profileActivationToken"]);
+		unset($fields["profileHash"]);
+		return ($fields);
+
 	}
 }
