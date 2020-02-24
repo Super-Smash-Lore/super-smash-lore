@@ -150,24 +150,6 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		$statement->execute($parameters);
 	}
 
-	/**
-	 * updates the favorite in mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
-	public function update(\PDO $pdo) : void {
-
-		//create a query template
-		$query = "UPDATE favorite SET favoriteCharacterId = :favoriteCharacterId, favoriteProfileId = :favoriteProfileId, favoriteDate = :favoriteDate";
-		$statement = $pdo->prepare($query);
-
-		//bind member variables to the place holder in the template
-		$formattedDate = $this->favoriteDate->format("Y-m-d");
-		$parameters = ["favoriteCharacterId" =>$this->favoriteCharacterId->getBytes(), "favoriteProfileId" => $this->favoriteProfileId->getBytes(), "favoriteDate" => $formattedDate];
-		$statement->execute($parameters);
-	}
 
 	/**
 	 * deletes a favorite from mySQL
