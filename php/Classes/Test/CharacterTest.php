@@ -82,18 +82,7 @@ class CharacterTest extends SuperSmashLoreTest {
 		$this->assertEquals($pdoCharacter->getCharacterSong(), $this->validCharacterSong);
 		$this->assertEquals($pdoCharacter->getCharacterUniverse(), $this->validCharacterUniverse);
 	}
-//	/**
-//	 * test grabbing a character that does not exist
-//	 */
-//	public function testGetInvalidCharacterByCharacterId() : void {
-//		//grab a character id that exceeds the maximum
-//		$fakeCharacterId = generateUuidV4();
-//		$character = Character::getCharacterByCharacterId($this->getPDO(), $fakeCharacterId);
-//		$this->assertNull($character);
-//	}
-	/**
-	 * test grabbing a character by the character's name
-	 */
+
 	public function testGetValidCharacterByCharacterName() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("character");
@@ -114,14 +103,7 @@ class CharacterTest extends SuperSmashLoreTest {
 		$this->assertEquals($pdoCharacter->getCharacterSong(), $this->validCharacterSong);
 		$this->assertEquals($pdoCharacter->getCharacterUniverse(), $this->validCharacterUniverse);
 	}
-//	/**
-//	 * test grabbing a Character by a name that does not exist
-//	 */
-//	public function testGetInvalidCharacterByCharacterName() : void {
-//		//grab a character name that does not exist
-//		$character = Character::getCharacterByCharacterName($this->getPDO(), "Waluigi was snubbed.");
-//		$this->assertCount(0, $character);
-//	}
+
 	/**
 	 *test grabbing a character by character's universe
 	 */
@@ -150,14 +132,7 @@ class CharacterTest extends SuperSmashLoreTest {
 		$this->assertEquals($pdoCharacter->getCharacterSong(), $this->validCharacterSong);
 		$this->assertEquals($pdoCharacter->getCharacterUniverse(), $this->validCharacterUniverse);
 	}
-//	/**
-//	 * test grabbing a character universe that does not exist
-//	 */
-//	public function testGetInvalidCharacterByCharacterUniverse() : void {
-//		//grab a invalid that does not exist
-//		$character = Character::getCharacterByCharacterUniverse($this->getPDO(), "Universe is invalid");
-//		$this->assertNull($character);
-//	}
+
 
 
 }

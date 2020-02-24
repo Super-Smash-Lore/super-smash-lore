@@ -315,18 +315,6 @@ class Character {
 		$this->characterReleaseDate = $newCharacterReleaseDate;
 	}
 
-//	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
-//		//checking to see if the date is a valid date and fits the format
-//		try {
-//			$releaseDate = self::validateDate($newCharacterReleaseDate);
-//		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-//			$exceptionType = get_class($exception);
-//			throw (new $exceptionType($exception->getMessage(), 0, $exception));
-//		}
-//		//store the release date
-//		$this->characterReleaseDate = $releaseDate;
-//	}
-
 	/**
 	 * getter for character song
 	 *
@@ -412,39 +400,6 @@ class Character {
 		$statement->execute($parameters);
 	}
 
-//	/**
-//	 * updates character in character table
-//	 *
-//	 * @param \PDO $pdo PDO connection object
-//	 * @throws \PDOException when MySQL related errors occur
-//	 * @throws \TypeError if $pdo is not a PDO connection object
-//	 */
-//	public function update(\PDO $pdo) : void {
-//		//create query template
-//		$query = "UPDATE character SET characterId = :characterId, characterDescription = :characterDescription, characterMusicUrl = :characterMusicUrl, characterPictureUrl = :characterPictureUrl,
-//					characterQuotes = :characterQuotes, characterReleaseDate = :characterReleaseDate, characterSong = :characterSong, characterUniverse = :characterSong";
-//		$statement = $pdo->prepare($query);
-//		//binds the updated member variables to the place holders in the template
-//		$parameters = ["characterId" =>$this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl, "characterPictureUrl" => $this->characterPictureUrl,
-//							"characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate, "characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
-//		$statement->execute($parameters);
-//	}
-//
-//	/**
-//	 * deletes a character from character table
-//	 *
-//	 * @param \PDO $pdo PDO connection object
-//	 * @throws \PDOException when MySQL related errors occur
-//	 * @throws \TypeError if $pdo is not a PDO connection object
-//	 */
-//	public function delete(\PDO $pdo) : void {
-//		//create the query template
-//		$query = "DELETE FROM character WHERE characterId = :characterId";
-//		$statement = $pdo->prepare($query);
-//		//sets up motion to delete said member variables in the template
-//		$parameters = ["characterId" => $this->characterId->getBytes()];
-//		$statement->execute($parameters);
-//	}
 	/**
 	 * gets Character by characterId
 	 *
@@ -502,11 +457,6 @@ class Character {
 		if(empty($characterName) === true) {
 			throw(new \PDOException("not a valid name"));
 		}
-		//		try {
-//			$characterName = self::string($characterName);
-//		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-//			throw(new \PDOException($exception->getMessage(), 0, $exception));
-//		}
 		//create a query template
 		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterName = :characterName";
 		$statement = $pdo->prepare($query);

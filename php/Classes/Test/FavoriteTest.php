@@ -137,14 +137,6 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$this->assertEquals($pdoFavorite->getFavoriteDate()->getTimeStamp(), $this->VALID_FAVORITEDATE->getTimestamp());
 }
 
-//	/**
-//	 * test grabbing a favorite that does not exist
-//	 */
-//	public function testGetFavoriteByFavoriteProfileIdAndFavoriteCharacterId() {
-//		$favorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($this->getPDO(), generateUuidV4());
-//		$this->assertNull($favorite);
-//	}
-
 	/**
 	 * test grabbing a Favorite by Character Id
 	 */
@@ -171,14 +163,5 @@ class FavoriteTest extends SuperSmashLoreTest {
 		//format the data to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoFavorite->getFavoriteDate()->getTimestamp(), $this->VALID_FAVORITEDATE->getTimestamp());
 	}
-
-//	/**
-//	 * test grabbing a favorite by a profile id that does not exist
-//	 */
-//	public function testGetInvalidFavoriteByProfileId() : void {
-//		//grab a character id that exceeds the maximum allowable profile id
-//		$favorite = Favorite::getFavoriteByFavoritProfileId($this->getPDO(), generateUuidV4());
-//		$this->assertCount(0, $favorite);
-//	}
 
 }

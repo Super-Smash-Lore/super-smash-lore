@@ -75,24 +75,6 @@ class GameTest extends SuperSmashLoreTest {
 	}
 
 	/**
-	 * test inserting, editing, and updating it
-	 **/
-//	public function testUpdateValidGame() : void {
-//		//count the number of rows and save it for later
-//		$numRows = $this->getConnection()->getRowCount("game");
-//		//create a new game and insert into mySQL
-//		$gameId = generateUuidV4();
-//		$game = new Game($gameId, $this->character->getCharacterId(), $this->VALID_GAME_URL, $this->VALID_GAME_SYSTEM, $this->VALID_PICTURE_URL);
-//		$game->insert($this->getPDO());
-//		//grab the data from mySQ and enforce the fields match our expectations
-//		$pdoGame = Game::getGameByGameId($this->getPDO(), $game->setGameId());
-//		$this->assertEquals($pdoGame->getGameId(), $gameId);
-//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("game"));
-//		$this->assertEquals($pdoGame->getGameCharacterId(), $this->character->getCharacterId());
-//		$this->assertEquals($pdoGame->getGameUrl(), $this->VALID_GAME_URL, $this->VALID_PICTURE_URL, $this->VALID_GAME_SYSTEM);
-//	}
-
-	/**
 	 * test creating game and then deleting it
 	 **/
 	public function testDeleteValidGame() : void {
