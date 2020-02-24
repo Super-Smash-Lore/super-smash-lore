@@ -478,6 +478,47 @@ class Character {
 		return($character);
 	}
 
+//getCharactersByCharacterName
+	/**
+	 * gets Characters by character name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string characterName to search by
+	 * @return \SplFixedArray SplFixedArray of characters found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getCharactersByCharacterName(\PDO $pdo, $characterName) : \SplFixedArray {
+		//sanitize the description before searching
+		$characterName = trim($characterName);
+		$characterName = filter_var($characterName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		//escape anyMySQL wild cards
+		$result = str_replace("%", "\\%", $characterName);
+		$characterName = str_replace("_", "\\_", $result);
+		//create a query template
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterName LIKE :characterName";
+		$statement = $pdo->prepare($query);
+		//bind the character universe to the place holder in the template
+		$characterName = "%$characterName%";
+		$parameters = ["characterName" => $characterName];
+		$statement->execute($parameters);
+		//build array of characters
+		$charactersArray = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterName"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
+				$charactersArray[$charactersArray->key()] = $character;
+				$charactersArray->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		//returns character array
+		return ($charactersArray);
+	}
+
 	/**
 	 * gets Character by characterUniverse
 	 *
