@@ -48,7 +48,7 @@ class Game {
 	 * @throws \TypeError if data type violates a data hint
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct(Uuid $newGameId, string $newGameCharacterId, string $newGamePictureUrl, string $newGameSystem, string $newGameUrl ) {
+	public function __construct($newGameId, string $newGameCharacterId, string $newGamePictureUrl, string $newGameSystem, string $newGameUrl) {
 		try {
 			$this->setGameId($newGameId);
 			$this->setGameCharacterId($newGameCharacterId);
