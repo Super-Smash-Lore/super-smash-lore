@@ -70,7 +70,7 @@ class Character {
 	 * @throws \Exception is some other exception occurs
 	 */
 
-	public function __construct($newCharacterId,$newCharacterDescription,$newCharacterMusicUrl,$newCharacterName,$newCharacterPictureUrl,$newCharacterQuotes,$newCharacterReleaseDate,$newCharacterSong, $newCharacterUniverse) {
+	public function __construct($newCharacterId,string $newCharacterDescription,string $newCharacterMusicUrl,string $newCharacterName,string $newCharacterPictureUrl,string $newCharacterQuotes,string $newCharacterReleaseDate,string $newCharacterSong,string $newCharacterUniverse) {
 		try {
 			$this->setCharacterId($newCharacterId);
 			$this->setCharacterDescription($newCharacterDescription);
@@ -96,8 +96,8 @@ class Character {
 	 *
 	 * @return Uuid
 	 */
-	public function getCharacterId() {
-		return $this->characterId;
+	public function getCharacterId() : Uuid {
+		return ($this->characterId);
 	}
 
 	/**
@@ -106,8 +106,9 @@ class Character {
 	 * @param Uuid|string $characterId value of new character Id
 	 * @throws \RangeException if $characterId is not positive
 	 * @throws \TypeError if character Id is not valid syntax or logic
+	 *
 	 */
-	public function setCharacterId( $newCharacterId) : void {
+	public function setCharacterId($newCharacterId) : void {
 		try {
 			$uuid = self::validateUuid($newCharacterId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -124,7 +125,7 @@ class Character {
 	 * @return string value of character description
 	 */
 
-	public function getCharacterDescription (){
+	public function getCharacterDescription () : string {
 		return $this->characterDescription;
 	}
 
@@ -135,9 +136,10 @@ class Character {
 	 * @throws \InvalidArgumentException if the description is not a string or insecure
 	 * @throws \RangeException if the description is over 1600 characters
 	 * @throws \TypeError if the character description is not a string
+	 * @return string for character description
 	 */
 
-	public function setCharacterDescription(string $newCharacterDescription){
+	public function setCharacterDescription(string $newCharacterDescription) : void {
 		$newCharacterDescription = trim($newCharacterDescription);
 		$newCharacterDescription = filter_var($newCharacterDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newCharacterDescription) === true) {
@@ -156,7 +158,7 @@ class Character {
 	 *
 	 * @return string value of music url
 	 */
-	public function getCharacterMusicUrl () {
+	public function getCharacterMusicUrl () : string {
 		return $this->characterMusicUrl;
 	}
 
@@ -167,8 +169,10 @@ class Character {
 	 * @throws \InvalidArgumentException if the music url is not a string or insecure
 	 * @throws \RangeException if the music url is over 255 characters
 	 * @throws \TypeError if the music url is not a string
+	 *
+	 * @return string for music url
 	 */
-	public function setCharacterMusicUrl (string $newCharacterMusicUrl) {
+	public function setCharacterMusicUrl (string $newCharacterMusicUrl) : void {
 		$newCharacterMusicUrl = trim($newCharacterMusicUrl);
 		$newCharacterMusicUrl = filter_var($newCharacterMusicUrl, FILTER_VALIDATE_URL);
 		if(empty($newCharacterMusicUrl) === true) {
@@ -187,7 +191,7 @@ class Character {
 	 *
 	 * @return string value of character name
 	 */
-	public function getCharacterName () {
+	public function getCharacterName () : string {
 		return $this->characterName;
 	}
 
@@ -198,8 +202,9 @@ class Character {
 	 * @throws \InvalidArgumentException if the character name is not a string or insecure
 	 * @throws \RangeException if the character name is over 32 characters
 	 * @throws \TypeError if the character name is not a string
+	 * @return string character name
 	 */
-	public function setCharacterName(string $newCharacterName){
+	public function setCharacterName(string $newCharacterName) : void {
 		$newCharacterName = trim($newCharacterName);
 		$newCharacterName = filter_var($newCharacterName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newCharacterName) === true) {
@@ -218,7 +223,7 @@ class Character {
 	 *
 	 * @return string value of picture url
 	 */
-	public function getCharacterPictureUrl(){
+	public function getCharacterPictureUrl() : string {
 		return $this->characterPictureUrl;
 	}
 
@@ -229,8 +234,9 @@ class Character {
 	 * @throws \InvalidArgumentException if the picture url is not a string or insecure
 	 * @throws \RangeException if the picture url is over 255 characters
 	 * @throws \TypeError if the character picture url is not a string
+	 * @return string character picture url
 	 */
-	public function setCharacterPictureUrl (string $newCharacterPictureUrl) {
+	public function setCharacterPictureUrl (string $newCharacterPictureUrl) : void{
 		$newCharacterPictureUrl = trim($newCharacterPictureUrl);
 		$newCharacterPictureUrl = filter_var($newCharacterPictureUrl, FILTER_VALIDATE_URL, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newCharacterPictureUrl) === true) {
@@ -249,7 +255,7 @@ class Character {
 	 *
 	 * @return string value of character quotes
 	 */
-	public function getCharacterQuotes() {
+	public function getCharacterQuotes() : string {
 		return $this->characterQuotes;
 	}
 
@@ -260,8 +266,9 @@ class Character {
 	 * @throws \InvalidArgumentException if the quotes are not a string or insecure
 	 * @throws \RangeException if the quotes are over 1600 characters
 	 * @throws \TypeError if the character quotes is not a string
+	 * @return string for quotes
 	 */
-	public function setCharacterQuotes(string $newCharacterQuotes) {
+	public function setCharacterQuotes(string $newCharacterQuotes) : void {
 		$newCharacterQuotes = trim($newCharacterQuotes);
 		$newCharacterQuotes = filter_var($newCharacterQuotes, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newCharacterQuotes) === true) {
@@ -280,7 +287,7 @@ class Character {
 	 *
 	 * @return string value of character release date
 	 */
-	public function getCharacterReleaseDate() {
+	public function getCharacterReleaseDate() : string {
 		return $this->characterReleaseDate;
 	}
 
@@ -291,19 +298,21 @@ class Character {
 	 * @throws \InvalidArgumentException if the release date is not a string or insecure
 	 * @throws \RangeException if the release date is over 6 characters
 	 * @throws \TypeError if the release date is not a string
+	 * @return string character release date
 	 *
-	 * TODO: REWORK THIS FUNCTION TO MATCH A DATE/TIME METHOD POSSIBLY...?
 	 */
-	public function setCharacterReleaseDate ($newCharacterReleaseDate) : void {
-		//checking to see if the date is a valid date and fits the format
-		try {
-			$releaseDate = self::validateDate($newCharacterReleaseDate);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+	public function setCharacterReleaseDate(string $newCharacterReleaseDate) : void {
+		$newCharacterReleaseDate = trim($newCharacterReleaseDate);
+		$newCharacterReleaseDate = filter_var($newCharacterReleaseDate, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCharacterReleaseDate) === true) {
+			throw (new \InvalidArgumentException("date empty or insecure"));
 		}
-		//store the release date
-		$this->characterReleaseDate = $releaseDate;
+		//checking to see if the date is under 128 characters
+		if(strlen($newCharacterReleaseDate) > 128) {
+			throw (new \RangeException("date must be fewer than 128 characters"));
+		}
+		//store the date
+		$this->characterReleaseDate = $newCharacterReleaseDate;
 	}
 
 	/**
@@ -311,7 +320,7 @@ class Character {
 	 *
 	 * @return string value of character song
 	 */
-	public function getCharacterSong() {
+	public function getCharacterSong() : string {
 		return $this->characterSong;
 	}
 
@@ -322,11 +331,12 @@ class Character {
 	 * @throws \InvalidArgumentException if the character song is not a string or insecure
 	 * @throws \RangeException if the character song is over 255 characters
 	 * @throws \TypeError if the character song is not a string
+	 * @return string character song
 	 */
-	public function setCharacterSong ($newCharacterSong)  {
+	public function setCharacterSong (string $newCharacterSong) : void {
 		//verify the song is secure and in good format
 		$newCharacterSong = trim($newCharacterSong);
-		$newCharacterSong = filter_var($newCharacterSong, FILTER_VALIDATE_URL, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newCharacterSong = filter_var($newCharacterSong, FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newCharacterSong) === true) {
 			throw (new \InvalidArgumentException("Song is empty or insecure"));
 		}
@@ -343,7 +353,7 @@ class Character {
 	 *
 	 * @return  string value of character universe
 	 */
-	public function getCharacterUniverse () {
+	public function getCharacterUniverse () : string {
 		return $this->characterUniverse;
 	}
 
@@ -354,8 +364,9 @@ class Character {
 	 * @throws \InvalidArgumentException if the character universe is not a string or insecure
 	 * @throws \RangeException if the character universe is over 255 characters
 	 * @throws \TypeError if the character universe is not a string
+	 * @return string character universe
 	 */
-	public function setCharacterUniverse ($newCharacterUniverse) {
+	public function setCharacterUniverse (string $newCharacterUniverse) : void {
 		$newCharacterUniverse = trim($newCharacterUniverse);
 		$newCharacterUniverse = filter_var($newCharacterUniverse, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		//checking to see if the character universe has valid data input
@@ -379,8 +390,8 @@ class Character {
 	 */
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO character(characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse) 
-					VALUES (:characterId, :charcterDescription, :characterMusicUrl, :characterName, :characterPictureUrl, :characterQuotes, :characterReleaseDate, :characterSong, :characterUnivers)";
+		$query = "INSERT INTO `character`(characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse) 
+					VALUES (:characterId, :characterDescription, :characterMusicUrl, :characterName, :characterPictureUrl, :characterQuotes, :characterReleaseDate, :characterSong, :characterUniverse)";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the place holders in the template
 		$parameters = ["characterId" => $this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl,
@@ -389,39 +400,6 @@ class Character {
 		$statement->execute($parameters);
 	}
 
-//	/**
-//	 * updates character in character table
-//	 *
-//	 * @param \PDO $pdo PDO connection object
-//	 * @throws \PDOException when MySQL related errors occur
-//	 * @throws \TypeError if $pdo is not a PDO connection object
-//	 */
-//	public function update(\PDO $pdo) : void {
-//		//create query template
-//		$query = "UPDATE character SET characterId = :characterId, characterDescription = :characterDescription, characterMusicUrl = :characterMusicUrl, characterPictureUrl = :characterPictureUrl,
-//					characterQuotes = :characterQuotes, characterReleaseDate = :characterReleaseDate, characterSong = :characterSong, characterUniverse = :characterSong";
-//		$statement = $pdo->prepare($query);
-//		//binds the updated member variables to the place holders in the template
-//		$parameters = ["characterId" =>$this->characterId->getBytes(), "characterDescription" => $this->characterDescription, "characterMusicUrl" => $this->characterMusicUrl, "characterPictureUrl" => $this->characterPictureUrl,
-//							"characterQuotes" => $this->characterQuotes, "characterReleaseDate" => $this->characterReleaseDate, "characterSong" => $this->characterSong, "characterUniverse" => $this->characterUniverse];
-//		$statement->execute($parameters);
-//	}
-//
-//	/**
-//	 * deletes a character from character table
-//	 *
-//	 * @param \PDO $pdo PDO connection object
-//	 * @throws \PDOException when MySQL related errors occur
-//	 * @throws \TypeError if $pdo is not a PDO connection object
-//	 */
-//	public function delete(\PDO $pdo) : void {
-//		//create the query template
-//		$query = "DELETE FROM character WHERE characterId = :characterId";
-//		$statement = $pdo->prepare($query);
-//		//sets up motion to delete said member variables in the template
-//		$parameters = ["characterId" => $this->characterId->getBytes()];
-//		$statement->execute($parameters);
-//	}
 	/**
 	 * gets Character by characterId
 	 *
@@ -431,15 +409,15 @@ class Character {
 	 * @throws \PDOException when MySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	public static function getCharacterByCharacterId(\PDO $pdo, $characterId) : ?Character {
-		//sanitize the characterId before searching
+	public static function getCharacterByCharacterId(\PDO $pdo, string $characterId) : ?Character {
+		//sanitize the characterId before searching\
 		try {
 			$characterId = self::validateUuid($characterId);
 		} catch(\InvalidArgumentException| \RangeException | \Exception | \TypeError $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterId";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterId = :characterId";
 		$statement =$pdo->prepare($query);
 		//bind the character id to the place holder in the template
 		$parameters = ["characterId" => $characterId->getBytes()];
@@ -472,18 +450,18 @@ class Character {
 	 * @throws \Exception if some other exception occurs
 	 * @throws \RangeException if the character name is too long
 	 * */
-	public static function getCharacterByCharacterName(\PDO $pdo, $characterName) : ?Character {
+	public static function getCharacterByCharacterName(\PDO $pdo, string $characterName) : ?Character {
 		//sanitize the character name before searching
-		try {
-			$characterName = self::string($characterName);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		$characterName = trim($characterName);
+		$characterName = filter_var($characterName, FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($characterName) === true) {
+			throw(new \PDOException("not a valid name"));
 		}
 		//create a query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse, characterName FROM Character WHERE characterName = :charaterName";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterName = :characterName";
 		$statement = $pdo->prepare($query);
 		//bind the favorite profile id to the place holder in the template
-		$parameters = ["characterName" => $characterName->getBytes()];
+		$parameters = ["characterName" => $characterName];
 		$statement->execute($parameters);
 		//grab the character from mySQL
 		try {
@@ -491,7 +469,7 @@ class Character {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"], $row["characterName"]);
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterName"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
 			}
 		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
@@ -517,7 +495,7 @@ class Character {
 		$result = str_replace("%", "\\%", $characterUniverse);
 		$characterUniverse = str_replace("_", "\\_", $result);
 		//create a query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseQuotes, characterSong, characterUniverse FROM Character WHERE characterUniverse LIKE :characterUniverse";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterUniverse LIKE :characterUniverse";
 		$statement = $pdo->prepare($query);
 		//bind the character universe to the place holder in the template
 		$characterUniverse = "%$characterUniverse%";
@@ -539,5 +517,15 @@ class Character {
 		//returns character array
 		return($characterUniverseArray);
 	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["characterId"] = $this->characterId->toString();
+		return ($fields);
 
+	}
 }

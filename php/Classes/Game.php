@@ -5,6 +5,8 @@ require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "/Classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
+use SuperSmashLore\SuperSmashLore\Test\GameTest;
+
 class Game {
 	use ValidateDate;
 	use ValidateUuid;
@@ -46,13 +48,14 @@ class Game {
 	 * @throws \TypeError if data type violates a data hint
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct($newGameId, $newGameCharacterId, $newGamePictureUrl, $newGameSystem, $newGameUrl) {
+	public function __construct($newGameId, $newGameCharacterId, $newGamePictureUrl, $newGameSystem, $newGameUrl ) {
 		try {
 			$this->setGameId($newGameId);
 			$this->setGameCharacterId($newGameCharacterId);
 			$this->setGamePictureUrl($newGamePictureUrl);
 			$this->setGameSystem($newGameSystem);
 			$this->setGameUrl($newGameUrl);
+
 
 			//determines what exception type was thrown
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -138,7 +141,7 @@ class Game {
 	public function setGamePictureUrl (string $newGamePictureUrl) : void {
 		//verifying if string is secure
 		$newGamePictureUrl = trim($newGamePictureUrl);
-		$newGamePictureUrl = filter_var($newGamePictureUrl, FILTER_VALIDATE_URL);
+		$newGamePictureUrl = filter_var($newGamePictureUrl, FILTER_VALIDATE_URL,FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newGamePictureUrl) === true) {
 			throw (new \InvalidArgumentException("picture url empty or insecure"));
 		}
@@ -147,7 +150,7 @@ class Game {
 			throw (new \RangeException("picture url must be fewer than 255 characters"));
 		}
 		//convert and store picture Url
-		$this->gamePicture = $newGamePictureUrl;
+		$this->gamePictureUrl = $newGamePictureUrl;
 	}
 
 	/**
@@ -221,29 +224,12 @@ class Game {
 	public function insert(\PDO $pdo) :void {
 		//create query template
 		$query = "INSERT INTO game (gameId, gameCharacterId, gamePictureUrl, gameSystem, gameUrl) 
-						VALUES (:gameId, :gameCharacterId, :gamePicture, :gameSystem, :gameUrl)";
+						VALUES (:gameId, :gameCharacterId, :gamePictureUrl, :gameSystem, :gameUrl)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder template
 		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId->getBytes(), "gamePictureUrl" => $this->gamePictureUrl,
 							"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
-		$statement->execute($parameters);
-	}
-
-	/**
-	 * update game for game table
-	 *
-	 * @param \PDO $pdo connection object
-	 * @throws \PDOException when MYSQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
-	public function update(\PDO $pdo) : void {
-		//create query template
-		$query = "UPDATE game SET gameId = :gameId, gameCharacterId = :gameCharacterId, gamePictureUrl = :gamePictureUrl, gameSystem = :gameSystem, gameUrl = :gameUrl";
-		$statement = $pdo->prepare($query);
-		//bind the member to the place holder in the template
-		$parameters = ["gameId" => $this->gameId->getBytes(), "gameCharacterId" => $this->gameCharacterId, "gamePictureUrl" => $this->gamePictureUrl,
-								"gameSystem" => $this->gameSystem, "gameUrl" => $this->gameUrl];
 		$statement->execute($parameters);
 	}
 
@@ -310,7 +296,7 @@ class Game {
 	 * @throws \PDOException when MYSQL error occurs
 	 * @throws \TypeError when a variable is not the correct data type
 	 */
-	public static function getGameByCharacterId(\PDO $pdo, $gameCharacterId) :?Game {
+	public static function getGameByGameCharacterId(\PDO $pdo, $gameCharacterId) : \SPLFixedArray {
 		//sanitize the characterId before searching
 		try {
 			$gameCharacterId = self::validateUuid($gameCharacterId);
@@ -321,20 +307,57 @@ class Game {
 		$query = "SELECT gameId, gameCharacterId, gamePictureUrl, gameSystem, gameUrl FROM game WHERE gameCharacterId = :gameCharacterId";
 		$statement = $pdo->prepare($query);
 		//bind the game character Id to the place holder in the template
+
 		$parameters = ["gameCharacterId" => $gameCharacterId->getBytes()];
 		$statement->execute($parameters);
-		//grab the game from MYSQL
-		try {
-			$game = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+
+
+		//build array of  character games
+		$games = new \SPLFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while (($row = $statement->fetch()) !== false) {
+			try {
 				$game = new Game($row["gameId"], $row["gameCharacterId"], $row["gamePictureUrl"], $row["gameSystem"], $row["gameUrl"]);
+				$games [$games->key()] = $game;
+				$games->next();
+			} catch(\Exception $exception) {
+				//if row can be converted rethrow it
+				throw (new\PDOException($exception->getMessage(),0, $exception));
 			}
-			//if the row couldn't be converted, rethrow it
-		} catch(\Exception $exception) {
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($game);
+		return ($games);
+	}
+	public static function getAllGames(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT gameId, gameCharacterId, gamePictureUrl, gameSystem, gameUrl FROM game";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of games
+		$games = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$game = new Game($row["gameId"], $row["gameCharacterId"], $row["gamePictureUrl"], $row["gameSystem"], $row["gameUrl"]);
+				$games[$games->key()] = $game;
+				$games->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($games);
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["gameId"] = $this->gameId->toString();
+		$fields["gameCharacterId"] = $this->gameCharacterId->toString();
+		return ($fields);
+
 	}
 }

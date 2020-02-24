@@ -19,16 +19,16 @@ class GameTest extends SuperSmashLoreTest {
 	 * game Id
 	 * @var Uuid game Id
 	 */
-	protected $game;
+	//protected $game;
 	/**
 	 * game that a character comes from; This is for foreign kew relations
 	 **/
-	protected $characterId;
+	protected $character;
 	 /**
 	  * valid picture url
 	  * @var string $VALID_PICTURE_URL
 	  **/
-	protected $VALID_PICTURE_URL = "https://www.iybujnewf.com";
+	protected $VALID_PICTURE_URL = "https://www.google.com";
 
 	/**
 	 *valid game system
@@ -47,9 +47,10 @@ class GameTest extends SuperSmashLoreTest {
 	 **/
 	public final function setUp() : void {
 		// create and insert character to own the test game
-		$this->characterId = new Character(generateUuidV4(), null, "characterMusic.com", "britneyBitch",
-			"characterPicture.com", "whatever", "right now", 215, "iurgieuni");
-		$this->characterId->insert($this->getPDO());
+		$characterId = generateUuidV4();
+		$this->character = new Character( $characterId,"The King of Thieves", "https://characterMusic.com", "britneyBitch",
+			"https://www.google.com", "whatever", "right now", "Gerudo Theme", "iurgieuni");
+		$this->character->insert($this->getPDO());
 	}
 
 	/**
@@ -59,34 +60,18 @@ class GameTest extends SuperSmashLoreTest {
 
 		//create a new Game and insert into mySQL
 		$gameId = generateUuidV4();
-		$game = new Game($gameId, $this->characterId->getCharacterId(), $this->VALID_GAME_URL, $this->VALID_GAME_SYSTEM, $this->VALID_PICTURE_URL);
+		$game = new Game($gameId, $this->character->getCharacterId(),  $this->VALID_PICTURE_URL, $this->VALID_GAME_SYSTEM, $this->VALID_GAME_URL);
 		$game->insert($this->getPDO());
 
 		//grb the data from mySQL nd enforce the fields match our expectations
 		$pdoGame = Game::getGameByGameId($this->getPDO(), $game->getGameId());
 		$this->assertEquals($pdoGame->getGameId()->toString(), $gameId->toString());
-		$this->assertEquals($pdoGame->getGameCharacterId(), $game->getGameId()->toString());
-		$this->assertEquals($pdoGame->getGameSystem(), $this->VALID_GAME_SYSTEM);
+		$this->assertEquals($pdoGame->getGameCharacterId(), $game->getGameCharacterId()->toString());
 		$this->assertEquals($pdoGame->getGamePicture(), $this->VALID_PICTURE_URL);
+		$this->assertEquals($pdoGame->getGameSystem(), $this->VALID_GAME_SYSTEM);
 		$this->assertEquals($pdoGame->getGameUrl(), $this->VALID_GAME_URL);
-	}
 
-	/**
-	 * test inserting, editing, and updating it
-	 **/
-	public function testUpdateValidGame() : void {
-		//count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("game");
-		//create a new game and insert into mySQL
-		$gameId = generateUuidV4();
-		$game = new Game($gameId, $this->characterId->getCharacterId(), $this->VALID_GAME_URL, $this->VALID_GAME_SYSTEM, $this->VALID_PICTURE_URL);
-		$game->insert($this->getPDO());
-		//grab the data from mySQ and enforce the fields match our expectations
-		$pdoGame = Game::getGameByGameId($this->getPDO(), $game->setGameId());
-		$this->assertEquals($pdoGame->getGameId(), $gameId);
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("game"));
-		$this->assertEquals($pdoGame->getGameCharacterId(), $this->characterId->getCharacterId());
-		$this->assertEquals($pdoGame->getGameUrl(), $this->VALID_GAME_URL, $this->VALID_PICTURE_URL, $this->VALID_GAME_SYSTEM);
+
 	}
 
 	/**
@@ -98,7 +83,7 @@ class GameTest extends SuperSmashLoreTest {
 
 		//create a new game and insert it into mySQL
 		$gameId = generateUuidV4();
-		$game = new Game($gameId, $this->characterId->getCharacterId(), $this->VALID_GAME_SYSTEM, $this->VALID_PICTURE_URL, $this->VALID_GAME_URL);
+		$game = new Game($gameId, $this->character->getCharacterId(), $this->VALID_PICTURE_URL, $this->VALID_GAME_SYSTEM,  $this->VALID_GAME_URL);
 		$game->insert($this->getPDO());
 
 		//delete the game from mySQL
@@ -114,26 +99,26 @@ class GameTest extends SuperSmashLoreTest {
 	/**
 	 * test inserting a game and grabbing it from mySQL
 	 **/
-	public function testGetValidGameByGameCharacterId () {
+	public function testGetValidGameByGameCharacterId () : void {
 		// count the number of rows
 		$numRows = $this->getConnection()->getRowCount("game");
 
 		//create a new game and insert into mySQL
-		$gameId = generateUuideV4();
-		$game = new Game($gameId, $this->characterId->getCharacterId(), $this->VALID_GAME_URL, $this->VALID_GAME_SYSTEM, $this->VALID_PICTURE_URL);
+		$gameId = generateUuidV4();
+		$game = new Game($gameId, $this->character->getCharacterId(), $this->VALID_PICTURE_URL, $this->VALID_GAME_SYSTEM, $this->VALID_GAME_URL );
 		$game->insert($this->getPDO());
 
-		//grab the data from mySQL and enforce the fields match expectaions
-		$results = Game::getGameByCharacterId($this->getPDO(), $game->getGameCharacterId());
+		//grab the data from mySQL and enforce the fields match expectations
+		$results = Game::getGameByGameCharacterId($this->getPDO(), $game->getGameCharacterId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("game"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore", $results);
+		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Game", $results);
 
 		//grab the result from array and validate it
 		$pdoGame = $results[0];
 
 		$this->assertEquals($pdoGame->getGameId(), $gameId);
-		$this->assertEquals($pdoGame->getGameCharacterId(), $this->characterId->getCharacterId);
+		$this->assertEquals($pdoGame->getGameCharacterId(), $this->character->getCharacterId());
 	}
 
 	/**
@@ -144,22 +129,22 @@ class GameTest extends SuperSmashLoreTest {
 		$numRows = $this->getConnection()->getRowCount("game");
 
 		//create new game and insert into mySQL
-		$gameId = generateUuideV4();
-		$game = new Game($gameId, $this->characterId->getCharacterId(), $this->VALID_GAME_URL, $this->VALID_GAME_SYSTEM, $this->VALID_PICTURE_URL);
+		$gameId = generateUuidV4();
+		$game = new Game($gameId, $this->character->getCharacterId(), $this->VALID_PICTURE_URL, $this->VALID_GAME_SYSTEM, $this->VALID_GAME_URL);
 		$game->insert($this->getPDO());
 
 		//grab the data from mySQL adn enforce the fields match expectations
 		$results = Game::getAllGames($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("game"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore", $results);
+		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Game", $results);
 
 		//grab the result from array and validate it
 		$pdoGame = $results[0];
 
 		//grab results from array and validate it
 		$this->assertEquals($pdoGame->getGameId(), $gameId);
-		$this->assertEquals($pdoGame->getGameCharacterId(), $this->characterId->getCharacterId);
+		$this->assertEquals($pdoGame->getGameCharacterId(), $this->character->getCharacterId());
 	}
 
 }
