@@ -38,17 +38,17 @@ class Game {
 
 	/**
 	 * constructor method for Game
-	 * @param $newGameId
-	 * @param $newGameCharacterId
-	 * @param $newGamePictureUrl
-	 * @param $newGameSystem
-	 * @param $newGameUrl
+	 * @param string | Uuid $newGameId id for this game or null if a new game
+	 * @param string | Uuid $newGameCharacterId id for the character or null if new game
+	 * @param string $newGamePictureUrl url for the picture of the game
+	 * @param string $newGameSystem string for the system the game is on
+	 * @param string $newGameUrl url for the link to purchase the game
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are too large or too small
 	 * @throws \TypeError if data type violates a data hint
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct($newGameId, $newGameCharacterId, $newGamePictureUrl, $newGameSystem, $newGameUrl ) {
+	public function __construct(Uuid $newGameId, string $newGameCharacterId, string $newGamePictureUrl, string $newGameSystem, string $newGameUrl ) {
 		try {
 			$this->setGameId($newGameId);
 			$this->setGameCharacterId($newGameCharacterId);
