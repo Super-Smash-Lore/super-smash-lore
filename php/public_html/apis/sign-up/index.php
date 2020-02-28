@@ -5,7 +5,7 @@ require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
-use UssHopper\DataDesign\Profile;
+use SuperSmashLore\SuperSamshLore\Profile;
 /**
  * api for signing up to Super Smash lore
  *
