@@ -30,7 +30,7 @@ $reply->data = null;
 try {
 	//grab the mySQL connection
 
-	$secrets = new \Secrets("/etc/apache2/capstone-mysql/ddctwitter.ini");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/SuperSmashLore.ini");
 	$pdo = $secrets->getPdoObject();
 
 
@@ -39,7 +39,6 @@ try {
 
 	// sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$profileAtHandle = filter_input(INPUT_GET, "profileAtHandle", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 
@@ -55,8 +54,7 @@ try {
 		if(empty($id) === false) {
 			$reply->data = Profile::getProfileByProfileId($pdo, $id);
 
-		} else if(empty($profileAtHandle) === false) {
-			$reply->data = Profile::getProfileByProfileAtHandle($pdo, $profileAtHandle);
+
 
 		} else if(empty($profileEmail) === false) {
 
@@ -85,24 +83,16 @@ try {
 			throw(new RuntimeException("Profile does not exist", 404));
 		}
 
-		//profile at handle
-		if(empty($requestObject->profileAtHandle) === true) {
-			throw(new \InvalidArgumentException ("No profile at handle", 405));
-		}
 
 		//profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
 		}
 
-		//profile phone # | if null use the profile phone that is in the database
-		if(empty($requestObject->profilePhone) === true) {
-			$requestObject->ProfilePhone = $profile->getProfilePhone();
-		}
 
-		$profile->setProfileAtHandle($requestObject->profileAtHandle);
+
+
 		$profile->setProfileEmail($requestObject->profileEmail);
-		$profile->setProfilePhone($requestObject->profilePhone);
 		$profile->update($pdo);
 
 		// update reply
