@@ -21,7 +21,7 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	//grab the mySQL connection
-	$secrets = new \Secrets("/etc/apache2/capstone-mysql/ddcSuperSmashLore.ini");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/SuperSmashLore.ini");
 	$pdo = $secrets->getPdoObject();
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -29,10 +29,7 @@ try {
 		//decode the json and turn it into a php object
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		//profile at handle is a required field
-		if(empty($requestObject->profileAtHandle) === true) {
-			throw(new \InvalidArgumentException ("No profile @handle", 405));
-		}
+
 		//profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
@@ -45,10 +42,7 @@ try {
 		if(empty($requestObject->profilePasswordConfirm) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
-		//if phone is empty set it too null
-		if(empty($requestObject->profilePhone) === true) {
-			$requestObject->profilePhone = null;
-		}
+
 		//make sure the password and confirm password match
 		if ($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
 			throw(new \InvalidArgumentException("passwords do not match"));
@@ -56,7 +50,7 @@ try {
 		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
 		$profileActivationToken = bin2hex(random_bytes(16));
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAtHandle, "null", $requestObject->profileEmail, $hash, $requestObject->profilePhone);
+		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAtHandle, "null", $requestObject->profileEmail, $hash,);
 		//insert the profile into the database
 		$profile->insert($pdo);
 		//compose the email message to send with th activation token
@@ -78,7 +72,7 @@ EOF;
 		$swiftMessage = new Swift_Message();
 		// attach the sender to the message
 		// this takes the form of an associative array where the email is the key to a real name
-		$swiftMessage->setFrom(["gkephart@cnm.edu" => "Gkephart"]);
+		$swiftMessage->setFrom(["dgonzales371@cnm.edu" => "Daniel Gonzales"]);
 		/**
 		 * attach recipients to the message
 		 * notice this is an array that can include or omit the recipient's name
