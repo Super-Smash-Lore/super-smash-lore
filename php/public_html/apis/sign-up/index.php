@@ -40,24 +40,24 @@ try {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
 		}
 		//verify that profile password is present
-		if(empty($requestObject->profileHash) === true) {
+		if(empty($requestObject->profilePassword) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 		//verify that the confirm password is present
-		if(empty($requestObject->profileHashConfirm) === true) {
+		if(empty($requestObject->profilePasswordConfirm) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 
 		//make sure the password and confirm password match
-		if ($requestObject->profileHash !== $requestObject->profileHashConfirm) {
+		if ($requestObject->profilePassword !== $requestObject->profileHashConfirm) {
 			throw(new \InvalidArgumentException("passwords do not match"));
 		}
-		$hash = password_hash($requestObject->profileHash, PASSWORD_ARGON2I, ["time_cost" => 7]);
+		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 7]);
 
 		$profileActivationToken = bin2hex(random_bytes(16));
 
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileUsername, "null", $requestObject->profileEmail, $hash,);
+		$profile = new Profile(generateUuidV4(), $profileActivationToken, new \DateTime, $requestObject->profileEmail, $hash, $requestObject->profileUsername);
 
 		//insert the profile into the database
 		$profile->insert($pdo);
@@ -86,7 +86,7 @@ EOF;
 
 		// attach the sender to the message
 		// this takes the form of an associative array where the email is the key to a real name
-		$swiftMessage->setFrom(["dgonzales371@cnm.edu" => "Daniel Gonzales"]);
+		$swiftMessage->setFrom(["odysseyofultimate@gmail.com" => "Odyssey of Ultimate"]);
 
 		/**
 		 * attach recipients to the message
