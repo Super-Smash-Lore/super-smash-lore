@@ -2,7 +2,7 @@
 //this will be the api for profile
 
 require_once dirname(__DIR__,3) . "/vendor/autoload.php";
-require_once dirname(__DIR__,3) . "/Classes/autoload.php";
+require_once dirname(__DIR__,3) . "/Classes/autoloader.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__,3) . "/lib/xsrf.php";
 require_once dirname(__DIR__,3) . "/lib/jwt.php";
@@ -88,11 +88,10 @@ try {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
 		}
 
-		$profile->setProfileId($requestObject->profileId);
-		$profile->setProfileActivationToken($requestObject->profileActivationToken);
-		$profile->setProfileDateJoined($requestObject->profileDateJoined);
+//		$profile->setProfileId($requestObject->profileId);
+//		$profile->setProfileActivationToken($requestObject->profileActivationToken);
+//		$profile->setProfileDateJoined($requestObject->profileDateJoined);
 		$profile->setProfileEmail($requestObject->profileEmail);
-		$profile->setProfileHash($requestObject->profileHash);
 		$profile->setProfileUsername($requestObject->profileUsername);
 		$profile->update($pdo);
 
