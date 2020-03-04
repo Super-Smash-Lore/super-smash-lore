@@ -9,7 +9,7 @@ require_once dirname(__DIR__,3) . "/lib/jwt.php";
 require_once dirname(__DIR__,3) . "/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
-use SuperSmashLore\DataDesign\Profile;
+use SuperSmashLore\SuperSmashLore\Profile;
 
 /**
  * API for Profile
@@ -30,7 +30,7 @@ $reply->data = null;
 try {
 	//grab the mySQL connection
 
-	$secrets = new \Secrets("/etc/apache2/capstone-mysql/SuperSmashLore.ini");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/smash.ini");
 	$pdo = $secrets->getPdoObject();
 
 
@@ -45,7 +45,7 @@ try {
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-}
+	}
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
@@ -57,7 +57,6 @@ try {
 
 
 		} else if(empty($profileEmail) === false) {
-
 			$reply->data = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 		}
 
@@ -89,10 +88,12 @@ try {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
 		}
 
-
-
-
+		$profile->setProfileId($requestObject->profileId);
+		$profile->setProfileActivationToken($requestObject->profileActivationToken);
+		$profile->setProfileDateJoined($requestObject->profileDateJoined);
 		$profile->setProfileEmail($requestObject->profileEmail);
+		$profile->setProfileHash($requestObject->profileHash);
+		$profile->setProfileUsername($requestObject->profileUsername);
 		$profile->update($pdo);
 
 		// update reply
@@ -130,7 +131,7 @@ try {
 	$reply->message = $exception->getMessage();
 }
 
-header("Content-type application/json");
+header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
