@@ -5,7 +5,7 @@ require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
-use UssHopper\DataDesign\Profile;
+use SuperSmashLore\SuperSmashLore\Profile;
 /**
  * api for signing up to Super Smash lore
  *
@@ -19,13 +19,16 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
+
 try {
 	//grab the mySQL connection
-	$secrets = new \Secrets("/etc/apache2/capstone-mysql/SuperSmashLore.ini");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/smash.ini");
 	$pdo = $secrets->getPdoObject();
 	//determine which HTTP method was used
+
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if($method === "POST") {
+
 		//decode the json and turn it into a php object
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -35,44 +38,54 @@ try {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
 		}
 		//verify that profile password is present
-		if(empty($requestObject->profilePassword) === true) {
+		if(empty($requestObject->profileHash) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 		//verify that the confirm password is present
-		if(empty($requestObject->profilePasswordConfirm) === true) {
+		if(empty($requestObject->profileHashConfirm) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 
 		//make sure the password and confirm password match
-		if ($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
+		if ($requestObject->profileHash !== $requestObject->profileHashConfirm) {
 			throw(new \InvalidArgumentException("passwords do not match"));
 		}
-		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$hash = password_hash($requestObject->profileHash, PASSWORD_ARGON2I, ["time_cost" => 7]);
+
 		$profileActivationToken = bin2hex(random_bytes(16));
+
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAtHandle, "null", $requestObject->profileEmail, $hash,);
+		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileUsername, "null", $requestObject->profileEmail, $hash,);
+
 		//insert the profile into the database
 		$profile->insert($pdo);
-		//compose the email message to send with th activation token
-		$messageSubject = "One step closer to Sticky Head -- Account Activation";
+
+		//compose the email message to send with the activation token
+		$messageSubject = "Congrats on your account activation!";
+
 		//building the activation link that can travel to another server and still work. This is the link that will be clicked to confirm the account.
 		//make sure URL is /public_html/api/activation/$activation
 		$basePath = dirname($_SERVER["SCRIPT_NAME"], 3);
+
 		//create the path
 		$urlglue = $basePath . "/apis/activation/?activation=" . $profileActivationToken;
+
 		//create the redirect link
 		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
+
 		//compose message to send with email
 		$message = <<< EOF
-<h2>Welcome to Super Smash Lore.</h2>
+<h2>Welcome to Odyssey Of Ultimate.</h2>
 <p>In order to sign in you must confirm your account </p>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 		//create swift email
 		$swiftMessage = new Swift_Message();
+
 		// attach the sender to the message
 		// this takes the form of an associative array where the email is the key to a real name
 		$swiftMessage->setFrom(["dgonzales371@cnm.edu" => "Daniel Gonzales"]);
+
 		/**
 		 * attach recipients to the message
 		 * notice this is an array that can include or omit the recipient's name
@@ -83,8 +96,10 @@ EOF;
 		$recipients = [$requestObject->profileEmail];
 		//set the recipient to the swift message
 		$swiftMessage->setTo($recipients);
+
 		//attach the subject line to the email message
 		$swiftMessage->setSubject($messageSubject);
+
 		/**
 		 * attach the message to the email
 		 * set two versions of the message: a html formatted version and a filter_var()ed version of the message, plain text
@@ -93,8 +108,10 @@ EOF;
 		 */
 		//attach the html version fo the message
 		$swiftMessage->setBody($message, "text/html");
+
 		//attach the plain text version of the message
 		$swiftMessage->addPart(html_entity_decode($message), "text/plain");
+
 		/**
 		 * send the Email via SMTP; the SMTP server here is configured to relay everything upstream via CNM
 		 * this default may or may not be available on all web hosts; consult their documentation/support for details
@@ -105,8 +122,10 @@ EOF;
 		$smtp = new Swift_SmtpTransport(
 			"localhost", 25);
 		$mailer = new Swift_Mailer($smtp);
+
 		//send the message
 		$numSent = $mailer->send($swiftMessage, $failedRecipients);
+
 		/**
 		 * the send method returns the number of recipients that accepted the Email
 		 * so, if the number attempted is not the number accepted, this is an Exception
@@ -116,7 +135,7 @@ EOF;
 			throw(new RuntimeException("unable to send email", 400));
 		}
 		// update reply
-		$reply->message = "Thank you for signing in to Super Smash Lore";
+		$reply->message = "Thank you for signing up for Odyssey Of Ultimate";
 	} else {
 		throw (new InvalidArgumentException("invalid http request"));
 	}
