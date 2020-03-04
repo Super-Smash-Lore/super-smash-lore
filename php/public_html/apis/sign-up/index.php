@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
-require_once dirname(__DIR__, 3) . "/Classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/Classes/autoloader.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/lib/uuid.php";
@@ -49,8 +49,8 @@ try {
 		}
 
 		//make sure the password and confirm password match
-		if ($requestObject->profilePassword !== $requestObject->profileHashConfirm) {
-			throw(new \InvalidArgumentException("passwords do not match"));
+		if ($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
+			throw(new \InvalidArgumentException("passwords do not match", 405));
 		}
 		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 7]);
 

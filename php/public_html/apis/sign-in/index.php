@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 3) . "/Classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/Classes/autoloader.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/lib/jwt.php";
@@ -52,7 +52,7 @@ try {
 			throw(new \InvalidArgumentException("Password Or Email Is Incorrect.", 401));
 		}
 		//grab the profile from the database and put it into the session
-		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId);
+		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 		$_SESSION["profile"] = $profile;
 		//create the auth payload
 		$authObject = (object) [

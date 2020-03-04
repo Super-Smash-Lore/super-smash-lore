@@ -117,7 +117,7 @@ class Profile implements \JsonSerializable {
 	 * @returns $newProfileActivationToken as null
 	 * */
 
-	public function setProfileActivationToken(string $newProfileActivationToken): void {
+	public function setProfileActivationToken(?string $newProfileActivationToken): void {
 		if($newProfileActivationToken === null) {
 			$this->profileActivationToken = null;
 			return;
