@@ -5,7 +5,7 @@ require_once ("autoloader.php");
 require_once (dirname(__DIR__) . "/Classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
-class Character {
+class Character implements \JsonSerializable {
 	use ValidateUuid;
 	use ValidateDate;
 	/**
@@ -528,13 +528,13 @@ class Character {
 	 * @throws \PDOException when MySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getCharacterByCharacterUniverse(\PDO $pdo, $characterUniverse) : \SplFixedArray {
+	public static function getCharacterByCharacterUniverse(\PDO $pdo, string $characterUniverse) : \SplFixedArray {
 		//sanitize the description before searching
 		$characterUniverse = trim($characterUniverse);
 		$characterUniverse = filter_var($characterUniverse, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		//escape anyMySQL wild cards
-		$result = str_replace("%", "\\%", $characterUniverse);
-		$characterUniverse = str_replace("_", "\\_", $result);
+//		$result = str_replace("%", "\\%", $characterUniverse);
+//		$characterUniverse = str_replace("_", "\\_", $result);
 		//create a query template
 		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` WHERE characterUniverse LIKE :characterUniverse";
 		$statement = $pdo->prepare($query);
