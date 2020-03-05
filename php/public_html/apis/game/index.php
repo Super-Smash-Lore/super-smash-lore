@@ -1,11 +1,12 @@
 <?php
-require_once dirname(__DIR__) . "/vendor/autoload.php";
-require_once dirname(__DIR__) . "/Classes/autoload.php";
+
+require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
+require_once dirname(__DIR__, 3) . "/Classes/autoloader.php";
 require_once ("/etc/apache2/capstone-mysql/Secrets.php");
-require_once dirname(__DIR__) . "/lib/xsrf.php";
-require_once dirname(__DIR__) . "/lib/uuid.php";
-require_once dirname("/etc/apache2/capstone-mysql/Secrets.php");
-use SuperSmashLore\SuperSmashLore\{Profile, Character, favorite};
+require_once dirname(__DIR__, 3) . "/lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/lib/uuid.php";
+require_once ("/etc/apache2/capstone-mysql/Secrets.php");
+use SuperSmashLore\SuperSmashLore\{Profile, Character, favorite, Game};
 /**
  * api for the game class
  *
@@ -20,13 +21,13 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-	$secrets = new\Secrets("/etc/spache2/capstone-mysql/supersmashlore.ini");
+	$secrets = new\Secrets("/etc/apache2/capstone-mysql/smash.ini");
 	$pdo = $secrets->getPdoObject();
 	//determine which HTTP method was used
 	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
-	//sanatize input
+	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$gameProfileId = filter_input(INPUT_GET, $gameProfileId, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$gameCharacterId = filter_input(INPUT_GET, "gameCharacterId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	//make sure the id is valid for method that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
 		throw (new InvalidArgumentException("Id cannot be empty or negative", 402));
@@ -35,22 +36,14 @@ try {
 	if($method === "GET") {
 		//set xsrf cookie
 		setXsrfCookie();
-		//get a specific gme or all games and update reply
+		//get a specific game or all games and update reply
 		if(empty($id) === false) {
 			$reply->data = Game::getGameByGameId($pdo, $id);
-		} elseif(empty($gameProfileId) === false) {
-			$reply->data = Game::getGameByGameProfileId($pdo, $gameProfileId);
+		} elseif(empty($gameCharacterId) === false) {
+			$reply->data = Game::getGameByGameCharacterId($pdo, $gameCharacterId);
 		} else {
-			$games = Game::getAllGames($pdo)->toArray();
-			$gameProfiles = [];
-			foreach($games as $game) {
-				$profile = Profile::getProfileByProfileId($pdo, $game->getGameProfileId());
-				$gameProfiles[] = (object)[
-					"gameId" => $game->getGameId(),
-					"gameProfileId" => $game->getGameProfileId(),
-				];
-			}
-			$reply->data = $gameProfiles;
+			$reply->data = Game::getAllGames($pdo)->toArray();
+
 		}
 	} elseif($method === "PUT" || $method === "POST") {
 		//enforce the user has a xsrf token

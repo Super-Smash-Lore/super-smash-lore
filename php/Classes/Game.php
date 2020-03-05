@@ -7,7 +7,7 @@ require_once (dirname(__DIR__) . "/Classes/autoloader.php");
 use Ramsey\Uuid\Uuid;
 use SuperSmashLore\SuperSmashLore\Test\GameTest;
 
-class Game {
+class Game implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
 	/**

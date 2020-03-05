@@ -1,11 +1,11 @@
 <?php
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
-require_once dirname(__DIR__, 3) . "/Classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/Classes/autoloader.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/lib/uuid.php";
-use SuperSmashLore\SuperSmashLore\Profile;
+use SuperSmashLore\SuperSmashLore\{Favorite, Profile, Character};
 /**
  * API for the favorite class
  *
@@ -41,7 +41,7 @@ try {
 			$reply->data = Favorite::getFavoriteByFavoriteProfileId($pdo, $favoriteProfileId)->toArray();
 			//get all the favorites associated with the characterId
 		} else if(empty($favoriteCharacterId) == false) {
-			$reply->data = Favorite::getFavoriteByFavoriteChaaracterId($pdo, $favoriteCharacterId)->toArray();
+			$reply->data = Favorite::getFavoriteByFavoriteCharacterId($pdo, $favoriteCharacterId)->toArray();
 		} else {
 			throw new InvalidArgumentException("Incorrect Search Parameters", 404);
 		}
@@ -68,14 +68,13 @@ try {
 				throw(new \InvalidArgumentException("You Must Be Logged in to Favorite Characters", 403));
 			}
 			validateJwtHeader();
-			$favorite = new Favorite($_SESSION["profile"]->getPRofileId(), $requestObject->favoriteCharacterId);
+			$favorite = new Favorite($requestObject->favoriteCharacterId, $_SESSION["profile"]->getProfileId(), new \DateTime());
 			$favorite->insert($pdo);
 			$reply->message = "Favorited Character Successful.";
-		} else if($method === "PUT") {
+		}
+		} else if($method === "DELETE") {
 			//enforce the end user has an XRSF Token
 			verifyXsrf();
-			//enforce the end user has a JWT token
-			validateJwtHeader();
 			//grab the favorite by its composite key
 			$favorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($pdo, $requestObject->favoriteProfileId, $requestObject->favoriteCharacterid);
 			if($favorite === null) {
@@ -85,11 +84,13 @@ try {
 			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $favorite->getFavoriteProfileId()->toString()) {
 				throw(new \InvalidArgumentException("You Are Not Allowed To Delete This Character", 403));
 			}
+			//enforce the end user has a JWT token
+			validateJwtHeader();
 			//perform the actual removal of the Favorite
 			$favorite->delete($pdo);
 			//update the message
 			$reply->message = "Favorite Successfully Removed.";
-		}
+
 	} else {
 		throw new \InvalidArgumentException("Invalid HTTP Request", 400);
 	}
