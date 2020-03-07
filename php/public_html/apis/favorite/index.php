@@ -31,8 +31,8 @@ try {
 		//set xsrf cookie
 		setXsrfCookie();
 		//gets a specific favorite associated based on the composite key
-		if ($favoriteProfileId !== null && $favoriteCharacterId !== null) {
-			$favorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId ($pdo, $favoriteProfileId, $favoriteCharacterId);
+		if($favoriteProfileId !== null && $favoriteCharacterId !== null) {
+			$favorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($pdo, $favoriteProfileId, $favoriteCharacterId);
 			if($favorite !== null) {
 				$reply->data = $favorite;
 			}
@@ -49,7 +49,7 @@ try {
 		//decode the response from the front end
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		if(empty($requestObject->favoriteProfileId) ===true) {
+		if(empty($requestObject->favoriteProfileId) === true) {
 			throw (new \InvalidArgumentException("No Profile Liked to the Favorite.", 405));
 		}
 		if(empty($requestObject->favoriteCharacterId) === true) {
@@ -71,14 +71,16 @@ try {
 			$favorite = new Favorite($requestObject->favoriteCharacterId, $_SESSION["profile"]->getProfileId(), new \DateTime());
 			$favorite->insert($pdo);
 			$reply->message = "Favorited Character Successful.";
-		}
-		} else if($method === "DELETE") {
+
+
+		} else if($method === "PUT") {
 			//enforce the end user has an XRSF Token
 			verifyXsrf();
+			var_dump($_SESSION["profile"]->getProfileId()->toString());
 			//grab the favorite by its composite key
-			$favorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($pdo, $requestObject->favoriteProfileId, $requestObject->favoriteCharacterid);
+			$favorite = Favorite::getFavoriteByFavoriteCharacterIdAndFavoriteProfileId($pdo, $requestObject->favoriteCharacterId, $requestObject->favoriteProfileId);
 			if($favorite === null) {
-				throw (new RuntimeException("Favorite Does Not Exist"));
+				throw (new RuntimeException("Favorite Does Not Exist", 401));
 			}
 			//enforce the user is signed in and only trying to edit their own favorites, either add or delete
 			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $favorite->getFavoriteProfileId()->toString()) {
@@ -90,18 +92,41 @@ try {
 			$favorite->delete($pdo);
 			//update the message
 			$reply->message = "Favorite Successfully Removed.";
+		} else if($method === "DELETE") {
+			//enforce that the end user has a XSRF token.
+			verifyXsrf();
 
-	} else {
-		throw new \InvalidArgumentException("Invalid HTTP Request", 400);
+			//retrieve the favorite to be deleted or removed
+			$favorite = Favorite::getFavoriteByFavoriteProfileId($id);
+			if($favorite === null) {
+				throw(new \RuntimeException("Favorite does not exist", 404));
+			}
+
+			//enforce the user is signed in and only trying to edit their own favorite.
+			if(empty($_SESSION["favorite"]) === true || $_SESSION["favorite"]->getFavoriteId()->toString() !== $favorite->getFavoriteProfileId()->toString()) {
+				throw(new \InvalidArgumentException("You are not allowed to delete this favorite.", 403));
+			}
+			//enforce the end user has a jwt token
+			validateJwtHeader();
+
+			//delete Favorite
+			$favorite->delete($pdo);
+
+			//update reply
+			$reply->message = "Favorite Deleted OK";
+		} else {
+			throw new \InvalidArgumentException("Invalid HTTP Request", 400);
+		}
+		//catch any exceptions that are thrown and update the reply status and message accordingly
 	}
-	//catch any exceptions that are thrown and update the reply status and message accordingly
-} catch(\Exception | \TypeError $exception) {
-	$reply->status = $exception->getCode();
-	$reply->message = $exception->getMessage();
-}
+} catch (\Exception | \TypeError $exception) {
+		$reply->status = $exception->getCode();
+		$reply->message = $exception->getMessage();
+	}
 header("Content-Type: application/jason");
 if($reply->data === null) {
 	unset($reply->data);
 }
 //encode and return reply to front end user
 echo json_encode($reply);
+

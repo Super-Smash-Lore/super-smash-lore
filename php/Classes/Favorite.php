@@ -175,18 +175,23 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 	 * Gets the Favorite by Favorite Character Id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $favoriteCharacterId favorite character id to search for
+	 * @param string $favoriteProfileId favorite character id to search for
 	 * @return Favorite| null Favorite found or null if not found
 	 * @throws \PDOException when MySql related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 */
-	public static function getFavoriteByFavoriteProfileId(\PDO $pdo) : \SPLFixedArray {
-
+	public static function getFavoriteByFavoriteProfileId(\PDO $pdo, $favoriteProfileId) : \SPLFixedArray {
+		try {
+			$favoriteProfileId = self::validateUuid($favoriteProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
 		// create query template
-		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM favorite";
+		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM favorite WHERE favoriteProfileId = :favoriteProfileId";
 		$statement = $pdo->prepare($query);
 		// bind the favorite profile id to the place holder in the template
-		$statement->execute();
+		$parameters = ["favoriteProfileId" => $favoriteProfileId->getBytes()];
+		$statement->execute($parameters);
 		// build an array of favorites
 		$favorites = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -203,21 +208,49 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		return($favorites);
 	}
 
+	public static function getFavoriteByFavoriteCharacterId(\PDO $pdo, $favoriteCharacterId) : \SPLFixedArray {
+		//sanitize the characterId before searching
+		try {
+			$favoriteCharacterId = self::validateUuid($favoriteCharacterId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create query template
+		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM favorite WHERE favoriteCharacterId = :favoriteCharacterId";
+		$statement = $pdo->prepare($query);
+		//bind the game character Id to the place holder in the template
+
+		$parameters = ["favoriteCharacterId" => $favoriteCharacterId->getBytes()];
+		$statement->execute($parameters);
+
+
+		//build array of  characters that have been favorited
+		$favoriteCharacters = new \SPLFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while (($row = $statement->fetch()) !== false) {
+			try {
+				$favorite = new Favorite($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
+				$favoriteCharacters [$favoriteCharacters->key()] = $favorite;
+				$favoriteCharacters->next();
+			} catch(\Exception $exception) {
+				//if row can be converted rethrow it
+				throw (new\PDOException($exception->getMessage(),0, $exception));
+			}
+		}
+		return ($favoriteCharacters);
+	}
+
 
 	/**
 	 * gets the favorite by favorite profile id and favorite character id
 	 *
 	 * @param \PDO $pdo PDO connection
-	 * @param Uuid| string  $FavoriteProfileId favorite profile id to search for
+	 * @param string $favoriteCharacterId
+	 * @param string $favoriteProfileId
 	 * @return Favorite|null Favorite found or null if not found
-	 * @throws \PDOException when mysql related errors occur
-	 * @throws \RangeException if the data values are out of bounds or too long
-	 * @throws \InvalidArgumentException if the data types are not valid
-	 * @throws \TypeError when variable is not the correct data type
-	 * @throws \Exception if some other exceptions occurs
 	 */
 
-	public static function getFavoriteByFavoriteProfileIdAndFavoriteCharacterId(\PDO $pdo, string $favoriteCharacterId, string $favoriteProfileId) : ?Favorite {
+	public static function getFavoriteByFavoriteCharacterIdAndFavoriteProfileId(\PDO $pdo, string $favoriteCharacterId, string $favoriteProfileId) : ?Favorite {
 		//creating throw error codes.
 		try {
 			$favoriteCharacterId = self::ValidateUuid($favoriteCharacterId);

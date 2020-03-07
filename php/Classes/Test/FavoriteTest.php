@@ -87,7 +87,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$favorite->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoFavorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($this->getPDO(), $this->character->getCharacterId(), $this->profile->getProfileId());
+		$pdoFavorite = Favorite::getFavoriteByFavoriteCharacterIdAndFavoriteProfileId($this->getPDO(), $this->character->getCharacterId(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getconnection()->getRowCount("favorite"));
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoFavorite->getFavoriteCharacterId(), $this->character->getCharacterId());
@@ -111,8 +111,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$favorite->delete($this->getPDO());
 
 		// grab data from my sql and enforce the Character does not exist
-		$pdoFavorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($this->getPDO(), $this->profile->getProfileId(), $this->character->getCharacterId());
-		$this->assertNull($pdoFavorite);
+		$pdoFavorite = Favorite::getFavoriteByFavoriteCharacterIdAndFavoriteProfileId($this->getPDO(), $this->character->getCharacterId(), $this->profile->getProfileId());		$this->assertNull($pdoFavorite);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("favorite"));
 	}
 
@@ -128,8 +127,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$favorite->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectation
-		$pdoFavorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($this->getPDO(),$this->character->getCharacterId(), $this->profile->getProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
+		$pdoFavorite = Favorite::getFavoriteByFavoriteCharacterIdAndFavoriteProfileId($this->getPDO(), $this->character->getCharacterId(), $this->profile->getProfileId());		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$this->assertEquals($pdoFavorite->getFavoriteProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoFavorite->getFavoriteCharacterId(), $this->character->getCharacterId());
 
@@ -150,7 +148,7 @@ class FavoriteTest extends SuperSmashLoreTest {
 		$favorite->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Favorite::getFavoriteByFavoriteProfileId($this->getPDO(), $this->character->getCharacterId());
+		$results = Favorite::getFavoriteByFavoriteProfileId($this->getPDO(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favorite"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Favorite", $results);
