@@ -2,6 +2,7 @@ import React from "react"
 import splash from "../img/Smash-Background.png"
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+import Logo from "../img/Deep-Dive-Smash-Logo.png"
 import "../index.css";
 
 export const Home = () => {
@@ -11,7 +12,10 @@ export const Home = () => {
 		<h1>Ultimate</h1>
 		<div>
 			<p id="developed-by">
-				Developed By: Deep Diving for Nintendo
+				Developed By:
+			</p>
+			<p id="developed-by-2">
+				Deep Diving for Nintendo
 			</p>
 		</div>
 		</div>
