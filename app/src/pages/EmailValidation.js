@@ -5,25 +5,30 @@ import Col from "react-bootstrap/Col";
 import Image from "../img/Super-smash.png";
 import Figure from "react-bootstrap/Figure"
 import Card from "react-bootstrap/Card";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import Button from "react-bootstrap/Button";
 import "./styles.css"
 
 export const EmailValidation = () => {
 	return (
-		<div className="">
-
-			<Row>
-				<Col md={4}><h1>Welcome to Odyssey of Ultimate</h1>
+		<div>
+				<Col className="d-flex justify-content-center mb-5"><h1>Welcome to Odyssey of Ultimate</h1>
 					</Col>
-			</Row>
-<Row>
-			<Col xs={12} md={8}><img className=" mt-5" src={Image} alt=""/></Col>
-</Row>
-			<Row>
-			<Col md={4}>
-				<p><strong> Confirming your profile and saving some of your favorite characters is only one more click away!</strong></p>
+
+
+			<Col md={{ span: 4, offset: 2 }}><img src={Image} alt=""/></Col>
+
+			<Col className="d-flex justify-content-center">
+				<h4> Confirming your profile and saving some of your favorite characters is only one more click away!</h4>
+			</Col>
+			<Col className="d-flex justify-content-center mt-3">
+				<ButtonToolbar>
+					<Button href="https://www.twitch.tv/c9zven" variant="link"> https://www.twitch.tv/c9zven</Button>
+				</ButtonToolbar>
+			</Col>
+			<Col className="d-flex justify-content-center fixed-bottom">
 				<p>OdysseyOfUltimate.com 2020</p>
 			</Col>
-			</Row>
 		</div>
 	)
 };
