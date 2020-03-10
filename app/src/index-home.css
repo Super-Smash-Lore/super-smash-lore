@@ -1,11 +1,9 @@
-body {
+.home {
 	margin: 0;
 	padding: 0;
-
-	/** background image */
+	min-width: 100vw;
+	min-height: 100vh;
 	background-image: url("./img/Odyssey-Of-Ultimate-Banner.png");
 	background-repeat: no-repeat;
-	background-attachment: fixed;
 	background-size: cover;
-
 }

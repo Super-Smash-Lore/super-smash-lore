@@ -2,19 +2,24 @@ h1 {
 	font-size: 8vw;
 	font-weight: bold;
 }
-#title {
-	margin-top: 5vw;
-}
+/*#title {*/
+/*	margin-top: 5vw;*/
+/*}*/
 #developed-by {
 	margin-top: 5vw;
 	font-size: 2vw;
+	font-family: 'Roboto', sans-serif;
 }
 #developed-by-2 {
 	font-size: 2vw;
+	font-family: 'Roboto', sans-serif;
 }
 #home-text {
 	font-size: 2vw;
 }
 #logo {
 	height: 12vw;
+}
+#sign-up-text {
+	font-size: 2.5vw;
 }
