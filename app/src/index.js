@@ -6,16 +6,18 @@ import {Route, Switch} from "react-router";
 import {FourOhFour} from "./pages/FourOhFour";
 import {Home} from "./pages/Home";
 import {SignIn} from "./pages/SignIn";
-import {NavBar} from "./shared/utils/NavBar"
+import {NavBar} from "./shared/utils/NavBar";
+import {Fighter} from "./pages/Fighter";
 
 
-const Routing = () => (
+ const Routing = () => (
 	<>
 		<BrowserRouter>
 			<Switch>
 				<Route exact path="/" component={Home}/>
 				<Route exact path="/sign-in" component={SignIn}/>
 				<Route exact path="./shared/NavBar" component={NavBar}/>
+				<Route exact path="/fighter" component={Fighter}/>
 				<Route component={FourOhFour}/>
 			</Switch>
 		</BrowserRouter>
