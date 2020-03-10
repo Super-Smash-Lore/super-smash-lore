@@ -10,7 +10,7 @@ export const AboutUs = () => {
 					<div className="row">
 						<div className="col-xl-6">
 							<h1>About Odyssey Of Ultimate</h1>
-							<Card.Img src={Image} id="Banner-40vw" alt="banner"/>
+							<Card.Img src={Image} id="Banner" alt="banner"/>
 						</div>
 						<div className="col-xl-6">
 							<Card className="bg-primary border-0 rounded-0 text-white text-shadow-dark">
