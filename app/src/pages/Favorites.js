@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
 import Container from 'react-bootstrap/Container';
 import Image from "../img/placeholder.png";
+import "../styles.css"
 
 
 export const Favorites = () => {
@@ -11,7 +12,7 @@ export const Favorites = () => {
 			<div className="Title pl-4 pt-4">
 			<h1 className="text-md-left pt-3">Your Favorite Characters:</h1>
 			</div>
-			<main className="Main my-4 align-items-baseline">
+			<main className="Main my-2 align-items-baseline ml-5">
 				<Container fluid="true" className="container-fluid text-center text-md-center pre-scrollable col-xl-12">
 					<CardDeck>
 						<Card className="card-body col-xl-2 border-0">
@@ -143,8 +144,8 @@ export const Favorites = () => {
 					</CardDeck>
 				</Container>
 			</main>
-			<div className="d-flex pt-3 mt-5 col-xl-12">
-				<div className="mr-auto p-2 col-xl-4 pl-5">
+			<div className="Profile d-flex pt-3 col-xl-12">
+				<div className="mr-auto p-2 col-xl-4 pb-5 pl-5">
 					<h2>Profile: Name</h2>
 					<a type="button" href="/about-us" className="btn btn-primary">Profile Settings</a>
 				</div>
