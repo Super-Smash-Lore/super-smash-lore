@@ -10,7 +10,7 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import CardDeck from "react-bootstrap/CardDeck";
 import Container from 'react-bootstrap/Container';
-import Image from "../img/kirby.jpg";
+import Image from "../img/kirby.png";
 import {NavBar} from "../shared/utils/NavBar";
 
 
