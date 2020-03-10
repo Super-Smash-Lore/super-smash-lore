@@ -7,11 +7,13 @@ h1 {
 /*}*/
 #developed-by {
 	margin-top: 5vw;
-	font-size: 2vw;
+	font-size: 1.5vw;
+	font-weight: bold;
 	font-family: 'Roboto', sans-serif;
 }
 #developed-by-2 {
-	font-size: 2vw;
+	font-size: 1.5vw;
+	font-weight: bold;
 	font-family: 'Roboto', sans-serif;
 }
 #home-text {
@@ -22,4 +24,10 @@ h1 {
 }
 #sign-up-text {
 	font-size: 2.5vw;
+}
+#branding-1 {
+	width: 6vw;
+}
+#character-name {
+	font-size: 4vw;
 }

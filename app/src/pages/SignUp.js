@@ -4,6 +4,10 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import smash from "../img/smash-pic-1.PNG";
+import Logo from "../img/OoD-Logo-v2.png";
+
+
+
 export const SignUp = () => {
 	useEffect(() => {
 		httpConfig.get("/apis/earl-grey")
@@ -42,13 +46,11 @@ export const SignUp = () => {
 								<p className="forgot-password text-right">
 									Already registered <a href="#">sign in?</a>
 								</p>
+								<div className="text-center">
+									<img src={Logo} id="branding-1"/>
+								</div>
 							</form>
 						</div>
-						{/*<div className="col-4">*/}
-						{/*	<Card>*/}
-						{/*		<p>Insert images!</p>*/}
-						{/*	</Card>*/}
-						{/*</div>*/}
 					</div>
 				</div>
 			</main>
