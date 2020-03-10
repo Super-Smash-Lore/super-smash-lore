@@ -10,12 +10,12 @@ export const AboutUs = () => {
 					<div className="row">
 						<div className="col-xl-6">
 							<h1>About Odyssey Of Ultimate</h1>
-							<Card.Img src={Image} id="Banner-40rem" alt="banner"/>
+							<Card.Img src={Image} id="Banner-40vw" alt="banner"/>
 						</div>
 						<div className="col-xl-6">
 							<Card className="bg-primary border-0 rounded-0 text-white text-shadow-dark">
 								<Card.Body>
-									<h4>About Odyssey Of Ultimate</h4>
+									<h4>About Odyssey Of Ultimate:</h4>
 										<p>We are a dedicated team who enjoys the funner games in life. We were tired of seeing the same old
 										Wiki-form pages for Super Smash Bros. Games and wanted to change it. We have all characters as soon as they are released. If you
 										enjoy a certain character, there is a section at each page bottom with other games they have been in.</p>
