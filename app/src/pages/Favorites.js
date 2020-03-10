@@ -19,56 +19,67 @@ export const Favorites = () => {
 				<Container fluid="true" className="container-fluid text-center text-md-center">
 					<h1 className="text-md-left">Your Favorited Characters:</h1>
 					<CardDeck>
-						<Card className="card-body col-xl-2 mb-3">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image}/>
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
-						<Card className="card-body col-xl-2 mb-3">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image} />
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
-						<Card className="card-body col-xl-2 mb-3">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image} />
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
-						<Card className="card-body col-xl-2 mb-3">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image} />
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
+						<div className="Right-modal-upper col-xl-3 border-dark border-left">
+							<div className="row-3 pt-5">
+								<div className="row-3 pt-5">
+									<h2>Profile: Name</h2>
+									<a className="nav-link" href="#">Profile Settings<span className="sr-only">(current)</span></a>
+								</div>
+							</div>
+						</div>
 					</CardDeck>
 					<CardDeck>
-						<Card className="card-body col-xl-2">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image}/>
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
-						<Card className="card-body col-xl-2">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image} />
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
-						<Card className="card-body col-xl-2">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image} />
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
-						<Card className="card-body col-xl-2">
+						<Card className="card-body col-xl-2 border-0">
 							<Card.Img variant="top" src={Image} />
 							<Card.Body>
 								<Card.Title>Character Name</Card.Title>
 							</Card.Body>
 						</Card>
+						<div className="Right-modal-lower col-xl-3 border-dark border-left">
+						<h1>Save all of your favorite fighters here to see information about them whenever you want.</h1>
+						</div>
 					</CardDeck>
 				</Container>
 			</main>
