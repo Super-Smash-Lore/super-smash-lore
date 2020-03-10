@@ -47,7 +47,7 @@ export const Favorites = () => {
 							<div className="row-3 pt-5">
 								<div className="row-3 pt-5">
 									<h2>Profile: Name</h2>
-									<a className="nav-link" href="#">Profile Settings<span className="sr-only">(current)</span></a>
+									<a type="button" href="/about-us" className="btn btn-primary">Profile Settings</a>
 								</div>
 							</div>
 						</div>
