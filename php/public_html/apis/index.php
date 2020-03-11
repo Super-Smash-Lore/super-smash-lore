@@ -17,5 +17,7 @@ try {
 
 
 } catch(\Exception | \RuntimeException $exception) {
-	var_dump($characters);
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+	var_dump($exception);
 }
