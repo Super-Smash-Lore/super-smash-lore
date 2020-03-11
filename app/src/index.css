@@ -31,3 +31,39 @@ h1 {
 #character-name {
 	font-size: 4vw;
 }
+#favorite-star {
+font-size: 3vw;
+}
+#about-character {
+	font-size: 1.5vw;
+}
+#universe-character {
+	font-size: 1.5vw;
+}
+#debut-character {
+	font-size: 1.5vw;
+}
+#about {
+	font-size: 3vw;
+}
+#debut {
+	font-size: 3vw;
+}
+#universe {
+	font-size: 3vw;
+}
+#quotes {
+	font-size: 3vw;
+}
+#carousel {
+	font-size: 1.5vw;
+}
+#background-fighter {
+	background-color: lightblue;
+}
+#card-1 {
+	background-color: lightblue;
+}
+#card-2 {
+	background-color: lightblue;
+}
