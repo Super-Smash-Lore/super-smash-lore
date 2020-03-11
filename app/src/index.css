@@ -59,11 +59,20 @@ font-size: 3vw;
 	font-size: 1.5vw;
 }
 #background-fighter {
-	background-color: lightblue;
+	background-color: lightgrey;
 }
 #card-1 {
-	background-color: lightblue;
+	background-color: lightgrey;
 }
 #card-2 {
 	background-color: lightblue;
+	margin-top: 1vw;
+	max-height: 63vh;
+}
+#games {
+	font-size: 3vw;
+}
+
+#game-click {
+	width: 5vw;
 }

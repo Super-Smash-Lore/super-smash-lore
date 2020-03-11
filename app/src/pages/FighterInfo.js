@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Placeholder from "../img/Ganon-Placeholder.jpg";
 // import Alert from '/react-bootstrap/react-bootstrap.alert'
 import Carousel from "react-bootstrap/Carousel";
+import GameImage from "../img/The_Legend_of_Zelda_A_Link_Between_Worlds_NA_cover.jpg"
 
 
 
@@ -37,7 +38,7 @@ export const FighterInfo = () => (
 							<Card.Title>Image: Breathe of The Wild II</Card.Title>
 						</Card.Body>
 					</Card>
-					<Card className="col-9 border-0" id="card-2">
+					<Card className="col-9 pre-scrollable border-dark" id="card-2">
 						<Card.Body>
 							<h2 id="about">
 								About:
@@ -68,33 +69,41 @@ export const FighterInfo = () => (
 							<h2 id="quotes">
 								Quotes:
 							</h2>
-							<ul id="carousel">
-								<li>
-									<p>
-										"My only mistake was to slightly underestimate the power of this kid... No...
-										it was not the kid's power I misjudged, it was the power of the Triforce of Courage!
-										But, with the Triforce of Wisdom that Zelda has... When I obtain these two Triforces...
-										Then, I will become the true ruler of the world!!"
-									</p>
-								</li>
-								<li>
-									<p>
-										"My country lay within a vast desert. When the sun rose into the sky,
-										a burning wind punished my lands, searing the world. And when the moon climbed into the dark of night,
-										a frigid gale pierced our homes. No matter when it came, the wind carried the same thing...
-										Death. But the winds that blew across the green fields of Hyrule brought something other than suffering and ruin.
-										I coveted that wind, I suppose."
-									</p>
-								</li>
-								<li>
-									<p>
-										"Your people have long amused me, Midna. To defy the gods with such petty magic, only to be cast aside…
-										How very pathetic. Pathetic as they were, though, they served me well. Their anguish was my nourishment.
-										Their hatred bled across the void and awakened me. I drew deep of it and grew strong again.
-										Your people had some skill, to be sure…but they lacked true power.
-									</p>
-								</li>
-							</ul>
+								<ul id="carousel">
+									<li>
+										<p>
+											"My only mistake was to slightly underestimate the power of this kid... No...
+											it was not the kid's power I misjudged, it was the power of the Triforce of Courage!
+											But, with the Triforce of Wisdom that Zelda has... When I obtain these two Triforces...
+											Then, I will become the true ruler of the world!!"
+										</p>
+									</li>
+									<li>
+										<p>
+											"My country lay within a vast desert. When the sun rose into the sky,
+											a burning wind punished my lands, searing the world. And when the moon climbed into the dark of night,
+											a frigid gale pierced our homes. No matter when it came, the wind carried the same thing...
+											Death. But the winds that blew across the green fields of Hyrule brought something other than suffering and ruin.
+											I coveted that wind, I suppose."
+										</p>
+									</li>
+									<li>
+										<p>
+											"Your people have long amused me, Midna. To defy the gods with such petty magic, only to be cast aside…
+											How very pathetic. Pathetic as they were, though, they served me well. Their anguish was my nourishment.
+											Their hatred bled across the void and awakened me. I drew deep of it and grew strong again.
+											Your people had some skill, to be sure…but they lacked true power.
+										</p>
+									</li>
+								</ul>
+							<h2 id="games">
+								Games:
+							</h2>
+							<div>
+								<img id="game-pic-1"
+											src={GameImage}
+								/>
+							</div>
 						</Card.Body>
 					</Card>
 				</div>
