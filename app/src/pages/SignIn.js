@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Image from "../img/Odyssey-Of-Ultimate-Banner.png";
 import {NavBar} from "../shared/utils/NavBar";
 import "./styles.css"
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 
 export const SignIn = () => {
@@ -13,17 +15,19 @@ export const SignIn = () => {
 		httpConfig.get("/apis/earl-grey")
 	});
 	return(
-		<>
+		<body id="signInBody">
 			<NavBar></NavBar>
 			<main>
 				<div className="container pt-sm-5 mt-sm-5">
 					<div className="row">
-						<div className="col-6">
+						<div className="col-5">
 							<Card>
 								<img className="odysseyUltimate" src={Image} alt="odyssey"/>
 							</Card>
 						</div>
-						<div id="signIn" className="col-6 text-center">
+						{/*<div className="verticalLine">*/}
+						{/*</div>*/}
+						<div id="signIn" className="col-6 my-sm-1 text-center">
 							<h2 className="mb-sm-5">Sign In</h2>
 							<Form>
 								<div className="form-group my-sm-4">
@@ -43,6 +47,11 @@ export const SignIn = () => {
 					</div>
 				</div>
 			</main>
-		</>
+		<footer id="foot">
+			<Navbar id="footBar" sticky="bottom">
+				<p>If you can see this, I love you</p>
+			</Navbar>
+		</footer>
+		</body>
 	)
 };

@@ -1,9 +1,39 @@
 .odysseyUltimate {
+	height: 20vw;
+	background-color: lightgray;
+	padding: 3.5vw 0 0 3.5vw;
+}
+
+#foot {
+	color: black;
+}
+
+#footBar {
+	background-color: black;
+}
+
+#signInBody {
 	background-color: lightblue;
-	padding: 4em 1em 1em 4em;
 }
 
 #Logo {
-	width: 2.5em;
-	height: 2.5em;
+	width: 3.5vw;
+}
+
+#fighterBody {
+	background-color: lightblue;
+}
+
+#backToTop {
+	color: darkblue;
+	float: right;
+}
+
+#signIn {
+	border-left:  solid black;
+	margin-left: 5vw;
+	padding-left: 5vw;
+}
+.card-body{
+	background-color: lightblue;
 }

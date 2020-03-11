@@ -12,7 +12,7 @@ export const NavBar = () => {
 				<Navbar.Brand href="/"><img id="Logo" className="ml-5" src={Image} alt="kirb"/></Navbar.Brand>
 				<Nav className="mr-auto container active">
 					<Nav.Link href="about">About</Nav.Link>
-					<Nav.Link href="/fighter">Fighters</Nav.Link>
+					<Nav.Link href="/fighter-selection">Fighters</Nav.Link>
 					<Nav.Link href="#profile">Profile</Nav.Link>
 					<Nav.Link href="#favorites">Favorites</Nav.Link>
 					<Nav.Link href="/sign-in">Sign In</Nav.Link>
