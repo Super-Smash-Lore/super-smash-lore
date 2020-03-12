@@ -17,18 +17,31 @@ import Nav from "react-bootstrap/Nav";
 
 
 
+
 export const FighterInfo = () => (
 	<body id="background-fighter">
 	<Navbar sticky="top" bg="dark" variant="dark">
-		<Navbar.Brand href="/"><img id="Logo-2" className="ml-5" src={Image} alt="kirb"/></Navbar.Brand>
-		<Nav className="mr-auto container active">
-			<Nav.Link href="about">About</Nav.Link>
-			<Nav.Link href="/fighter-selection">Fighters</Nav.Link>
-			<Nav.Link href="#profile">Profile</Nav.Link>
-			<Nav.Link href="#favorites">Favorites</Nav.Link>
-			<Nav.Link href="/sign-in">Sign In</Nav.Link>
-			<Nav.Link href="#signUp">Sign Up</Nav.Link>
-		</Nav>
+		<Navbar.Brand href="/"><img id="Logo-2" className="ml-5" src={Image} alt="nav-logo"/></Navbar.Brand>
+		<div className="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
+			<Nav.Item className="navbar-nav">
+				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="about">About</Nav.Link>
+			</Nav.Item>
+			<Nav.Item className="navbar-nav">
+				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/fighter-selection">Fighters</Nav.Link>
+			</Nav.Item>
+			<Nav.Item className="navbar-nav">
+				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#profile">Profile</Nav.Link>
+			</Nav.Item>
+			<Nav.Item className="navbar-nav">
+				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#favorites">Favorites</Nav.Link>
+			</Nav.Item>
+			<Nav.Item className="navbar-nav">
+				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/sign-in">Sign-In</Nav.Link>
+			</Nav.Item>
+			<Nav.Item className="navbar-nav">
+				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#signUp">Sign-Up</Nav.Link>
+			</Nav.Item>
+		</div>
 	</Navbar>
 		<main className="my-5">
 			<Container fluid="true" className="container-fluid">
@@ -115,23 +128,23 @@ export const FighterInfo = () => (
 								<h2 id="games">
 									Games:
 								</h2>
-								<CardDeck>
-									<Card className="border-0">
+								<Row>
+									<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">
 										<a href='https://smile.amazon.com/Nintendo-Selects-Legend-Zelda-Between-Worlds/dp/B0792R1NYY/ref=sxin_0_ac_d_rm?ac_md=0-0-bGluayBiZXR3ZWVuIHdvcmxkcw%3D%3D-ac_d_rm&crid=2C6TP367GAC6H&cv_ct_cx=link+between+worlds&keywords=link+between+worlds&pd_rd_i=B0792R1NYY&pd_rd_r=82c3940e-527a-42e3-8331-c13220ae4a0e&pd_rd_w=IZMNt&pd_rd_wg=YdNV4&pf_rd_p=ec111f65-4a46-499c-be78-f47997212bd0&pf_rd_r=2WCJXPFGP94EAC8F1EWE&psc=1&qid=1584051066&sprefix=lnik+betwee%2Caps%2C219'>
-									<img id="game-pic-1" src={GameImage}/>
+											<img className="img-fluid" id="game-pic-1" src={GameImage}/>
 										</a>
-									</Card>
-									<Card>
+									</Col>
+									<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">
 										<a href='https://smile.amazon.com/Nintendo-Selects-Legend-Zelda-Between-Worlds/dp/B0792R1NYY/ref=sxin_0_ac_d_rm?ac_md=0-0-bGluayBiZXR3ZWVuIHdvcmxkcw%3D%3D-ac_d_rm&crid=2C6TP367GAC6H&cv_ct_cx=link+between+worlds&keywords=link+between+worlds&pd_rd_i=B0792R1NYY&pd_rd_r=82c3940e-527a-42e3-8331-c13220ae4a0e&pd_rd_w=IZMNt&pd_rd_wg=YdNV4&pf_rd_p=ec111f65-4a46-499c-be78-f47997212bd0&pf_rd_r=2WCJXPFGP94EAC8F1EWE&psc=1&qid=1584051066&sprefix=lnik+betwee%2Caps%2C219'>
-											<img id="game-pic-1" src={GameImage}/>
+											<img className="img-fluid" id="game-pic-1" src={GameImage}/>
 										</a>
-									</Card>
-									<Card>
+									</Col>
+									<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">
 										<a href='https://smile.amazon.com/Nintendo-Selects-Legend-Zelda-Between-Worlds/dp/B0792R1NYY/ref=sxin_0_ac_d_rm?ac_md=0-0-bGluayBiZXR3ZWVuIHdvcmxkcw%3D%3D-ac_d_rm&crid=2C6TP367GAC6H&cv_ct_cx=link+between+worlds&keywords=link+between+worlds&pd_rd_i=B0792R1NYY&pd_rd_r=82c3940e-527a-42e3-8331-c13220ae4a0e&pd_rd_w=IZMNt&pd_rd_wg=YdNV4&pf_rd_p=ec111f65-4a46-499c-be78-f47997212bd0&pf_rd_r=2WCJXPFGP94EAC8F1EWE&psc=1&qid=1584051066&sprefix=lnik+betwee%2Caps%2C219'>
-											<img id="game-pic-1" src={GameImage}/>
+											<img className="img-fluid" id="game-pic-1" src={GameImage}/>
 										</a>
-									</Card>
-								</CardDeck>
+									</Col>
+								</Row>
 							</Card.Body>
 						</Card>
 					</Col>
