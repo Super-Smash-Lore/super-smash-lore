@@ -2,6 +2,9 @@ h1 {
 	font-size: 8vw;
 	font-weight: bold;
 }
+#Logo-2 {
+	height: 5vh;
+}
 /*#title {*/
 /*	margin-top: 5vw;*/
 /*}*/
@@ -59,15 +62,14 @@ font-size: 3vw;
 	font-size: 1.5vw;
 }
 #background-fighter {
-	background-color: lightgrey;
 }
 #card-1 {
-	background-color: lightgrey;
 }
 #card-2 {
-	background-color: lightblue;
 	margin-top: 1vw;
-	max-height: 63vh;
+}
+#whole-row {
+
 }
 #games {
 	font-size: 3vw;
@@ -75,4 +77,15 @@ font-size: 3vw;
 
 #game-click {
 	width: 5vw;
+}
+
+@media screen and (min-width: 992px) {
+	.fighter-img-panel {
+		position: fixed;
+		z-index: 999;
+	}
+}
+
+.fighter-text-panel {
+
 }

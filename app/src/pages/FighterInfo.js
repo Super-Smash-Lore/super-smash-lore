@@ -1,74 +1,90 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import CardImg from "react-bootstrap/CardImg";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Placeholder from "../img/Ganon-Placeholder.jpg";
 // import Alert from '/react-bootstrap/react-bootstrap.alert'
-import Carousel from "react-bootstrap/Carousel";
 import GameImage from "../img/The_Legend_of_Zelda_A_Link_Between_Worlds_NA_cover.jpg"
-
+import CardDeck from "react-bootstrap/CardDeck";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Image from "../img/OoD-Logo-v2.png";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 
 
 export const FighterInfo = () => (
 	<body id="background-fighter">
+	<Navbar sticky="top" bg="dark" variant="dark">
+		<Navbar.Brand href="/"><img id="Logo-2" className="ml-5" src={Image} alt="kirb"/></Navbar.Brand>
+		<Nav className="mr-auto container active">
+			<Nav.Link href="about">About</Nav.Link>
+			<Nav.Link href="/fighter-selection">Fighters</Nav.Link>
+			<Nav.Link href="#profile">Profile</Nav.Link>
+			<Nav.Link href="#favorites">Favorites</Nav.Link>
+			<Nav.Link href="/sign-in">Sign In</Nav.Link>
+			<Nav.Link href="#signUp">Sign Up</Nav.Link>
+		</Nav>
+	</Navbar>
 		<main className="my-5">
 			<Container fluid="true" className="container-fluid">
-				<row>
-					<div className="text-right">
+				<Row>
+					<div className="text-right col-12">
 						<h1 className="" id="character-name">Ganondorf</h1>
 					</div>
-				</row>
-				<row>
-					<div className="text-right" id="favorite-me">
+				</Row>
+				<Row>
+					<div className="text-right col-12" id="favorite-me">
 						<Button variant="primary">Favorite</Button>
 						{/*<Alert variant="success">*/}
 						{/*<Alert.Heading>Hey, nice to see you</Alert.Heading>*/}
 						{/*</Alert>*/}
 					</div>
-				</row>
+				</Row>
 			</Container>
-			<Container fluid="true" className="container-fluid" >
-				<div className="row">
-					<Card className="card-body col-3 border-0 text-center" id="card-1">
-						<Card.Img variant="top" src={Placeholder}/>
-						<Card.Body>
-							<Card.Title>Image: Breathe of The Wild II</Card.Title>
-						</Card.Body>
-					</Card>
-					<Card className="col-9 pre-scrollable border-dark" id="card-2">
-						<Card.Body>
-							<h2 id="about">
-								About:
-							</h2>
-							<p id="about-character">
-								Ganondorf also known as “King of Theieves” or the “Demon King”, is a Gerudo and the villain and antagonist in the Legend of Zelda series.
-								Ganondorf is a magical overpowering character who will do what he wants and what he deems as right.
-								Ganon is the wielder of the Triforce of Power and is usually the great evil Link must confront in his story.
-								Ganon’s story varies in the different games, but usually he is released through the breaking of some sort of seal.
-								Once released he uses his unmatchable power to wreak havoc and darkness across all of Hyrule.
-								In most cases the only one who is able to defeat Ganon is the one who is chosen by the Goddess, the hero,
-								that being Link. Ganondorf is a villain like no other, he is timeless and always will be,
-								at some points you may even start thinking he is just downright cool, regardless the great evil must always be defeated.
-								So jump in and take him on!
-							</p>
-							<h2 id="universe">
-								Universe:
-							</h2>
-							<p id="universe-character">
-								The Legend of Zelda
-							</p>
-							<h2 id="debut">
-								Debut:
-							</h2>
-							<p id="debut-character">
-								February 21, 1986
-							</p>
-							<h2 id="quotes">
-								Quotes:
-							</h2>
+			<Container fluid="true" className="container-fluid" id="whole-row">
+				<Row>
+					<Col className="col-6 offset-3 offset-lg-0 col-lg-3 fighter-img-panel">
+						<Card className="card-body border-0 text-center" id="card-1">
+							<CardImg src={Placeholder}/>
+						</Card>
+					</Col>
+					<Col className="col-12 offset-lg-3 col-lg-9 fighter-text-panel">
+						<Card className="border-0" id="card-2">
+							<Card.Body>
+								<h2 id="about">
+									About:
+								</h2>
+								<p id="about-character">
+									Ganondorf also known as “King of Thieves” or the “Demon King”, is a Gerudo and the villain and antagonist in the Legend of Zelda series.
+									Ganondorf is a magical overpowering character who will do what he wants and what he deems as right.
+									Ganon is the wielder of the Triforce of Power and is usually the great evil Link must confront in his story.
+									Ganon’s story varies in the different games, but usually he is released through the breaking of some sort of seal.
+									Once released he uses his unmatchable power to wreak havoc and darkness across all of Hyrule.
+									In most cases the only one who is able to defeat Ganon is the one who is chosen by the Goddess, the hero,
+									that being Link. Ganondorf is a villain like no other, he is timeless and always will be,
+									at some points you may even start thinking he is just downright cool, regardless the great evil must always be defeated.
+									So jump in and take him on!
+								</p>
+								<h2 id="universe">
+									Universe:
+								</h2>
+								<p id="universe-character">
+									The Legend of Zelda
+								</p>
+								<h2 id="debut">
+									Debut:
+								</h2>
+								<p id="debut-character">
+									February 21, 1986
+								</p>
+								<h2 id="quotes">
+									Quotes:
+								</h2>
 								<ul id="carousel">
 									<li>
 										<p>
@@ -96,18 +112,31 @@ export const FighterInfo = () => (
 										</p>
 									</li>
 								</ul>
-							<h2 id="games">
-								Games:
-							</h2>
-							<div>
-								<img id="game-pic-1"
-											src={GameImage}
-								/>
-							</div>
-						</Card.Body>
-					</Card>
-				</div>
+								<h2 id="games">
+									Games:
+								</h2>
+								<CardDeck>
+									<Card className="border-0">
+										<a href='https://smile.amazon.com/Nintendo-Selects-Legend-Zelda-Between-Worlds/dp/B0792R1NYY/ref=sxin_0_ac_d_rm?ac_md=0-0-bGluayBiZXR3ZWVuIHdvcmxkcw%3D%3D-ac_d_rm&crid=2C6TP367GAC6H&cv_ct_cx=link+between+worlds&keywords=link+between+worlds&pd_rd_i=B0792R1NYY&pd_rd_r=82c3940e-527a-42e3-8331-c13220ae4a0e&pd_rd_w=IZMNt&pd_rd_wg=YdNV4&pf_rd_p=ec111f65-4a46-499c-be78-f47997212bd0&pf_rd_r=2WCJXPFGP94EAC8F1EWE&psc=1&qid=1584051066&sprefix=lnik+betwee%2Caps%2C219'>
+									<img id="game-pic-1" src={GameImage}/>
+										</a>
+									</Card>
+									<Card>
+										<a href='https://smile.amazon.com/Nintendo-Selects-Legend-Zelda-Between-Worlds/dp/B0792R1NYY/ref=sxin_0_ac_d_rm?ac_md=0-0-bGluayBiZXR3ZWVuIHdvcmxkcw%3D%3D-ac_d_rm&crid=2C6TP367GAC6H&cv_ct_cx=link+between+worlds&keywords=link+between+worlds&pd_rd_i=B0792R1NYY&pd_rd_r=82c3940e-527a-42e3-8331-c13220ae4a0e&pd_rd_w=IZMNt&pd_rd_wg=YdNV4&pf_rd_p=ec111f65-4a46-499c-be78-f47997212bd0&pf_rd_r=2WCJXPFGP94EAC8F1EWE&psc=1&qid=1584051066&sprefix=lnik+betwee%2Caps%2C219'>
+											<img id="game-pic-1" src={GameImage}/>
+										</a>
+									</Card>
+									<Card>
+										<a href='https://smile.amazon.com/Nintendo-Selects-Legend-Zelda-Between-Worlds/dp/B0792R1NYY/ref=sxin_0_ac_d_rm?ac_md=0-0-bGluayBiZXR3ZWVuIHdvcmxkcw%3D%3D-ac_d_rm&crid=2C6TP367GAC6H&cv_ct_cx=link+between+worlds&keywords=link+between+worlds&pd_rd_i=B0792R1NYY&pd_rd_r=82c3940e-527a-42e3-8331-c13220ae4a0e&pd_rd_w=IZMNt&pd_rd_wg=YdNV4&pf_rd_p=ec111f65-4a46-499c-be78-f47997212bd0&pf_rd_r=2WCJXPFGP94EAC8F1EWE&psc=1&qid=1584051066&sprefix=lnik+betwee%2Caps%2C219'>
+											<img id="game-pic-1" src={GameImage}/>
+										</a>
+									</Card>
+								</CardDeck>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
 			</Container>
 		</main>
-		</body>
+	</body>
 );
