@@ -7,6 +7,7 @@ import Figure from "react-bootstrap/Figure"
 import Card from "react-bootstrap/Card";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import Button from "react-bootstrap/Button";
+import {Footer} from "../shared/utils/footer"
 import "./styles.css"
 
 export const EmailValidation = () => {
@@ -26,9 +27,9 @@ export const EmailValidation = () => {
 					<Button href="https://www.twitch.tv/c9zven" variant="link"> https://www.twitch.tv/c9zven</Button>
 				</ButtonToolbar>
 			</Col>
-			<Col className="d-flex justify-content-center fixed-bottom">
-				<p>OdysseyOfUltimate.com 2020</p>
-			</Col>
+<Footer></Footer>
+
 		</div>
+
 	)
 };
