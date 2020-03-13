@@ -4,7 +4,7 @@ import "../../pages/styles.css"
 export const Footer = () => {
 	return (
 		<>
-			<div className="fixed-bottom">
+			<div className="">
 			<footer className="page-footer font-small blue bg-primary">
 				<div className="footer-copyright text-center py-3 ">
 					<div className="d-flex justify-content-center">
