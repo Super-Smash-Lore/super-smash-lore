@@ -20,28 +20,19 @@ import Nav from "react-bootstrap/Nav";
 
 export const FighterInfo = () => (
 	<body id="background-fighter">
-	<Navbar sticky="top" bg="dark" variant="dark">
+	<Navbar sticky="top" bg="dark" variant="dark" collapseOnSelect expand="lg">
 		<Navbar.Brand href="/"><img id="Logo-2" className="ml-5" src={Image} alt="nav-logo"/></Navbar.Brand>
-		<div className="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
-			<Nav.Item className="navbar-nav">
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="about">About</Nav.Link>
-			</Nav.Item>
-			<Nav.Item className="navbar-nav">
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/fighter-selection">Fighters</Nav.Link>
-			</Nav.Item>
-			<Nav.Item className="navbar-nav">
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#profile">Profile</Nav.Link>
-			</Nav.Item>
-			<Nav.Item className="navbar-nav">
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#favorites">Favorites</Nav.Link>
-			</Nav.Item>
-			<Nav.Item className="navbar-nav">
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/sign-in">Sign-In</Nav.Link>
-			</Nav.Item>
-			<Nav.Item className="navbar-nav">
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#signUp">Sign-Up</Nav.Link>
-			</Nav.Item>
-		</div>
+		<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+		<Navbar.Collapse id="responsive-navbar-nav">
+				<div className="navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="about">About</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/fighter-selection">Fighters</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#profile">Profile</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#favorites">Favorites</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/sign-in">Sign-In</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#signUp">Sign-Up</Nav.Link>
+				</div>
+		</Navbar.Collapse>
 	</Navbar>
 		<main className="my-5">
 			<Container fluid="true" className="container-fluid">
@@ -151,5 +142,14 @@ export const FighterInfo = () => (
 				</Row>
 			</Container>
 		</main>
+	<div className="position-static">
+		<footer className="page-footer font-small blue bg-primary">
+			<div className="footer-copyright text-center mt-5">
+				<div className="d-flex justify-content-center">
+					<p className="my-2">OdysseyOfUltimate.com 2020</p>
+				</div>
+			</div>
+		</footer>
+	</div>
 	</body>
 );

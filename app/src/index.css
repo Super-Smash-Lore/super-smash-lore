@@ -84,8 +84,34 @@ font-size: 3vw;
 		position: fixed;
 		z-index: 999;
 	}
+	#sign-up-image {
+		border-bottom: none;
+		border-top: none;
+		border-left: none;
+		border-color: black;
+		border-radius: 0;
+		margin-right: 3vw;
+		padding-right: 5vw;
+	}
 }
 
+@media screen and (max-width: 992px) {
+	#sign-up-image {
+		border: none;
+	}
+}
+@media screen and (max-width: 575px) {
+	#sign-up-image {
+		margin-top: 5vw;
+	}
+	#sign-up-text {
+		font-size: 1.25rem;
+		text-align: center;
+	}
+}
 .fighter-text-panel {
 
+}
+#footer-logo {
+	width: 3.5vw;
 }

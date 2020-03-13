@@ -3,8 +3,11 @@ import {httpConfig} from "../shared/utils/http-config";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import smash from "../img/smash-pic-1.PNG";
-import Logo from "../img/OoD-Logo-v2.png";
+import smash from "../img/Playing-Switch.jpg";
+import Image from "../img/OoD-Logo-v2.png";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+
 
 
 
@@ -18,9 +21,9 @@ export const SignUp = () => {
 				<div className="container pt-sm-5 mt-sm-5">
 					<div className="row">
 						<div className="col-lg-8">
-							<Card className="border-right border-bottom-0 border-left-0 border-top-0 mr-5 pr-5 border-dark rounded-0">
+							<Card id="sign-up-image">
 								<Card.Img src={smash}/>
-								<p id="sign-up-text">Sign up today and start saving some of your favorite characters!</p>
+								<p id="sign-up-text">Start saving some of your favorite characters!</p>
 							</Card>
 						</div>
 						<div className="col-lg-4 text-left">
@@ -46,14 +49,11 @@ export const SignUp = () => {
 								<p className="forgot-password text-right">
 									Already registered <a href="#">sign in?</a>
 								</p>
-								<div className="text-center">
-									<img src={Logo} id="branding-1"/>
-								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</main>
-		</>
+			</>
 	)
 };
