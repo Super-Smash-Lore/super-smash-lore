@@ -1,27 +1,81 @@
 h1 {
 	font-size: 8vw;
+	text-align: right;
 	font-weight: bold;
 }
 #Logo-2 {
 	height: 5vh;
 }
-/*#title {*/
-/*	margin-top: 5vw;*/
-/*}*/
 #developed-by {
-	margin-top: 5vw;
+
 	font-size: 1.5vw;
 	font-weight: bold;
 	font-family: 'Roboto', sans-serif;
+	text-align: right;
 }
 #developed-by-2 {
 	font-size: 1.5vw;
 	font-weight: bold;
 	font-family: 'Roboto', sans-serif;
+	text-align: right;
 }
 #home-text {
 	font-size: 2vw;
+	text-align: right;
 }
+.home {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	background-image: url("./img/Odyssey-Of-Ultimate-Banner-2.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+#started {
+	font-size: 2vw;
+	font-weight: bold;
+	text-align: center;
+}
+#start-button {
+	font-size: 2vw;
+	font-weight: bold;
+	text-align: center;
+}
+@media screen and (max-width: 1500px) {
+	.home {
+		background-image: url("./img/Odyssey-Of-Ultimate-Banner-3.png");
+	}
+	h1 {
+		text-align: center;
+		font-size: 5rem;
+	}
+	#Of {
+		text-align: center;
+	}
+	#title-top {
+		padding-top: 4rem;
+	}
+	#developed-by {
+		text-align: center;
+		font-size: 2rem;
+	}
+	#developed-by-2 {
+		text-align: center;
+		font-size: 2rem;
+	}
+	#started {
+	font-size: 2rem;
+		font-weight: bold;
+		text-align: center;
+		margin-top: 10vw;
+	}
+	#start-button {
+	font-size: 1.5rem;
+	text-align: center;
+	}
+}
+
 #logo {
 	height: 12vw;
 }
