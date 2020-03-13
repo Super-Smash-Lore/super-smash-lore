@@ -3,12 +3,16 @@ require_once dirname(__DIR__, 2) . "/lib/uuid.php";
 require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 require_once (dirname(__DIR__,2) . "/Classes/autoloader.php");
+require_once("/etc/apache2/capstone-mysql/Secrets.php");
 use SuperSmashLore\SuperSmashLore\{Character};
+
 
 //prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
+$secrets = new \Secrets("/etc/apache2/capstone-mysql/smash.ini");
+$pdo = $secrets->getPdoObject();
 
 
 try {
@@ -25,50 +29,58 @@ try {
 //TRYING TO USE EXPLODE
 //		$c = explode($currentValue->characterQuotes, "\"\"");
 //		var_dump($currentValue->characterQuotes);
+//
 //		$c = explode( " ", "$currentValue->characterDescription");
 //		var_dump($currentValue->characterDescription);
+//
 //		$c = explode( " ", "$currentValue->characterMusicUrl");
 //		var_dump($currentValue->characterMusicUrl);
+//
 //		$c = explode(" ", "$currentValue->characterName");
 //		var_dump($currentValue->characterName);
+//
 //		$c = explode(" ", "$currentValue->characterPictureUrl");
 //		var_dump($currentValue->characterPictureUrl);
+//
 //		$c = explode(" ", "$currentValue->characterQuotes");
 //		var_dump($currentValue->characterQuotes);
+//
 //		$c = explode(" ", "$currentValue->characterReleaseDate");
 //		var_dump($currentValue->characterReleaseDate);
+//
 //		$c = explode(" ", "$currentValue->characterSong");
 //		var_dump($currentValue->characterSong);
+//
 //		$c = explode(" ", "$currentValue->characterUniverse");
 //		var_dump($currentValue->characterUniverse);
 
-
-		//USING EXPLODE
+//
+//		//USING EXPLODE
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterDescription);
-
+//
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterMusicUrl);
-
+//
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterName);
-
+//
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterPictureUrl);
-
+//
 //		$c = explode(",", $currentValue->characterQuotes);
 //		var_dump($c);
-
+//
 //		$c = explode("/", $currentValue->characterReleaseDate);
 //		var_dump($c);
-
+//
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterSong);
-
+//
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterUniverse);
 		$character = new Character(generateUuidV4(), $currentValue->characterDescription, $currentValue->characterMusicUrl, $currentValue->characterName, $currentValue->characterPictureUrl, $currentValue->characterQuotes, $currentValue->characterReleaseDate, $currentValue->characterSong, $currentValue->characterUniverse);
-
+		$character->insert($pdo);
 //		var_dump($currentValue);
 //		var_dump($currentValue->characterName);
 //		var_dump($currentValue->characterReleaseDate);
@@ -82,8 +94,7 @@ try {
 	}
 
 } catch (\RuntimeException| \InvalidArgumentException | \RangeException | \Exception | \TypeError $exception ) {
-	$reply->status = $exception->getCode();
-	$reply->message = $exception->getMessage();
+
 	var_dump($exception);
 }
 
