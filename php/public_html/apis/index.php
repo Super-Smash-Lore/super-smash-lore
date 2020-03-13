@@ -43,24 +43,28 @@ try {
 //		var_dump($currentValue->characterUniverse);
 
 
-
 		//USING EXPLODE
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterDescription);
+
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterMusicUrl);
+
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterName);
+
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterPictureUrl);
-	//todo this does not work and unsure how to explode to individual particles
+
 //		$c = explode(",", $currentValue->characterQuotes);
 //		var_dump($c);
-		$c = explode("/", $currentValue->characterReleaseDate);
-		var_dump($c);
+
+//		$c = explode("/", $currentValue->characterReleaseDate);
+//		var_dump($c);
 
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterSong);
+
 //		$c = explode(" ", "\"\"");
 //		var_dump($currentValue->characterUniverse);
 		$character = new Character(generateUuidV4(), $currentValue->characterDescription, $currentValue->characterMusicUrl, $currentValue->characterName, $currentValue->characterPictureUrl, $currentValue->characterQuotes, $currentValue->characterReleaseDate, $currentValue->characterSong, $currentValue->characterUniverse);
