@@ -83,7 +83,7 @@ class Character implements \JsonSerializable {
 			$this->setCharacterUniverse($newCharacterUniverse);
 		}
 		//determine what exception type was thrown
-		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError$exception) {
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0 ,$exception));
 		}

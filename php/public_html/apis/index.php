@@ -2,7 +2,8 @@
 require_once dirname(__DIR__, 2) . "/lib/uuid.php";
 require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
-use SuperSmashLore\SuperSmashLore\{Character, Game};
+require_once (dirname(__DIR__,2) . "/Classes/autoloader.php");
+use SuperSmashLore\SuperSmashLore\{Character};
 
 //prepare an empty reply
 $reply = new stdClass();
@@ -19,14 +20,64 @@ try {
 	$characters = json_decode($smashJson);
 
 	foreach($characters as $currentValue) {
-		var_dump($currentValue);
-		$character = new Character(generateUuidV4(), $currentValue->characterDescription, $currentValue->characterMusicUrl, $currentValue->characterName, $currentValue->characterPictureUrl, $currentValue->characterQuotes, $currentValue->characterReleaseDate, $currentValue->characterSong, $currentValue->characterUniverse);
-//		$character = new Character(generateUuidV4(), "Mario is the main Protagonist for the Mario Series that has well over 50 games. He originally was featured in the Donkey Kong original in 1981. Mario is known for being kind, cheerful, playful, courageous, and headstrong and is also eager and cocky in certain occasions. Mario is always seen as a hero throughout the franchise. Whether it be rescuing a Princess or defeating the evil that gripped the land. Most often seen taking down castles and defeating the menacing Bowser and rescuing Princess Peach countless times. Try out some other games if you love side scrolling platformers or try one of the 3D open world games like Mario Odyssey which is more open world with plenty of challenges.", "https://www.youtube.com/watch?v=0IuKgivLCLg&list=PLUzxirmuFjBmpiQEbgwjUexgXk1RcD00B&index=1", "Mario", "https://vignette.wikia.nocookie.net/ssb/images/0/07/Mario_-_Super_Smash_Bros._Ultimate.png/revision/latest/scale-to-width-down/350?cb=20180910105834", "Let's-a go!, \"Mamma-Mia!\", \"Okey-dokey\", \"Here we go!\", \"It's-a me, Mario", "July 9th, 1981", "Ground Theme (Band Performance)", "Mario Universe");
 
-//		$game = new Game(generateUuidV4(), $currentValue->gameCharacterId, $currentValue->gamePictureUrl, $currentValue->gameSystem, $currentValue->gameUrl);
+
+//TRYING TO USE EXPLODE
+//		$c = explode($currentValue->characterQuotes, "\"\"");
+//		var_dump($currentValue->characterQuotes);
+//		$c = explode( " ", "$currentValue->characterDescription");
+//		var_dump($currentValue->characterDescription);
+//		$c = explode( " ", "$currentValue->characterMusicUrl");
+//		var_dump($currentValue->characterMusicUrl);
+//		$c = explode(" ", "$currentValue->characterName");
+//		var_dump($currentValue->characterName);
+//		$c = explode(" ", "$currentValue->characterPictureUrl");
+//		var_dump($currentValue->characterPictureUrl);
+//		$c = explode(" ", "$currentValue->characterQuotes");
+//		var_dump($currentValue->characterQuotes);
+//		$c = explode(" ", "$currentValue->characterReleaseDate");
+//		var_dump($currentValue->characterReleaseDate);
+//		$c = explode(" ", "$currentValue->characterSong");
+//		var_dump($currentValue->characterSong);
+//		$c = explode(" ", "$currentValue->characterUniverse");
+//		var_dump($currentValue->characterUniverse);
+
+
+
+		//USING EXPLODE
+//		$c = explode(" ", "\"\"");
+//		var_dump($currentValue->characterDescription);
+//		$c = explode(" ", "\"\"");
+//		var_dump($currentValue->characterMusicUrl);
+//		$c = explode(" ", "\"\"");
+//		var_dump($currentValue->characterName);
+//		$c = explode(" ", "\"\"");
+//		var_dump($currentValue->characterPictureUrl);
+	//todo this does not work and unsure how to explode to individual particles
+//		$c = explode(",", $currentValue->characterQuotes);
+//		var_dump($c);
+		$c = explode("/", $currentValue->characterReleaseDate);
+		var_dump($c);
+
+//		$c = explode(" ", "\"\"");
+//		var_dump($currentValue->characterSong);
+//		$c = explode(" ", "\"\"");
+//		var_dump($currentValue->characterUniverse);
+		$character = new Character(generateUuidV4(), $currentValue->characterDescription, $currentValue->characterMusicUrl, $currentValue->characterName, $currentValue->characterPictureUrl, $currentValue->characterQuotes, $currentValue->characterReleaseDate, $currentValue->characterSong, $currentValue->characterUniverse);
+
+//		var_dump($currentValue);
+//		var_dump($currentValue->characterName);
+//		var_dump($currentValue->characterReleaseDate);
+//		var_dump($currentValue->gameSystem);
+//		var_dump($currentValue->characterDescription);
+//		var_dump($currentValue->characterQuotes);
+//		var_dump($currentValue->characterSong);
+//		var_dump($currentValue->characterUniverse);
+//		var_dump($currentValue->characterPictureUrl);
+//		var_dump($currentValue->gamePictureUrl);
 	}
 
-} catch (\Exception | \RuntimeException $exception) {
+} catch (\RuntimeException| \InvalidArgumentException | \RangeException | \Exception | \TypeError $exception ) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 	var_dump($exception);
