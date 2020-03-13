@@ -9,10 +9,10 @@ import "../styles.css"
 export const Favorites = () => {
 	return (
 		<>
-			<div className="Title pl-4 pt-4">
+			<div className="Title pt-4">
 			<h1 className="text-md-left pt-3">Your Favorite Characters:</h1>
 			</div>
-			<main className="Main my-2 align-items-baseline ml-5">
+			<main className="Main align-items-baseline ml-5">
 				<Container fluid="true" className="pre-scrollable container-fluid text-center text-md-center col-xl-12">
 					<CardDeck>
 						<Card className="card-body col-xl-2 border-0">
