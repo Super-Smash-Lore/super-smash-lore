@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import  "../../pages/styles.css"
+import  "../../index.css";
 import Image from "../../img/OoD-Logo-v2.png";
 
 
@@ -13,12 +13,12 @@ export const NavBar = () => {
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<div className="navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
-						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="about">About</Nav.Link>
-						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/fighter-selection">Fighters</Nav.Link>
-						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#profile">Profile</Nav.Link>
-						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#favorites">Favorites</Nav.Link>
-						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/sign-in">Sign-In</Nav.Link>
-						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#signUp">Sign-Up</Nav.Link>
+						<Nav.Link className="nav-link nav-item active" href="/about-us">About</Nav.Link>
+						<Nav.Link className="nav-link nav-item active" href="/fighter-selection">Fighters</Nav.Link>
+						<Nav.Link className="nav-link nav-item active" href="/profile">Profile</Nav.Link>
+						<Nav.Link className="nav-link nav-item active" href="/favorites">Favorites</Nav.Link>
+						<Nav.Link className="nav-link nav-item active" href="/sign-in">Sign-In</Nav.Link>
+						<Nav.Link className="nav-link nav-item active" href="/sign-up">Sign-Up</Nav.Link>
 					</div>
 				</Navbar.Collapse>
 			</Navbar>

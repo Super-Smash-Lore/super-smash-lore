@@ -1,0 +1,184 @@
+h1 {
+	font-size: 8vw;
+	text-align: right;
+	font-weight: bold;
+}
+#Logo-2 {
+	height: 5vh;
+}
+#developed-by {
+
+	font-size: 1.5vw;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	text-align: right;
+}
+#developed-by-2 {
+	font-size: 1.5vw;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	text-align: right;
+}
+#home-text {
+	font-size: 2vw;
+	text-align: right;
+}
+.home {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	background-image: url("./img/Odyssey-Of-Ultimate-Banner-2.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+#started {
+	font-size: 2vw;
+	font-weight: bold;
+	text-align: center;
+}
+#start-button {
+	font-size: 2vw;
+	font-weight: bold;
+	text-align: center;
+}
+@media screen and (max-width: 1500px) {
+	.home {
+		background-image: url("./img/Odyssey-Of-Ultimate-Banner-3.png");
+	}
+	h1 {
+		text-align: center;
+		font-size: 5rem;
+	}
+	#Of {
+		text-align: center;
+	}
+	#title-top {
+		padding-top: 4rem;
+	}
+	#developed-by {
+		text-align: center;
+		font-size: 2rem;
+	}
+	#developed-by-2 {
+		text-align: center;
+		font-size: 2rem;
+	}
+	#started {
+	font-size: 2rem;
+		font-weight: bold;
+		text-align: center;
+		margin-top: 10vw;
+	}
+	#start-button {
+	font-size: 1.5rem;
+	text-align: center;
+	}
+}
+
+#logo {
+	height: 12vw;
+}
+#sign-up-text {
+	font-size: 2.5vw;
+}
+#branding-1 {
+	width: 6vw;
+}
+#character-name {
+	font-size: 4vw;
+}
+#favorite-star {
+font-size: 3vw;
+}
+#about-character {
+	font-size: 1.5vw;
+}
+#universe-character {
+	font-size: 1.5vw;
+}
+#debut-character {
+	font-size: 1.5vw;
+}
+#about {
+	font-size: 3vw;
+}
+#debut {
+	font-size: 3vw;
+}
+#universe {
+	font-size: 3vw;
+}
+#quotes {
+	font-size: 3vw;
+}
+#carousel {
+	font-size: 1.5vw;
+}
+#background-fighter {
+}
+#card-1 {
+}
+#card-2 {
+	margin-top: 1vw;
+}
+#whole-row {
+
+}
+#games {
+	font-size: 3vw;
+}
+
+#game-click {
+	width: 5vw;
+}
+
+@media screen and (min-width: 992px) {
+	.fighter-img-panel {
+		position: fixed;
+		z-index: 999;
+	}
+	#sign-up-image {
+		border-bottom: none;
+		border-top: none;
+		border-left: none;
+		border-color: black;
+		border-radius: 0;
+		margin-right: 3vw;
+		padding-right: 5vw;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	#sign-up-image {
+		border: none;
+	}
+	#about-us-text {
+		margin-top: 5vw;
+	}
+	#signIn{
+		border: none;
+	}
+}
+@media screen and (max-width: 575px) {
+	#sign-up-image {
+		margin-top: 5vw;
+	}
+	#sign-up-text {
+		font-size: 1.25rem;
+		text-align: center;
+	}
+}
+.fighter-text-panel {
+
+}
+#footer-logo {
+	width: 3.5vw;
+}
+#backToTop {
+	color: darkblue;
+	float: right;
+}
+.odysseyUltimate {
+	height: 20vw;
+}

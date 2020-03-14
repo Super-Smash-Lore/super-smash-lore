@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import Image from "../../img/kirby.png";
+import Image from "../../img/Ganon-Placeholder.jpg";
 
 
 export const FighterCard = () => {
