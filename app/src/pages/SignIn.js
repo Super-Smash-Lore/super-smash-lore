@@ -6,8 +6,6 @@ import Button from "react-bootstrap/Button";
 import Image from "../img/Odyssey-Of-Ultimate-Banner.png";
 import {NavBar} from "../shared/utils/NavBar";
 import "./styles.css"
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 
 
 export const SignIn = () => {
@@ -45,15 +43,6 @@ export const SignIn = () => {
 					</div>
 				</div>
 			</main>
-			<div id="footerWidth" className="position-static">
-				<footer className="page-footer font-small bg-primary">
-					<div className="text-center py-3">
-						<div className="d-flex justify-content-center">
-							<p className="mr-3"><strong>OdysseyOfUltimate.com 2020</strong></p>
-						</div>
-					</div>
-				</footer>
-			</div>
 		</body>
 	)
 };
