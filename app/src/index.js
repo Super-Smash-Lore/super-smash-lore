@@ -17,7 +17,7 @@ const Routing = () => (
 				<Route exact path="/about-us" component={AboutUs}/>
 				<Route exact path="/favorites" component={Favorites}/>
 				<Route exact path="/email-validation" component={EmailValidation}/>
-				<Route exact path="/profile-settings" component={ProfileSettings}/>
+				<Route exact path="/profile" component={ProfileSettings}/>
 				<Route exact path="/" component={Home}/>
 				<Route component={FourOhFour}/>
 			</Switch>
