@@ -30,14 +30,14 @@ export const Favorites = () => (
 	<main className="my-5 flex-row">
 		<Container fluid="true" className="container-fluid">
 			<Row>
-				<div className="text-right col-12">
+				<div className="text-right col-12 pb-1">
 					<h1 className="" id="character-name">Your Favorites:</h1>
 				</div>
 			</Row>
 		</Container>
 		<Container fluid="true" className="container-fluid" id="whole-row">
 			<Row className="favorite-row">
-				<Col className="profile-area col-12 offset-lg-0 col-xl-3">
+				<Col className="profile-area col-12 offset-lg-0 col-xl-3 pb-5 mb-5">
 					<Card className="card-body border-0 text-center" id="card-3">
 						<div className="Profile d-flex pt-3 col-xl-12">
 							<div className="mr-auto col-xl-12 pb-5 pt-2">
@@ -50,7 +50,7 @@ export const Favorites = () => (
 						</div>
 					</Card>
 				</Col>
-				<Col className="favorite-panel pre-scrollable col-12 col-xl-9 border-left border-dark pt-2">
+				<Col className="favorite-panel pre-scrollable col-12 col-xl-9 border-left border-dark pt-2 ">
 					<Card className="border-0" id="card-4">
 						<Card.Body>
 							<CardDeck>
@@ -155,7 +155,7 @@ export const Favorites = () => (
 			</Row>
 		</Container>
 	</main>
-	<div className="position-static">
+	<div className="fixed-bottom">
 		<footer className="page-footer font-small blue bg-primary">
 			<div className="footer-copyright text-center mt-5">
 				<div className="d-flex justify-content-center">
