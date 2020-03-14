@@ -10,9 +10,6 @@ import "../styles.css"
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
 
-
-
-
 export const EmailValidation = () => {
 	return (
 	<container>
@@ -24,7 +21,7 @@ export const EmailValidation = () => {
 				</row>
 			</div>
 
-			<div className="page-pic d-flex justify-content-center mb-3 col-xs-10 pb-3 pt-3">
+			<div className="page-pic d-flex justify-content-center mb-3 col-xs-10 pb-3">
 				<row className="content-banner">
 					<img src={Image} alt="banner"/>
 				</row>
