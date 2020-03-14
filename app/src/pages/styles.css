@@ -1,7 +1,5 @@
 .odysseyUltimate {
 	height: 20vw;
-	background-color: lightgray;
-	padding: 3.5vw 0 0 3.5vw;
 }
 
 #foot {
@@ -31,9 +29,24 @@
 
 #signIn {
 	border-left:  solid black;
-	margin-left: 5vw;
-	padding-left: 5vw;
+	/*margin-left: 5vw;*/
+	/*padding-left: 5vw;*/
 }
 .card-body{
 	background-color: lightblue;
 }
+@media screen and (max-width: 992px){
+	#signIn{
+		border: none;
+	}
+}
+#Logo-2 {
+	width: 3.5vw;
+}
+
+
+/*#footerWidth {*/
+/*	width: 98.5vw;*/
+
+/*}*/
+

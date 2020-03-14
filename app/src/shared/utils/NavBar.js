@@ -8,16 +8,19 @@ import Image from "../../img/OoD-Logo-v2.png";
 export const NavBar = () => {
 	return (
 		<>
-			<Navbar sticky="top" bg="dark" variant="dark">
-				<Navbar.Brand href="/"><img id="Logo" className="ml-5" src={Image} alt="kirb"/></Navbar.Brand>
-				<Nav className="mr-auto container active">
-					<Nav.Link href="about">About</Nav.Link>
-					<Nav.Link href="/fighter-selection">Fighters</Nav.Link>
-					<Nav.Link href="#profile">Profile</Nav.Link>
-					<Nav.Link href="#favorites">Favorites</Nav.Link>
-					<Nav.Link href="/sign-in">Sign In</Nav.Link>
-					<Nav.Link href="#signUp">Sign Up</Nav.Link>
-				</Nav>
+			<Navbar sticky="top" bg="dark" variant="dark" collapseOnSelect expand="lg">
+				<Navbar.Brand href="/"><img id="Logo-2" className="ml-5" src={Image} alt="nav-logo"/></Navbar.Brand>
+				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+				<Navbar.Collapse id="responsive-navbar-nav">
+					<div className="navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="about">About</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/fighter-selection">Fighters</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#profile">Profile</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#favorites">Favorites</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/sign-in">Sign-In</Nav.Link>
+						<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#signUp">Sign-Up</Nav.Link>
+					</div>
+				</Navbar.Collapse>
 			</Navbar>
 		</>
 	)

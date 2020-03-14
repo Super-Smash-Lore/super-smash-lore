@@ -8,6 +8,7 @@ import {Home} from "./pages/Home";
 import {SignIn} from "./pages/SignIn";
 import {NavBar} from "./shared/utils/NavBar";
 import {FighterSelection} from "./pages/FighterSelection";
+import {FighterCard} from "./shared/utils/FighterCard";
 
 
  const Routing = () => (
@@ -18,6 +19,7 @@ import {FighterSelection} from "./pages/FighterSelection";
 				<Route exact path="/sign-in" component={SignIn}/>
 				<Route exact path="./shared/NavBar" component={NavBar}/>
 				<Route exact path="/fighter-selection" component={FighterSelection}/>
+				<Route exact path="./shared/FighterCard" component={FighterCard}/>
 				<Route component={FourOhFour}/>
 			</Switch>
 		</BrowserRouter>
