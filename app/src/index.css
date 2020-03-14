@@ -153,6 +153,12 @@ font-size: 3vw;
 	#sign-up-image {
 		border: none;
 	}
+	#about-us-text {
+		margin-top: 5vw;
+	}
+	#signIn{
+		border: none;
+	}
 }
 @media screen and (max-width: 575px) {
 	#sign-up-image {
@@ -168,4 +174,11 @@ font-size: 3vw;
 }
 #footer-logo {
 	width: 3.5vw;
+}
+#backToTop {
+	color: darkblue;
+	float: right;
+}
+.odysseyUltimate {
+	height: 20vw;
 }

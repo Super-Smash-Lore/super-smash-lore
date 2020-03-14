@@ -7,6 +7,7 @@ import smash from "../img/Playing-Switch.jpg";
 import Image from "../img/OoD-Logo-v2.png";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import {NavBar} from "../shared/utils/NavBar";
 
 
 
@@ -17,6 +18,7 @@ export const SignUp = () => {
 	});
 	return(
 		<>
+			<NavBar></NavBar>
 			<main>
 				<div className="container pt-sm-5 mt-sm-5">
 					<div className="row">

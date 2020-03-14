@@ -4,8 +4,11 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Logo from "../img/OoD-Logo-v2.png"
 import Button from "react-bootstrap/Button";
+import {NavBar} from "../shared/utils/NavBar";
 
 export const Home = () => (
+	<body>
+	<NavBar></NavBar>
 			<div className="home">
 			<h1 id="title-top">Odyssey</h1>
 				<h1 id="Of">Of</h1>
@@ -27,5 +30,6 @@ export const Home = () => (
 					</div>
 				</div>
 			</div>
+	</body>
 	);
 
