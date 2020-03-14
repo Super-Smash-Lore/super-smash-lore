@@ -3,7 +3,7 @@ import {httpConfig} from "../shared/utils/http-config";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Image from "../img/Odyssey-Of-Ultimate-Banner.png";
+import Image from "../img/Odyssey-Of-Ultimate-Banner-mini.png";
 import {NavBar} from "../shared/utils/NavBar";
 import "../index.css"
 

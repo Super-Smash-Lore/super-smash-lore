@@ -15,6 +15,12 @@ import {SignIn} from "./pages/SignIn";
 import {FighterCard} from "./shared/utils/FighterCard";
 import {NavBar} from "./shared/utils/NavBar";
 import {ProfileSettings} from "./pages/ProfileSettings";
+import { applyMiddleware, createStore } from 'redux';
+import { combinedReducers } from './shared/reducers';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux'
+
+const store = createStore(combinedReducers, applyMiddleware(thunk));
 
 const Routing = () => (
 	<>
