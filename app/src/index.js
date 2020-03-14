@@ -14,6 +14,7 @@ import {FighterSelection} from "./pages/FighterSelection";
 import {SignIn} from "./pages/SignIn";
 import {FighterCard} from "./shared/utils/FighterCard";
 import {NavBar} from "./shared/utils/NavBar";
+import {ProfileSettings} from "./pages/ProfileSettings";
 
 const Routing = () => (
 	<>
@@ -21,6 +22,7 @@ const Routing = () => (
 			<Switch>
 				<Route exact path="./shared/NavBar" component={NavBar}/>
 				<Route exact path="/sign-in" component={SignIn}/>
+				<Route exact path="/profile" component={ProfileSettings}/>
 				<Route exact path="/about-us" component={AboutUs} />
 				<Route exact path="/favorites" component={Favorites} />
 				<Route exact path="/sign-up" component={SignUp}/>

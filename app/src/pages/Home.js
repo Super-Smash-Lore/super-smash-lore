@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Logo from "../img/OoD-Logo-v2.png"
 import Button from "react-bootstrap/Button";
 import {NavBar} from "../shared/utils/NavBar";
+import {FighterSelection} from "./FighterSelection";
 
 export const Home = () => (
 	<body>
@@ -26,7 +27,7 @@ export const Home = () => (
 						Let's get started!
 					</p>
 					<div id="start-button">
-						<a type="button" href="FighterInfo.js/" className="btn btn-dark btn-lg">Fighters</a>
+						<a type="button" href={FighterSelection} className="btn btn-dark btn-lg">Fighters</a>
 					</div>
 				</div>
 			</div>
