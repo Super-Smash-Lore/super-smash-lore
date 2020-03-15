@@ -519,6 +519,39 @@ class Character implements \JsonSerializable {
 		return ($charactersArray);
 	}
 
+	//getCharactersByCharacterName
+	/**
+	 * gets All Characters
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of characters found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getAllCharacters(\PDO $pdo) : \SplFixedArray {
+		//create a query template
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character`";
+		$statement = $pdo->prepare($query);
+		//bind the character universe to the place holder in the template
+		$statement->execute();
+		//build array of characters
+		$charactersArray = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$character = new Character($row["characterId"], $row["characterDescription"], $row["characterMusicUrl"], $row["characterName"], $row["characterPictureUrl"], $row["characterQuotes"], $row["characterReleaseDate"], $row["characterSong"], $row["characterUniverse"]);
+				$charactersArray[$charactersArray->key()] = $character;
+				$charactersArray->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		//returns character array
+		return ($charactersArray);
+	}
+
+
 	/**
 	 * gets Character by characterUniverse
 	 *

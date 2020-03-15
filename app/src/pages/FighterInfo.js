@@ -21,7 +21,7 @@ import {NavBar} from "../shared/utils/NavBar";
 
 export const FighterInfo = () => (
 	<body id="background-fighter">
-	<NavBar></NavBar>
+	<NavBar/>
 		<main className="my-5">
 			<Container fluid="true" className="container-fluid">
 				<Row>
@@ -130,14 +130,5 @@ export const FighterInfo = () => (
 				</Row>
 			</Container>
 		</main>
-	<div className="position-static">
-		<footer className="page-footer font-small blue bg-primary">
-			<div className="footer-copyright text-center mt-5">
-				<div className="d-flex justify-content-center">
-					<p className="my-2">OdysseyOfUltimate.com 2020</p>
-				</div>
-			</div>
-		</footer>
-	</div>
 	</body>
 );
