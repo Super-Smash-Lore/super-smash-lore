@@ -21,7 +21,7 @@ export const getCharacterByFavoriteProfileId = (id) => async dispatch => {
 };
 
 export const getCharacterByCharacterId = (id) => async dispatch => {
-	const {data} = await httpConfig('/apis/character/$(id)');
+	const {data} = await httpConfig(`/apis/character/${id}`);
 	dispatch({type: "GET_CHARACTER_BY_CHARACTER_ID", payload: data })
 };
 export const getGamesByCharacterId = (characterId) => async dispatch => {

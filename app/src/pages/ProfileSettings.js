@@ -10,7 +10,6 @@ import {NavBar} from "../shared/utils/NavBar";
 export const ProfileSettings = () => {
 	return(
 		<body id="settingsInBody">
-		<NavBar></NavBar>
 		<main>
 			<div className="container pt-5 mt-5 col-xl-12">
 				<row className="row">

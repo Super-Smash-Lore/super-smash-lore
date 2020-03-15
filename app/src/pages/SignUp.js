@@ -18,7 +18,6 @@ export const SignUp = () => {
 	});
 	return(
 		<>
-			<NavBar></NavBar>
 			<main>
 				<div className="container pt-sm-5 mt-sm-5">
 					<div className="row">

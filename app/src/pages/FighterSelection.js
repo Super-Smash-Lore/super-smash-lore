@@ -29,7 +29,6 @@ export const FighterSelection = () => {
 
 	return (
 		<div id="fighterBody">
-		<NavBar/>
 		<main  className="my-5">
 			<Container fluid="true" className="container-fluid text-center text-md-center">
 				<Form inline>
