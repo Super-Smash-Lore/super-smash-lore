@@ -14,6 +14,13 @@ import {FighterSelection} from "./pages/FighterSelection";
 import {SignIn} from "./pages/SignIn";
 import {FighterCard} from "./shared/utils/FighterCard";
 import {NavBar} from "./shared/utils/NavBar";
+import {ProfileSettings} from "./pages/ProfileSettings";
+import { applyMiddleware, createStore } from 'redux';
+import { combinedReducers } from './shared/reducers';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux'
+
+const store = createStore(combinedReducers, applyMiddleware(thunk));
 
 
  const Routing = () => (
@@ -22,6 +29,7 @@ import {NavBar} from "./shared/utils/NavBar";
 			<Switch>
 				<Route exact path="./shared/NavBar" component={NavBar}/>
 				<Route exact path="/sign-in" component={SignIn}/>
+				<Route exact path="/profile" component={ProfileSettings}/>
 				<Route exact path="/about-us" component={AboutUs} />
 				<Route exact path="/favorites" component={Favorites} />
 				<Route exact path="/sign-up" component={SignUp}/>
