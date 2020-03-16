@@ -13,7 +13,6 @@ export const SignIn = () => {
 	});
 	return(
 		<body id="signInBody">
-		<NavBar></NavBar>
 		<main>
 			<div className="container pt-lg-5">
 				<div className="row">

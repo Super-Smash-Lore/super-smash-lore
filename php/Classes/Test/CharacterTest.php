@@ -163,6 +163,36 @@ class CharacterTest extends SuperSmashLoreTest {
 		$this->assertEquals($pdoCharacter->getCharacterSong(), $this->validCharacterSong);
 		$this->assertEquals($pdoCharacter->getCharacterUniverse(), $this->validCharacterUniverse);
 	}
+
+	/**
+	 * test grabbing all of the characters
+	 */
+	public function testGetAllCharacters(): void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCOunt("character");
+		//character id
+		$characterId = generateUuidV4();
+		$character = new Character($characterId, $this->validCharacterDescription, $this->validCharacterMusicUrl, $this->validCharacterName, $this->validCharacterPictureUrl, $this->validCharacterQuotes, $this->validCharacterReleaseDate, $this->validCharacterSong, $this->validCharacterUniverse);
+		$character->insert($this->getPDO());
+		//grab the data from mySQL
+		$results = Character::getAllCharacters($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("character"));
+		//enforce no other objects are bleeding into the character
+		$this->assertContainsOnlyInstancesOf("SuperSmashLore\\SuperSmashLore\\Character", $results);
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoCharacter = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("character"));
+		$this->assertEquals($pdoCharacter->getCharacterId(), $characterId);
+		$this->assertEquals($pdoCharacter->getCharacterDescription(), $this->validCharacterDescription);
+		$this->assertEquals($pdoCharacter->getCharacterMusicUrl(), $this->validCharacterMusicUrl);
+		$this->assertEquals($pdoCharacter->getCharacterName(), $this->validCharacterName);
+		$this->assertEquals($pdoCharacter->getCharacterPictureUrl(), $this->validCharacterPictureUrl);
+		$this->assertEquals($pdoCharacter->getCharacterQuotes(), $this->validCharacterQuotes);
+		$this->assertEquals($pdoCharacter->getCharacterReleaseDate(), $this->validCharacterReleaseDate);
+		$this->assertEquals($pdoCharacter->getCharacterSong(), $this->validCharacterSong);
+		$this->assertEquals($pdoCharacter->getCharacterUniverse(), $this->validCharacterUniverse);
+	}
+
 }
 
 

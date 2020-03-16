@@ -9,7 +9,6 @@ import {FighterSelection} from "./FighterSelection";
 
 export const Home = () => (
 	<body>
-	<NavBar></NavBar>
 			<div className="home">
 			<h1 id="title-top">Odyssey</h1>
 				<h1 id="Of">Of</h1>

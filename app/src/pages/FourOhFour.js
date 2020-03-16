@@ -5,7 +5,6 @@ import Navi from "../img/Navi-Pixels.png"
 export const FourOhFour = () => {
 	return (
 		<>
-			<NavBar></NavBar>
 			<h2 className="text-center mt-5">Error: 404</h2>
 			<div className="text-center">
 				<img src={Navi} alt="Navi"/>

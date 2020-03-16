@@ -7,7 +7,6 @@ import {NavBar} from "../shared/utils/NavBar";
 export const AboutUs = () => {
 	return(
 		<>
-			<NavBar></NavBar>
 			<main className="my-5 text-white">
 				<div className="container-fluid text-center text-md-left">
 					<Row>

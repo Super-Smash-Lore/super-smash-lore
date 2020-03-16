@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Card from "react-bootstrap/Card";
 import CardColumns from "react-bootstrap/CardColumns";
 import Row from "react-bootstrap/Row";
@@ -12,13 +12,23 @@ import Image from "../img/Ganon-Placeholder.jpg";
 import {NavBar} from "../shared/utils/NavBar";
 import "../index.css";
 import {FighterCard} from "../shared/utils/FighterCard"
+import {useDispatch, useSelector} from "react-redux";
+import {getAllCharacters} from "../shared/actions/character-action";
 
 
 
 export const FighterSelection = () => {
+	const dispatch = useDispatch();
+	const characters = useSelector(state => state.characters ? state.characters : [] );
+	const sideEffects = () => {
+		dispatch(getAllCharacters())
+	}
+	const sideEffectInputs = [];
+
+	useEffect(sideEffects, sideEffectInputs)
+
 	return (
-		<body id="fighterBody">
-		<NavBar></NavBar>
+		<div id="fighterBody">
 		<main  className="my-5">
 			<Container fluid="true" className="container-fluid text-center text-md-center">
 				<Form inline>
@@ -26,11 +36,11 @@ export const FighterSelection = () => {
 					<FormControl type="text" placeholder="Search" className="mr-sm-2 col-lg-5 border-dark" />
 					<Button className="btn btn-primary my-sm-4" variant="outline-dark">Search</Button>
 				</Form>
-				<div>
-					<FighterCard></FighterCard>
-				</div>
+				<Row>
+					{characters.map(character =>(<FighterCard character={character}/>))}
+				</Row>
 			</Container>
 		</main>
-		</body>
+		</div>
 	)
 };
