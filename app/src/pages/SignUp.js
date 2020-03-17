@@ -1,6 +1,6 @@
 import {httpConfig} from "../shared/utils/http-config";
 import {SignUpContent} from "../shared/utils/SignUpContent";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as Yup from "yup";
 import {Formik} from "formik";
 import {Redirect} from "react-router";
@@ -9,6 +9,9 @@ import {Redirect} from "react-router";
 
 
 	export const SignUp = () => {
+		useEffect(() => {
+			httpConfig.get("/apis/earl-grey/")
+		});
 		// state variable to handle redirect to posts page on sign in
 		const [toHome, setToHome] = useState(null);
 		const signUp = {
