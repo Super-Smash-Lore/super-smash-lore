@@ -30,7 +30,7 @@ export const Favorites = () => (
 						<div className="Profile d-flex pt-3 col-xl-12">
 							<div className="mr-auto col-xl-12 pb-5 pt-2">
 								<h2 id="Profile-section">Profile: Name</h2>
-								<a type="button" href="/about-us" className="btn btn-primary">Profile Settings</a>
+								<a type="button" href="/profile" className="btn btn-primary">Profile Settings</a>
 							</div>
 						</div>
 						<div className="p-2 align-self-center col-xl-12">

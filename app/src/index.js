@@ -14,6 +14,7 @@ import {FighterSelection} from "./pages/FighterSelection";
 import {SignIn} from "./pages/SignIn";
 import {FighterCard} from "./shared/utils/FighterCard";
 import {NavBar} from "./shared/utils/NavBar";
+import {EmailValidation} from "./pages/EmailValidation";
 import {ProfileSettings} from "./pages/ProfileSettings";
 import {IndividualInfoCard} from "./shared/utils/IndividualInfoCard";
 import { applyMiddleware, createStore } from 'redux';
@@ -44,6 +45,7 @@ const Routing = () => (
 					<Route exact path="/fighter" component={FighterInfo}/>
 					<Route exact path="/fighter-selection" component={FighterSelection}/>
 					<Route exact path="./shared/FighterCard" component={FighterCard}/>
+					<Route exact path="/Email" component={EmailValidation}/>
 					<Route component={FourOhFour}/>
 				</Switch>
 			</BrowserRouter>

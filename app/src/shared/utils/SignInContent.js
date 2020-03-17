@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Image2 from "../../img/homemade.jpg";
+import Image2 from "../../img/homemade-2.jpg";
 
 
 
@@ -27,7 +27,7 @@ export const SignInContent = (props) => {
 					<div className="row">
 						<div className="col-lg-5 pt-lg-5">
 							<Card>
-								<img className="odysseyUltimate" src={Image2} alt="odyssey"/>
+								<img className="odysseyUltimate rounded" src={Image2} alt="odyssey"/>
 							</Card>
 						</div>
 						<div id="signIn" className="col-lg-6 mx-lg-4 text-left">
