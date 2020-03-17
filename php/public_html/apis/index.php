@@ -16,7 +16,7 @@ $pdo = $secrets->getPdoObject();
 
 
 try {
-	$smashJson = @file_get_contents("smashJson.json");
+	$smashJson = @file_get_contents("smashfinal.json");
 
 	if($smashJson === false) {
 		throw(new RuntimeException("Unable to read diceware data", 500));
