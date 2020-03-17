@@ -7,9 +7,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {getCharacterByCharacterId} from "../actions/character-action";
 import {useDispatch, useSelector} from "react-redux";
+// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Badge from "react-bootstrap/Badge";
 
 export const IndividualInfoCard = ({match}) => {
-	console.log(match.params.characterId);
 const dispatch = useDispatch();
 	const sideEffects = () => {
 		dispatch(getCharacterByCharacterId(match.params.characterId));
@@ -19,7 +20,6 @@ const dispatch = useDispatch();
 	const character = useSelector(state => (
 		state.characters ? state.characters : null
 	));
-	console.log(character);
 	return (
 		<>
 			{character && (
@@ -31,14 +31,12 @@ const dispatch = useDispatch();
 							<h1 className="" id="character-name">{character.characterName}</h1>
 						</div>
 					</Row>
-					<Row>
-						<div className="text-right col-12" id="favorite-me">
-							<Button variant="primary">Favorite</Button>
-							{/*<Alert variant="success">*/}
-							{/*<Alert.Heading>Hey, nice to see you</Alert.Heading>*/}
-							{/*</Alert>*/}
-						</div>
-					</Row>
+					{/*<Row>*/}
+					{/*<Button variant="outline-danger" size="sm" className={`post-like-btn ${(isLiked !== null ? isLiked : "")}`} onClick={clickLike} disabled={!jwt && true}>*/}
+					{/*	<FontAwesomeIcon icon="heart"/>&nbsp;*/}
+					{/*	<Badge variant="danger">1</Badge>*/}
+					{/*</Button>*/}
+					{/*</Row>*/}
 				</Container>
 				<Container fluid="true" className="container-fluid" id="whole-row">
 					<Row>
@@ -62,15 +60,19 @@ const dispatch = useDispatch();
 										Debut:
 									</h2>
 									<p id="debut-character">{character.characterReleaseDate}</p>
+									<h2 id="song">
+										Theme Music:
+									</h2>
+									<a id="song-link"  href={character.characterMusicUrl}>{character.characterSong}</a>
 									<h2 id="quotes">
 										Quotes:
 									</h2>
 									<ul id="carousel">
-										{/*{character.characterQuotes.map(characterQuote => (<li>characterQuote</li>))}*/}
+										{character.characterQuotes && character.characterQuotes.split(",").map(characterQuote => (<li>{characterQuote}</li>))}
 									</ul>
-									<h2 id="games">
-										Games:
-									</h2>
+									{/*<h2 id="games">*/}
+									{/*	Games:*/}
+									{/*</h2>*/}
 									{/*<Row>*/}
 									{/*	<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">*/}
 									{/*		<a href='https://smile.amazon.com/Nintendo-Selects-Legend-Zelda-Between-Worlds/dp/B0792R1NYY/ref=sxin_0_ac_d_rm?ac_md=0-0-bGluayBiZXR3ZWVuIHdvcmxkcw%3D%3D-ac_d_rm&crid=2C6TP367GAC6H&cv_ct_cx=link+between+worlds&keywords=link+between+worlds&pd_rd_i=B0792R1NYY&pd_rd_r=82c3940e-527a-42e3-8331-c13220ae4a0e&pd_rd_w=IZMNt&pd_rd_wg=YdNV4&pf_rd_p=ec111f65-4a46-499c-be78-f47997212bd0&pf_rd_r=2WCJXPFGP94EAC8F1EWE&psc=1&qid=1584051066&sprefix=lnik+betwee%2Caps%2C219'>*/}

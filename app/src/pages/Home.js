@@ -26,7 +26,7 @@ export const Home = () => (
 						Let's get started!
 					</p>
 					<div id="start-button">
-						<a type="button" href={FighterSelection} className="btn btn-dark btn-lg">Fighters</a>
+						<a type="button" href='/fighter-selection' className="btn btn-dark btn-lg">Fighters</a>
 					</div>
 				</div>
 			</div>

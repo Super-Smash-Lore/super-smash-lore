@@ -1,60 +1,62 @@
-import React, {useEffect} from "react";
 import {httpConfig} from "../shared/utils/http-config";
-import Form from "react-bootstrap/Form";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import smash from "../img/Playing-Switch.jpg";
-import Image from "../img/OoD-Logo-v2.png";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import {NavBar} from "../shared/utils/NavBar";
+import {SignUpContent} from "../shared/utils/SignUpContent";
+import React, {useState} from 'react';
+import * as Yup from "yup";
+import {Formik} from "formik";
+import {Redirect} from "react-router";
 
 
 
 
-export const SignUp = () => {
-	useEffect(() => {
-		httpConfig.get("/apis/earl-grey")
-	});
-	return(
-		<>
-			<main>
-				<div className="container pt-sm-5 mt-sm-5">
-					<div className="row">
-						<div className="col-lg-8">
-							<Card id="sign-up-image">
-								<Card.Img src={smash}/>
-								<p id="sign-up-text">Start saving some of your favorite characters!</p>
-							</Card>
-						</div>
-						<div className="col-lg-4 text-left">
-							<h2>Sign Up</h2>
-							<form>
-								<div className="form-group mb-lg-4 mt-lg-4">
-									<label>Name</label>
-									<input type="text" className="form-control" placeholder="Jane Doe" />
-								</div>
-								<div className="form-group mb-lg-4">
-									<label>Email:</label>
-									<input type="email" className="form-control" placeholder="yourmail@gmail.com" />
-								</div>
-								<div className="form-group mb-lg-4">
-									<label>Password:</label>
-									<input type="password" className="form-control" placeholder="Enter Password" />
-								</div>
-								<div className="form-group mb-lg-4">
-									<label>Confirm Password:</label>
-									<input type="password" className="form-control" placeholder="Re-Enter Password" />
-								</div>
-								<button type="submit" className="btn btn-primary btn-block mt-5 mb-1">Sign Up</button>
-								<p className="forgot-password text-right">
-									Already registered <a href="#">sign in?</a>
-								</p>
-							</form>
-						</div>
-					</div>
-				</div>
-			</main>
+	export const SignUp = () => {
+		// state variable to handle redirect to posts page on sign in
+		const [toHome, setToHome] = useState(null);
+		const signUp = {
+			profileUsername: "",
+			profileEmail: "",
+			profilePassword: "",
+			profilePasswordConfirm: "",
+		};
+		const [status, setStatus] = useState(null);
+		const validator = Yup.object().shape({
+			profileUsername: Yup.string()
+				.required("Profile Username is required"),
+			profileEmail: Yup.string()
+				.email("Email must be a valid email")
+				.required("Email is required"),
+			profilePassword: Yup.string()
+				.required("Password is required")
+				.min(8, "Password must be at least eight characters long"),
+			profilePasswordConfirm: Yup.string()
+				.required("Password confirm is required")
+				.min(8, "Password must be at least eight characters long")
+		});
+		const submitSignUp = (values, {resetForm, setStatus}) => {
+			httpConfig.post("/apis/sign-up/", values)
+				.then(reply => {
+					let {message, type} = reply;
+					if(reply.status === 200 && reply.headers["x-jwt-token"]) {
+						window.localStorage.removeItem("jwt-token");
+						window.localStorage.setItem("jwt-token", reply.headers["x-jwt-token"]);
+						resetForm();
+						setTimeout(() => {
+							setToHome(true);
+						}, 1500);
+					}
+					setStatus({message, type});
+				});
+		};
+		return (
+			<>
+				{/* redirect user to posts page on sign in */}
+				{toHome ? <Redirect to="/home/" /> : null}
+				<Formik
+					initialValues={signUp}
+					onSubmit={submitSignUp}
+					validationSchema={validator}
+				>
+					{SignUpContent}
+				</Formik>
 			</>
-	)
-};
+		)
+	};

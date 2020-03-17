@@ -1,46 +1,58 @@
-import React, {useEffect} from "react";
-import {httpConfig} from "../shared/utils/http-config";
-import Form from "react-bootstrap/Form";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Image from "../img/Odyssey-Of-Ultimate-Banner-mini.png";
-import {NavBar} from "../shared/utils/NavBar";
-import "../index.css"
+import React, {useState} from 'react';
+import {httpConfig} from "../shared/utils/http-config.js";
+import {Formik} from "formik/dist/index";
+import * as Yup from "yup";
+import {SignInContent} from "../shared/utils/SignInContent";
+import {Redirect} from "react-router";
 
 export const SignIn = () => {
-	useEffect(() => {
-		httpConfig.get("/apis/earl-grey")
+
+	// state variable to handle redirect to posts page on sign in
+	const [toHome, setToHome] = useState(null);
+
+	const  validator = Yup.object().shape({
+		profileEmail: Yup.string()
+			.email("email must be a valid email")
+			.required('email is required'),
+		profilePassword: Yup.string()
+			.required("Password is required")
+			.min(8, "Password must be at least eight characters")
 	});
-	return(
-		<body id="signInBody">
-		<main>
-			<div className="container pt-lg-5">
-				<div className="row">
-					<div className="col-lg-5 pt-lg-5">
-						<Card>
-							<img className="odysseyUltimate " src={Image} alt="odyssey"/>
-						</Card>
-					</div>
-					<div id="signIn" className="col-lg-6 mx-lg-4 text-center">
-						<h2 className="mb-5">Sign In</h2>
-						<Form>
-							<div className="form-group my-4">
-								<label className="float-left">UserName</label>
-								<input type="email" className="form-control " placeholder="Enter email" />
-							</div>
-							<div className="form-group my-5">
-								<label className="float-left">Password</label>
-								<input type="password" className="form-control" placeholder="Enter password" />
-							</div>
-							<Button type="submit" className="btn btn-primary btn-block my-4">Sign In</Button>
-							<p className="forgot-password text-right m-4">
-								New to Odyssey of Ultimate? <a href="#">Sign Up</a>
-							</p>
-						</Form>
-					</div>
-				</div>
-			</div>
-		</main>
-		</body>
+
+	//the initial values object defines what the request payload is.
+	const signIn = {
+		profileEmail: "",
+		profilePassword: ""
+	};
+
+	const submitSignIn = (values, {resetForm, setStatus}) => {
+		httpConfig.post("/apis/sign-in/", values)
+			.then(reply => {
+				let {message, type} = reply;
+				if(reply.status === 200 && reply.headers["x-jwt-token"]) {
+					window.localStorage.removeItem("jwt-token");
+					window.localStorage.setItem("jwt-token", reply.headers["x-jwt-token"]);
+					resetForm();
+					setTimeout(() => {
+						setToHome(true);
+					}, 1500);
+				}
+				setStatus({message, type});
+			});
+	};
+
+	return (
+		<>
+			{/* redirect user to posts page on sign in */}
+			{toHome ? <Redirect to="/profile" /> : null}
+
+			<Formik
+				initialValues={signIn}
+				onSubmit={submitSignIn}
+				validationSchema={validator}
+			>
+				{SignInContent}
+			</Formik>
+		</>
 	)
 };

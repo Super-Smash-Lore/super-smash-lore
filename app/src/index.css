@@ -108,6 +108,12 @@ font-size: 3vw;
 #universe {
 	font-size: 3vw;
 }
+#song {
+	font-size: 3vw;
+}
+#song-link {
+	font-size: 1.5vw;
+}
 #quotes {
 	font-size: 3vw;
 }
@@ -179,5 +185,5 @@ font-size: 3vw;
 	float: right;
 }
 .odysseyUltimate {
-	height: 20vw;
+	height: 35vh;
 }

@@ -24,9 +24,9 @@ export const getCharacterByCharacterId = (id) => async dispatch => {
 	const {data} = await httpConfig(`/apis/character/${id}`);
 	dispatch({type: "GET_CHARACTER_BY_CHARACTER_ID", payload: data })
 };
-export const getGamesByCharacterId = (characterId) => async dispatch => {
+export const getGameByGameCharacterId = (characterId) => async dispatch => {
 	const {data} = await httpConfig(`/apis/game/?characterId=${characterId}`);
-	dispatch({type: "GET_GAMES_BY_CHARACTER_ID", payload: data })
+	dispatch({type: "GET_GAME_BY_GAME_CHARACTER_ID", payload: data })
 };
 
 export const getFavoritesByFavoriteCharacterId = (characterId) => async dispatch => {
