@@ -145,14 +145,5 @@ export const Favorites = () => (
 			</Row>
 		</Container>
 	</main>
-	<div className="fixed-bottom">
-		<footer className="page-footer font-small blue bg-primary">
-			<div className="footer-copyright text-center mt-5">
-				<div className="d-flex justify-content-center">
-					<p className="my-2">OdysseyOfUltimate.com 2020</p>
-				</div>
-			</div>
-		</footer>
-	</div>
 	</body>
 );
