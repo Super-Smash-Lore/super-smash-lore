@@ -5,6 +5,7 @@ require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
+include $_SERVER["DOCUMENT_ROOT"] . "/includes/email-styles.php";
 
 use SuperSmashLore\SuperSmashLore\Profile;
 
@@ -81,8 +82,9 @@ try {
 
 		//compose message to send with email
 		$message = <<< EOF
-<h2>Welcome to Odyssey Of Ultimate.</h2>
-<p>In order to sign in you must confirm your account </p>
+<h2 id="route-header">Welcome to Odyssey Of Ultimate.</h2>
+<img src="https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-9/90143895_10216315664192959_5726385659879358464_n.jpg?_nc_cat=109&_nc_sid=8024bb&_nc_ohc=vrSXeUsGb4oAX-0eC9H&_nc_ht=scontent-lax3-1.xx&oh=7db1253b1cabc1570b54f645adb2a61f&oe=5E96558E" alt="banner">
+<p id="route-body">In order to sign in you must confirm your account </p>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 		//create swift email
