@@ -8,25 +8,14 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 // import Image from "../img/OoD-Logo-v2.png";
-import Placeholder from "../img/placeholder.png";
+import Placeholder from "../img/Ganon-Placeholder.jpg";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import {NavBar} from "../shared/utils/NavBar";
 export const Favorites = () => (
+
 	<body id="favorites-body">
-	<Navbar sticky="top" bg="dark" variant="dark" collapseOnSelect expand="lg">
-		<Navbar.Brand href="/"><img id="Logo-2" className="ml-5"  alt="nav-logo"/></Navbar.Brand>
-		<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-		<Navbar.Collapse id="responsive-navbar-nav">
-			<div className="navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="about">About</Nav.Link>
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/fighter-selection">Fighters</Nav.Link>
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#profile">Profile</Nav.Link>
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#favorites">Favorites</Nav.Link>
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="/sign-in">Sign-In</Nav.Link>
-				<Nav.Link className="nav-link nav-item active js-scroll-trigger" href="#signUp">Sign-Up</Nav.Link>
-			</div>
-		</Navbar.Collapse>
-	</Navbar>
+>>>>>>> ryanb-sprint-4
 	<main className="my-5 flex-row">
 		<Container fluid="true" className="container-fluid">
 			<Row>
@@ -42,7 +31,7 @@ export const Favorites = () => (
 						<div className="Profile d-flex pt-3 col-xl-12">
 							<div className="mr-auto col-xl-12 pb-5 pt-2">
 								<h2 id="Profile-section">Profile: Name</h2>
-								<a type="button" href="/about-us" className="btn btn-primary">Profile Settings</a>
+								<a type="button" href="/profile" className="btn btn-primary">Profile Settings</a>
 							</div>
 						</div>
 						<div className="p-2 align-self-center col-xl-12">
@@ -54,37 +43,37 @@ export const Favorites = () => (
 					<Card className="border-0" id="card-4">
 						<Card.Body>
 							<CardDeck>
-							<Card className="card-body col-xl-12 border-0">
-								<Card.Img variant="top" src={Placeholder}/>
-								<Card.Body>
-									<Card.Title>Character Name</Card.Title>
-								</Card.Body>
-							</Card>
-							<Card className="card-body col-xl-12 border-0">
-								<Card.Img variant="top" src={Placeholder} />
-								<Card.Body>
-									<Card.Title>Character Name</Card.Title>
-								</Card.Body>
-							</Card>
-							<Card className="card-body col-xl-12 border-0">
-								<Card.Img variant="top" src={Placeholder} />
-								<Card.Body>
-									<Card.Title>Character Name</Card.Title>
-								</Card.Body>
-							</Card>
-							<Card className="card-body col-xl-12 border-0">
-								<Card.Img variant="top" src={Placeholder} />
-								<Card.Body>
-									<Card.Title>Character Name</Card.Title>
-								</Card.Body>
-							</Card>
-							<Card className="card-body col-xl-12 border-0">
-								<Card.Img variant="top" src={Placeholder} />
-								<Card.Body>
-									<Card.Title>Character Name</Card.Title>
-								</Card.Body>
-							</Card>
-						</CardDeck>
+								<Card className="card-body col-xl-12 border-0">
+									<Card.Img variant="top" src={Placeholder}/>
+									<Card.Body>
+										<Card.Title>Character Name</Card.Title>
+									</Card.Body>
+								</Card>
+								<Card className="card-body col-xl-12 border-0">
+									<Card.Img variant="top" src={Placeholder} />
+									<Card.Body>
+										<Card.Title>Character Name</Card.Title>
+									</Card.Body>
+								</Card>
+								<Card className="card-body col-xl-12 border-0">
+									<Card.Img variant="top" src={Placeholder} />
+									<Card.Body>
+										<Card.Title>Character Name</Card.Title>
+									</Card.Body>
+								</Card>
+								<Card className="card-body col-xl-12 border-0">
+									<Card.Img variant="top" src={Placeholder} />
+									<Card.Body>
+										<Card.Title>Character Name</Card.Title>
+									</Card.Body>
+								</Card>
+								<Card className="card-body col-xl-12 border-0">
+									<Card.Img variant="top" src={Placeholder} />
+									<Card.Body>
+										<Card.Title>Character Name</Card.Title>
+									</Card.Body>
+								</Card>
+							</CardDeck>
 							<CardDeck>
 								<Card className="card-body col-xl-12 border-0">
 									<Card.Img variant="top" src={Placeholder}/>

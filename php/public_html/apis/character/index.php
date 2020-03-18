@@ -59,6 +59,9 @@ try {
 		} else if(empty($characterUniverse) === false) {
 			$reply->data = Character::getCharacterByCharacterUniverse($pdo, $characterUniverse)->toArray();
 			}
+		else {
+			$reply->data = Character::getAllCharacters($pdo)->toArray();
+		}
 		}
 } catch(\Exception | TypeError $exception) {
 	$reply->status = $exception->getCode();

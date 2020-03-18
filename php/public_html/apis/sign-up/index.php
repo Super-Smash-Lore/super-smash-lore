@@ -35,6 +35,10 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
+		//profile username is a required field
+		if(empty($requestObject->profileUsername) === true) {
+			throw(new \InvalidArgumentException ("No profile username present", 405));
+		}
 		//profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("No profile email present", 405));

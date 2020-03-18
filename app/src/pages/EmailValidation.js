@@ -12,31 +12,29 @@ import CardDeck from "react-bootstrap/CardDeck";
 
 export const EmailValidation = () => {
 	return (
-	<container>
-	<row className="flex-xl-column">
-		<Col className="tough justify-content-center col-xl-12">
-			<div className="d-flex justify-content-center mb-2 col-xs-10 pt-5">
-				<row>
-					<h2>Welcome to Odyssey of Ultimate</h2>
-				</row>
-			</div>
-
-			<div className="page-pic d-flex justify-content-center mb-3 col-xs-10 pb-3">
-				<row className="content-banner">
-					<img src={Image} alt="banner"/>
-				</row>
-			</div>
-
-			<div className="d-flex justify-content-center content-row col-xs-10">
-					<h3> Confirming your profile and saving some of your favorite characters is only one more click away!</h3>
-			</div>
-			<div className="d-flex justify-content-center mt-3 col-xs-12">
-				<ButtonToolbar>
-					<Button href="https://www.twitch.tv/c9zven" variant="link"> https://www.twitch.tv/c9zven</Button>
-				</ButtonToolbar>
-			</div>
-		</Col>
-	</row>
-	</container>
+		<Container>
+			<Row className="flex-xl-column">
+				<Col className="tough justify-content-center col-xl-12">
+					<div className="d-flex justify-content-center mb-2 col-xs-10 pt-5">
+						<Row>
+							<h2>Welcome to Odyssey of Ultimate</h2>
+						</Row>
+					</div>
+					<div className="page-pic d-flex justify-content-center mb-3 col-xs-10 pb-3">
+						<Row className="content-banner">
+							<img src={Image} alt="banner"/>
+						</Row>
+					</div>
+					<div className="d-flex text-center content-row col-xs-10">
+						<h3> Confirming your profile and saving some of your favorite characters is only one more click away!</h3>
+					</div>
+					<div className="d-flex justify-content-center mt-3 col-xs-12">
+						<ButtonToolbar>
+							<Button href="https://www.twitch.tv/c9zven" variant="link"> https://www.twitch.tv/c9zven</Button>
+						</ButtonToolbar>
+					</div>
+				</Col>
+			</Row>
+		</Container>
 	)
 };
