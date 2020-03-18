@@ -14,6 +14,7 @@ import "../index.css";
 import {FighterCard} from "../shared/utils/FighterCard"
 import {useDispatch, useSelector} from "react-redux";
 import {getAllCharacters} from "../shared/actions/character-action";
+import {SearchBar} from "../shared/utils/SearchBar";
 
 
 
@@ -31,6 +32,7 @@ export const FighterSelection = () => {
 		<div id="fighterBody">
 		<main  className="my-5">
 			<Container fluid="true" className="container-fluid text-center text-md-center">
+				<SearchBar/>
 				<Form inline>
 					<h2 className="text-md-left col-lg-6"><strong>CHOOSE YOUR FIGHTER:</strong></h2>
 					<FormControl type="text" placeholder="Search" className="mr-sm-2 col-lg-5 border-dark" />

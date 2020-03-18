@@ -19,7 +19,8 @@ import {IndividualInfoCard} from "./shared/utils/IndividualInfoCard";
 import { applyMiddleware, createStore } from 'redux';
 import { combinedReducers } from './shared/reducers';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import {SearchBar} from './shared/utils/SearchBar';
 
 const store = createStore(combinedReducers, applyMiddleware(thunk));
 
@@ -31,6 +32,7 @@ const store = createStore(combinedReducers, applyMiddleware(thunk));
 			<BrowserRouter>
 				<Switch>
 					<Route exact path="/character/:characterId" component={IndividualInfoCard} characterId=":characterId"/>
+					<Route exact path="./shared/SearchBar" component={SearchBar}/>
 					<Route exact path="/sign-in" component={SignIn}/>
 					<Route exact path="/profile" component={ProfileSettings}/>
 					<Route exact path="/about-us" component={AboutUs}/>
