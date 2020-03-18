@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Image2 from "../../img/homemade-2.jpg";
+import Image from "../../img/homemade-2.jpg";
 
 
 
@@ -21,17 +21,17 @@ export const SignInContent = (props) => {
 	} = props;
 	return (
 		<>
-			<body id="signInBody">
+			<body>
 			<main>
-				<div className="container pt-lg-5">
-					<div className="row">
-						<div className="col-lg-5 pt-lg-5">
-							<Card>
-								<img className="odysseyUltimate rounded" src={Image2} alt="odyssey"/>
+				<div className="container mt-5">
+					<row className="row">
+						<div className="col-lg-7">
+							<Card id="sign-in-image">
+								<Card.Img className="odysseyUltimate rounded" variant="top"  src={Image} alt="odyssey"/>
 							</Card>
 						</div>
-						<div id="signIn" className="col-lg-6 mx-lg-4 text-left">
-							<h2 className="mb-5">Sign In</h2>
+						<div className="col-lg-5  text-left">
+							<h2 className="my-2">Sign In</h2>
 							<form onSubmit={handleSubmit}>
 								{/*controlId must match what is passed to the initialValues prop*/}
 								<div className="form-group my-4 text-left">
@@ -84,7 +84,7 @@ export const SignInContent = (props) => {
 							</form>
 							{status && (<div className={status.type}>{status.message}</div>)}
 						</div>
-					</div>
+					</row>
 				</div>
 			</main>
 			</body>

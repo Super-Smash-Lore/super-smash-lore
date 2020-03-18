@@ -14,6 +14,8 @@ import Nav from "react-bootstrap/Nav";
 import {NavBar} from "../shared/utils/NavBar";
 export const Favorites = () => (
 
+
+
 	<body id="favorites-body">
 	<main className="my-5 flex-row">
 		<Container fluid="true" className="container-fluid">

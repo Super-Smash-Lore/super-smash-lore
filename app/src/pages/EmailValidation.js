@@ -11,8 +11,8 @@ import Image from "../img/Odyssey-Of-Ultimate-Banner.png"
 
 export const EmailValidation = () => {
 	return (
-		<Container>
-			<Row className="flex-xl-column">
+		<container>
+			<row className="flex-xl-column">
 				<Col className="tough justify-content-center col-xl-12">
 					<div className="d-flex justify-content-center mb-2 col-xs-10 pt-5">
 						<Row>
@@ -33,7 +33,7 @@ export const EmailValidation = () => {
 						</ButtonToolbar>
 					</div>
 				</Col>
-			</Row>
-		</Container>
+			</row>
+		</container>
 	)
 };

@@ -1,7 +1,15 @@
 h1 {
 	font-size: 8vw;
-	text-align: right;
 	font-weight: bold;
+}
+#home-info {
+	font-size: 2vw;
+	display: block;
+	margin: auto;
+
+}
+#learn-text {
+	font-size: 3vw;
 }
 #Logo-2 {
 	height: 5vh;
@@ -10,42 +18,22 @@ h1 {
 	font-size: 1.5vw;
 	font-weight: bold;
 	font-family: 'Roboto', sans-serif;
-	text-align: right;
 }
 #developed-by-2 {
 	font-size: 1.5vw;
 	font-weight: bold;
 	font-family: 'Roboto', sans-serif;
-	text-align: right;
 }
 #home-text {
 	font-size: 2vw;
-	text-align: right;
 }
-.home {
-	margin: 0;
-	padding: 0;
-	min-height: 100vh;
-	background-image: url("./img/Odyssey-Of-Ultimate-Banner-2.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center center;
-}
+
 #started {
-	font-size: 2vw;
+	font-size: 4vw;
 	font-weight: bold;
-	text-align: center;
-}
-#start-button {
-	font-size: 2vw;
-	font-weight: bold;
-	text-align: center;
-	color: white;
 }
 @media screen and (max-width: 1500px) {
-	.home {
-		background-image: url("./img/Odyssey-Of-Ultimate-Banner-3.png");
-	}
+
 	h1 {
 		text-align: center;
 		font-size: 5rem;
@@ -69,10 +57,6 @@ h1 {
 		font-weight: bold;
 		text-align: center;
 		margin-top: 10vw;
-	}
-	#start-button {
-	font-size: 1.5rem;
-	text-align: center;
 	}
 }
 #logo {
@@ -102,6 +86,12 @@ font-size: 3vw;
 #about {
 	font-size: 3vw;
 }
+#about-image {
+	margin: auto;
+}
+#about-us-text {
+	font-size: 1.5vw;
+}
 #debut {
 	font-size: 3vw;
 }
@@ -130,6 +120,7 @@ font-size: 3vw;
 #whole-row {
 
 }
+
 #games {
 	font-size: 3vw;
 }
@@ -152,6 +143,26 @@ font-size: 3vw;
 		margin-right: 3vw;
 		padding-right: 5vw;
 	}
+	#about-border {
+		border-color: black;
+		border-top: none;
+		border-bottom: none;
+		border-left: none;
+		border-radius: 0;
+		padding-right: 5vw;
+		margin-right: 3vw;
+		margin-left: 2vw;
+	}
+	#sign-in-image {
+		border-color: black;
+		border-top: none;
+		border-bottom: none;
+		border-left: none;
+		border-radius: 0;
+		padding-right: 5vw;
+		margin-right: 3vw;
+		margin-left: 2vw;
+	}
 }
 
 @media screen and (max-width: 992px) {
@@ -160,9 +171,10 @@ font-size: 3vw;
 	}
 	#about-us-text {
 		margin-top: 5vw;
+		font-size: 1rem;
 	}
-	#signIn{
-		border: none;
+	#learn-text {
+		font-size: 1.5rem;
 	}
 }
 @media screen and (max-width: 575px) {
@@ -174,9 +186,6 @@ font-size: 3vw;
 		text-align: center;
 	}
 }
-.fighter-text-panel {
-
-}
 #footer-logo {
 	width: 3.5vw;
 }
@@ -184,9 +193,7 @@ font-size: 3vw;
 	color: darkblue;
 	float: right;
 }
-.odysseyUltimate {
-	height: 35vh;
-}
+
 #smash-fighter {
 	height: 30vh;
 }

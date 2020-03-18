@@ -21,10 +21,12 @@ import { applyMiddleware, createStore } from 'redux';
 import { combinedReducers } from './shared/reducers';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux'
+import {httpConfig} from "./shared/utils/http-config";
 // import { library } from '@fortawesome/fontawesome-svg-core'
 // import {heart} from '@fortawesome/free-solid-svg-icons'
 // import {SearchBar} from "./shared/utils/SearchBar";
 
+httpConfig.get("/apis/earl-grey");
 const store = createStore(combinedReducers, applyMiddleware(thunk));
 
 // library.add(heart);
