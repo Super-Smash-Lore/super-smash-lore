@@ -12,8 +12,7 @@ import Image from "../img/homemade-2.jpg";
 
 export const Home = () => (
 	<div className="home">
-		<Container fluid="true">
-			<Row>
+		<Container fluid={true}>
 				<div className="col-lg-12 text-center">
 					<h1>Odyssey of Ultimate</h1>
 				</div>
@@ -22,7 +21,6 @@ export const Home = () => (
 						Developed By: Deep Diving for Nintendo
 					</p>
 				</div>
-			</Row>
 			<Row>
 				<div className="col-8 offset-2  text-center mt-2">
 					<Card>
@@ -31,13 +29,11 @@ export const Home = () => (
 				</div>
 			</Row>
 			<div className="text-center mt-5">
-				<Row>
 					<h2 id="learn-text">
 						Learn the stories of some of your favorite characters!
 					</h2>
-				</Row>
-				<Row className="mt-5 px-0">
-					<div className="col-lg-6 col-md-10 offset-md-1 offset-lg-1 text-center mt-2">
+				<Row className="mt-5 px-0 text-center">
+					<div className="col-lg-6 col-md-10 offset-md-1 offset-lg-1 mt-2">
 						<Card>
 							<Card.Img className="rounded"  src={smashsplash} alt="odyssey"/>
 						</Card>
