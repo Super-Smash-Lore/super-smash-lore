@@ -278,6 +278,37 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		}
 		return ($favorite);
 	}
+
+	/**
+	 * gets All Favorites
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of favorites found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getAllFavorites(\PDO $pdo) : \SplFixedArray {
+		//create a query template
+		$query = "SELECT favoriteCharacterId, favoriteProfileId, favoriteDate FROM favorite";
+		$statement = $pdo->prepare($query);
+		//bind the favorite to the place holder in the template
+		$statement->execute();
+		//build array of favorites
+		$favoritesArray = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$favorite = new Favorite($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
+				$favoritesArray[$favoritesArray->key()] = $favorite;
+				$favoritesArray->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		//returns favorite array
+		return ($favoritesArray);
+	}
 	/**
 	 * formats the state variables for JSON serialization
 	 *
@@ -289,6 +320,5 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		$fields["favoriteProfileId"] = $this->favoriteProfileId->toString();
 		$fields ["favoriteDate"] = round(floatval($this->favoriteDate->format("U.u")) * 1000);
 		return ($fields);
-
 	}
 }

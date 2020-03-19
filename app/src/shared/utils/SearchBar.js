@@ -6,14 +6,14 @@
 // 		this.state={term:''};
 // 	}
 // 	onInputChange(term){
-// 		const name = this.props.searchBoxName  undefined
+// 		const name = this.props.searchBoxName (undefined)
 // 		this.setState({term});
 // 		if(this.props.onSearchTermChange){
 // 			this.props.onSearchTermChange({name,term})
 // 		}
 // 	}
 // 	render() {
-// 		const name = this.props.searchBoxName  undefined
+// 		const name = this.props.searchBoxName (undefined)
 // 		return (
 // 			<div className="search-box">
 // 				<div className="search-icon">

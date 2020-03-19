@@ -34,6 +34,11 @@ export const getFavoritesByFavoriteCharacterId = (characterId) => async dispatch
 	dispatch({type: "GET_FAVORITES_BY_FAVORITE_CHARACTER_ID", payload: data })
 };
 
+export const getAllFavorites = () => async dispatch => {
+	const {data} = await httpConfig('/apis/favorite/');
+	dispatch({type: "GET_ALL_FAVORITES", payload: data })
+};
+
 export const getProfileByProfileId = (id) => async dispatch => {
 	const {data} = await httpConfig(`/apis/profile/${id}`);
 	dispatch({type: "GET_PROFILE_BY_PROFILE_ID", payload: data })

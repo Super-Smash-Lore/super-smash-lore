@@ -30,6 +30,7 @@ try {
 	if($method === "GET") {
 		//set xsrf cookie
 		setXsrfCookie();
+
 		//gets a specific favorite associated based on the composite key
 		if($favoriteProfileId !== null && $favoriteCharacterId !== null) {
 			$favorite = Favorite::getFavoriteByFavoriteProfileIdAndFavoriteCharacterId($pdo, $favoriteProfileId, $favoriteCharacterId);
@@ -43,12 +44,13 @@ try {
 		} else if(empty($favoriteCharacterId) == false) {
 			$reply->data = Favorite::getFavoriteByFavoriteCharacterId($pdo, $favoriteCharacterId)->toArray();
 		} else {
-			throw new InvalidArgumentException("Incorrect Search Parameters", 404);
+			$reply->data = Favorite::getAllFavorites($pdo)->toArray();
 		}
 	} else if($method === "POST" || $method === "PUT") {
 		//decode the response from the front end
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
+
 		if(empty($requestObject->favoriteProfileId) === true) {
 			throw (new \InvalidArgumentException("No Profile Liked to the Favorite.", 405));
 		}

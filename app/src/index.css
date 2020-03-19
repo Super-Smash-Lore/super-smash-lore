@@ -70,6 +70,10 @@ h1 {
 }
 #character-name {
 	font-size: 4vw;
+	text-align: right;
+}
+#favorite-button {
+	text-align: right;
 }
 #favorite-star {
 font-size: 3vw;
