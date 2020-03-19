@@ -8,19 +8,20 @@ import Button from "react-bootstrap/Button";
 import {NavBar} from "../shared/utils/NavBar";
 import {FighterSelection} from "./FighterSelection";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Image from "../img/homemade-2.jpg";
 
 export const Home = () => (
 	<div className="home">
-		<Container fluid="true">
+		<Container fluid={true}>
 			<Row>
 				<div className="col-lg-12 text-center">
 					<h1>Odyssey of Ultimate</h1>
-				</div>
-				<div className="text-lg-center">
-					<p id="developed-by">
-						Developed By: Deep Diving for Nintendo
-					</p>
+					<div className="text-lg-center">
+						<p id="developed-by">
+							Developed By: Deep Diving for Nintendo
+						</p>
+					</div>
 				</div>
 			</Row>
 			<Row>
@@ -32,9 +33,9 @@ export const Home = () => (
 			</Row>
 			<div className="text-center mt-5">
 				<Row>
-					<h2 id="learn-text">
-						Learn the stories of some of your favorite characters!
-					</h2>
+					<Col>
+						<h2 id="learn-text">Learn the stories of some of your favorite characters!</h2>
+					</Col>
 				</Row>
 				<Row className="mt-5 px-0">
 					<div className="col-lg-6 col-md-10 offset-md-1 offset-lg-1 text-center mt-2">
@@ -61,4 +62,3 @@ export const Home = () => (
 		</Container>
 	</div>
 );
-
