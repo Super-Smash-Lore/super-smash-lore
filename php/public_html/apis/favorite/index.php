@@ -78,11 +78,11 @@ try {
 		} else if($method === "PUT") {
 			//enforce the end user has an XRSF Token
 			verifyXsrf();
-			var_dump($_SESSION["profile"]->getProfileId()->toString());
+
 			//grab the favorite by its composite key
 			$favorite = Favorite::getFavoriteByFavoriteCharacterIdAndFavoriteProfileId($pdo, $requestObject->favoriteCharacterId, $requestObject->favoriteProfileId);
 			if($favorite === null) {
-				throw (new RuntimeException("Favorite Does Not Exist", 401));
+				throw (new RuntimeException("Favorite does not exist, can't edit.", 401));
 			}
 			//enforce the user is signed in and only trying to edit their own favorites, either add or delete
 			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $favorite->getFavoriteProfileId()->toString()) {
