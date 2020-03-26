@@ -278,6 +278,28 @@ public function setFavoriteProfileId( $newFavoriteProfileId) : void {
 		}
 		return ($favorite);
 	}
+
+	public static function getAllFavorites(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT  favoriteCharacterId, favoriteProfileId, favoriteDate FROM favorite";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of games
+		$favorites = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$favorite = new Favorite ($row["favoriteCharacterId"], $row["favoriteProfileId"], $row["favoriteDate"]);
+				$favorites[$favorites->key()] = $favorite;
+				$favorites->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($favorites);
+	}
 	/**
 	 * formats the state variables for JSON serialization
 	 *

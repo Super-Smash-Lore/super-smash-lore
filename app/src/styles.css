@@ -1,0 +1,32 @@
+/*.Title {*/
+/*	background-color: lightblue;*/
+/*}*/
+/*.Main {*/
+/*	background-color: lightblue;*/
+/*}*/
+
+/*.Profile {*/
+/*	background-color: lightblue;*/
+/*}*/
+
+/*.card-body {*/
+/*	background-color: lightblue;*/
+/*}*/
+
+.pre-scrollable {
+	max-height: 450px;
+	overflow-y: scroll;
+	padding-left: 70px;
+}
+
+/*.content-banner {*/
+/*	width: auto;*/
+/*	height: auto;*/
+/*}*/
+
+/*.profile-section {*/
+/*	padding-left: 20px;*/
+/*	padding-top: 20px;*/
+/*}*/
+
+
