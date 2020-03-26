@@ -25,12 +25,12 @@ export const getCharacterByCharacterId = (id) => async dispatch => {
 	dispatch({type: "GET_CHARACTER_BY_CHARACTER_ID", payload: data })
 };
 export const getGameByGameCharacterId = (characterId) => async dispatch => {
-	const {data} = await httpConfig(`/apis/game/?characterId=${characterId}`);
+	const {data} = await httpConfig(`/apis/game/?gameCharacterId=${characterId}`);
 	dispatch({type: "GET_GAME_BY_GAME_CHARACTER_ID", payload: data })
 };
 
 export const getFavoritesByFavoriteCharacterId = (characterId) => async dispatch => {
-	const {data} = await httpConfig(`/apis/favorite/?characterId=${characterId}`);
+	const {data} = await httpConfig(`/apis/favorite/?favoriteCharacterId=${characterId}`);
 	dispatch({type: "GET_FAVORITES_BY_FAVORITE_CHARACTER_ID", payload: data })
 };
 

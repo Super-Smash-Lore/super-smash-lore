@@ -31,6 +31,8 @@ export const HeartButton = ({characterId, profileId}) => {
 	// Grab all favorites from the redux store
 	const favorites = useSelector(state => (state.favorites ? state.favorites : []));
 
+console.log(favorites);
+
 	const effects = () => {
 		initializeFavorites(profileId);
 		countFavorites(characterId);
@@ -138,10 +140,9 @@ export const HeartButton = ({characterId, profileId}) => {
 	return (
 		<>
 			<Button variant="outline-primary" size="sm" className={`post-favorite-btn ${(isFavorited !== null ? isFavorited : "")}`} disabled={!jwt && true} onClick={clickFavorite}>
-				Favorite <FontAwesomeIcon icon="heart"/>&nbsp;
+				Favorite <FontAwesomeIcon icon="heart"/> {favoriteCount}
 			</Button>
 		</>
 	)
 };
 
-// <Badge variant="danger">{favoriteCount}</Badge>

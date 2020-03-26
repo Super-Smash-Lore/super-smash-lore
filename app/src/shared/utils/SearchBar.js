@@ -1,25 +1,58 @@
-import React from 'react';
+import React from "react";
 
-export class SearchBar extends React.Component {
-	constructor(props){
-		super(props);
-		this.state={term:''};
+class SearchBar extends React.Component {
+	state = {
+		query: "",
+		data: [],
+		filteredData: []
+	};
+
+	handleInputChange = event => {
+		const query = event.target.value;
+
+		this.setState(prevState => {
+			const filteredData = prevState.data.filter(element => {
+				return element.name.toLowerCase().includes(query.toLowerCase());
+			});
+
+			return {
+				query,
+				filteredData
+			};
+		});
+	};
+
+	getData = () => {
+		fetch(`http://localhost:3000/fighter-selection`)
+			.then(response => response.json())
+			.then(data => {
+				const { query } = this.state;
+				const filteredData = data.filter(element => {
+					return element.name.toLowerCase().includes(query.toLowerCase());
+				});
+
+				this.setState({
+					data,
+					filteredData
+				});
+			});
+	};
+
+	componentWillMount() {
+		this.getData();
 	}
-	onInputChange(term){
-		const name = this.props.searchBoxName;
-		this.setState({term});
-		if(this.props.onSearchTermChange){
-			this.props.onSearchTermChange({name,term})
-		}
-	}
+
 	render() {
-		const name = this.props.searchBoxName;
 		return (
-			<div className="search-box">
-				<div className="search-icon">
-				</div>
-				<input name={name} className="search-input" id="search" type="text" placeholder="Search" value={this.state.term}
-						 onChange={event=>this.onInputChange(event.target.value)} onKeyPress={this.props.onKeyPress|| null}/>
+			<div className="searchForm">
+				<form>
+					<input
+						placeholder="Search for..."
+						value={this.state.query}
+						onChange={this.handleInputChange}
+					/>
+				</form>
+				<div>{this.state.filteredData.map(i => <p>{i.name}</p>)}</div>
 			</div>
 		);
 	}

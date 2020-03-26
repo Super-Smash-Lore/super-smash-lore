@@ -40,7 +40,7 @@ try {
 		if(empty($id) === false) {
 			$reply->data = Game::getGameByGameId($pdo, $id);
 		} elseif(empty($gameCharacterId) === false) {
-			$reply->data = Game::getGameByGameCharacterId($pdo, $gameCharacterId);
+			$reply->data = Game::getGameByGameCharacterId($pdo, $gameCharacterId)->toArray();
 		} else {
 			$reply->data = Game::getAllGames($pdo)->toArray();
 

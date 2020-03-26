@@ -105,8 +105,8 @@ try {
 			}
 
 			//enforce the user is signed in and only trying to edit their own favorite.
-			if(empty($_SESSION["favorite"]) === true || $_SESSION["favorite"]->getFavoriteId()->toString() !== $favorite->getFavoriteProfileId()->toString()) {
-				throw(new \InvalidArgumentException("You are not allowed to delete this favorite.", 403));
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $favorite->getFavoriteProfileId()->toString()) {
+				throw(new \InvalidArgumentException("You Are Not Allowed To Delete This Character", 403));
 			}
 			//enforce the end user has a jwt token
 			validateJwtHeader();
