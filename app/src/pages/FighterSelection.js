@@ -33,7 +33,7 @@ export const FighterSelection = () => {
 			<Container fluid="true" className="container-fluid text-center text-md-center">
 				<Form inline>
 					<h2 className="text-md-left col-lg-6"><strong>CHOOSE YOUR FIGHTER:</strong></h2>
-					<SearchBar/>
+					{/*<SearchBar/>*/}
 					<Button className="btn btn-primary my-sm-4" variant="outline-dark">Search</Button>
 				</Form>
 				<Row>
