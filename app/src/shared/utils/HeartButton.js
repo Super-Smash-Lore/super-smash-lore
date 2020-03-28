@@ -140,8 +140,11 @@ console.log(favorites);
 	return (
 		<>
 			<Button variant="outline-primary" size="sm" className={`post-favorite-btn ${(isFavorited !== null ? isFavorited : "")}`} disabled={!jwt && true} onClick={clickFavorite}>
-				Favorite <FontAwesomeIcon icon="heart"/> {favoriteCount}
+				Favorite <FontAwesomeIcon icon="heart"/>
 			</Button>
+			<p className="mt-2 font-weight-bold text-primary">
+				Favorited By: {favoriteCount}
+			</p>
 		</>
 	)
 };
