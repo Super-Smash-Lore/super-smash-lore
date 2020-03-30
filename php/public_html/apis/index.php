@@ -29,13 +29,13 @@ try {
 		//create each individual character
 		$character = new Character(generateUuidV4(), $currentValue->characterDescription, $currentValue->characterMusicUrl, $currentValue->characterName, $currentValue->characterPictureUrl, $currentValue->characterQuotes, $currentValue->characterReleaseDate, $currentValue->characterSong, $currentValue->characterUniverse);
 		$character->insert($pdo);
-		$c = explode(",", $currentValue->gamePictureUrl);
-		var_dump($c);
-		$c = explode(",", $currentValue->gameUrl);
-		var_dump($c);
-	for($c = 0; $c <= 3; $c++)
+		$gamePictureUrls = explode(",", $currentValue->gamePictureUrl);
+		var_dump($gamePictureUrls);
+		$gameUrls = explode(",", $currentValue->gameUrl);
+		var_dump($gameUrls);
+		foreach($gamePictureUrls as $c => $value)
 			//create each individual game for the character page
-			$game = new Game(generateUuidV4(), $character->getCharacterId(), $currentValue->gamePictureUrl, $currentValue->gameSystem, $currentValue->gameUrl);
+			$game = new Game(generateUuidV4(), $character->getCharacterId(), $gamePictureUrls[$c], "no system", $gameUrls[$c]);
 			$game->insert($pdo);
 	}
 }
