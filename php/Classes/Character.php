@@ -530,7 +530,7 @@ class Character implements \JsonSerializable {
 	 */
 	public static function getAllCharacters(\PDO $pdo) : \SplFixedArray {
 		//create a query template
-		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character`";
+		$query = "SELECT characterId, characterDescription, characterMusicUrl, characterName, characterPictureUrl, characterQuotes, characterReleaseDate, characterSong, characterUniverse FROM `character` ORDER BY characterName ASC";
 		$statement = $pdo->prepare($query);
 		//bind the character universe to the place holder in the template
 		$statement->execute();

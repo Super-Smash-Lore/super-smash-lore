@@ -10,6 +10,8 @@ export default (state = [], action) => {
 			return action.payload;
 		case "GET_CHARACTER_BY_FAVORITE_PROFILE_ID":
 			return action.payload;
+		case "SEARCH_CHARACTER_BY_NAME":
+			return action.payload;
 		default:
 			return state;
 	}
