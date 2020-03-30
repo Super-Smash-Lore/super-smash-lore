@@ -93,9 +93,11 @@ console.log(game);
 											</h2>
 											<Row>
 												<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">
-													<a id="game-link" href={game.gameUrl && game.gameUrl.split(",").map(gameUrl => ({gameUrl}))}>
-														{game.gamePictureUrl && game.gamePictureUrl.split(",").map(gamePictureUrl => (<p> {gamePictureUrl}</p>))}
-													</a>
+													<Card>
+														{/*{game.gameUrl && game.gameUrl.split(",").map(gameUrl => ({gameUrl}))}*/}
+													<CardImg id="game-link" alt="Game Pictures" src={game.gamePictureUrl && game.gamePictureUrl.split(",").map(gamePictureUrl => (<p> {gamePictureUrl}</p>))}
+													/>
+													</Card>
 												</Col>
 												{/*<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">*/}
 												{/*	<a id="song-link" href={game.gamePictureUrl}>{game.gameUrl}</a>*/}
