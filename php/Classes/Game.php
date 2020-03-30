@@ -48,7 +48,7 @@ class Game implements \JsonSerializable {
 	 * @throws \TypeError if data type violates a data hint
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct($newGameId, string $newGameCharacterId, string $newGamePictureUrl, string $newGameSystem, string $newGameUrl) {
+	public function __construct($newGameId, $newGameCharacterId, string $newGamePictureUrl, string $newGameSystem, string $newGameUrl) {
 		try {
 			$this->setGameId($newGameId);
 			$this->setGameCharacterId($newGameCharacterId);
@@ -142,6 +142,7 @@ class Game implements \JsonSerializable {
 		//verifying if string is secure
 		$newGamePictureUrl = trim($newGamePictureUrl);
 		$newGamePictureUrl = filter_var($newGamePictureUrl, FILTER_VALIDATE_URL,FILTER_FLAG_NO_ENCODE_QUOTES);
+		var_dump($newGamePictureUrl);
 		if(empty($newGamePictureUrl) === true) {
 			throw (new \InvalidArgumentException("picture url empty or insecure"));
 		}
