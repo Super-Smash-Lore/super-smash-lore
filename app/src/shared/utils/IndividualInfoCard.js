@@ -30,10 +30,13 @@ export const IndividualInfoCard = ({match}) => {
 		state.characters ? state.characters : null
 	));
 	const game = useSelector(state => (
-		state.games ? state.games :null
+		state.games ? state.games : null
 	));
 console.log(game);
 	//Write useSelector to grab favorites from Redux
+	const favorite = useSelector(state => (
+		state.favorites ? state.favorites : null
+	));
 
 	const profileId = UseJwtProfileId();
 
