@@ -4,8 +4,6 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "../index.css";
 import Image from "../img/homemade-2.jpg";
-import Col from "react-bootstrap/Col";
-import {NavBar} from "../shared/utils/NavBar";
 import {UseJwt, UseJwtProfileId} from "../shared/utils/JwtHelpers";
 import {getProfileByProfileId} from "../shared/actions/character-action";
 import {useDispatch, useSelector} from "react-redux";
