@@ -15,7 +15,6 @@ export const ProfileSettings = () => {
 	const dispatch = useDispatch();
 	// grab the jwt and username for logged in users
 	const profileId = UseJwtProfileId();
-	console.log(profileId);
 
 	useEffect(() => {
 		dispatch(getProfileByProfileId(profileId))
@@ -38,30 +37,37 @@ export const ProfileSettings = () => {
 						</Card>
 					</div>
 					<div id="ProfileSettings" className="col-lg-5 my-sm-2 text-center">
-						<h2 className="mb-sm-3">Profile Settings</h2>
-						<Form>
-							<div className="form-group">
-								<label className="float-left">Change UserName</label>
-								<input type="email" className="form-control " placeholder="New Username" />
-							</div>
-							<div className="form-group">
-								<label className="float-left">Change Email</label>
-								<input type="email" className="form-control" placeholder="New Email" />
-							</div>
-							<div className="form-group">
-								<label className="float-left">Change Password</label>
-								<input type="password" className="form-control " placeholder="New Password" />
-							</div>
-							<div className="form-group">
-								<label className="float-left">Confirm New Password</label>
-								<input type="password" className="form-control" placeholder="Confirm New Password" />
-							</div>
-							<div className="text-left mt-4">
-								<Button type="submit">Apply Changes</Button>
-								<p className="forgot-password text-right m-sm-4">
-								</p>
-							</div>
-						</Form>
+						{/*<h2 className="mb-sm-3">Profile Settings</h2>*/}
+						<br/>
+						<h2>
+							New features with your
+						</h2>
+						<h2>
+							profile coming soon!
+						</h2>
+						{/*<Form>*/}
+						{/*	<div className="form-group">*/}
+						{/*		<label className="float-left">Change UserName</label>*/}
+						{/*		<input type="email" className="form-control " placeholder="New Username" />*/}
+						{/*	</div>*/}
+						{/*	<div className="form-group">*/}
+						{/*		<label className="float-left">Change Email</label>*/}
+						{/*		<input type="email" className="form-control" placeholder="New Email" />*/}
+						{/*	</div>*/}
+						{/*	<div className="form-group">*/}
+						{/*		<label className="float-left">Change Password</label>*/}
+						{/*		<input type="password" className="form-control " placeholder="New Password" />*/}
+						{/*	</div>*/}
+						{/*	<div className="form-group">*/}
+						{/*		<label className="float-left">Confirm New Password</label>*/}
+						{/*		<input type="password" className="form-control" placeholder="Confirm New Password" />*/}
+						{/*	</div>*/}
+						{/*	<div className="text-left mt-4">*/}
+						{/*		<Button type="submit">Apply Changes</Button>*/}
+						{/*		<p className="forgot-password text-right m-sm-4">*/}
+						{/*		</p>*/}
+						{/*	</div>*/}
+						{/*</Form>*/}
 					</div>
 				</Row>
 			</div>

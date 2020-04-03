@@ -15,7 +15,6 @@ export const Favorites = () => {
 	const dispatch = useDispatch();
 // grab the jwt and username for logged in users
 	const profileId = UseJwtProfileId();
-	console.log(profileId);
 
 	useEffect(() => {
 		dispatch(getProfileByProfileId(profileId))

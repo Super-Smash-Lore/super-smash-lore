@@ -201,3 +201,9 @@ font-size: 3vw;
 #smash-fighter {
 	height: 30vh;
 }
+#search-box {
+	border-left: none;
+	border-top: 0;
+	border-right: none;
+	margin-right: 1rem;
+}

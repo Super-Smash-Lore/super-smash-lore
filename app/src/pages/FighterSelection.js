@@ -7,6 +7,7 @@ import "../index.css"
 import {FighterCard} from "../shared/utils/FighterCard"
 import {useDispatch, useSelector} from "react-redux";
 import {getAllCharacters, searchCharacterByName} from "../shared/actions/character-action";
+import Col from "react-bootstrap/Col";
 
 
 export const FighterSelection = () => {
@@ -27,20 +28,18 @@ export const FighterSelection = () => {
 		<div id="fighterBody">
 			<main className="my-5">
 				<Container fluid="true" className="container-fluid text-center text-md-center">
-					<Form className="form-inline md-form mr-auto mb-4">
-						<h2 className="text-md-left col-lg-6"><strong>CHOOSE YOUR FIGHTER:</strong></h2>
+					<Row>
+						<h2 className="text-lg-left col-lg-9"><strong>CHOOSE YOUR FIGHTER:</strong></h2>
 						{/*search bar is below*/}
-						<Row>
-							<Container>
-								<input className=""
+							<Col>
+								<input id="search-box" className="pr-5"
 									type="text"
 									placeholder="Search"
 									onChange={handleChange}
 								/>
-							<Button className="btn btn-outline-primary btn-sm my-0" variant="outline-dark">Search</Button>
-							</Container>
+							<Button className="btn btn-primary" variant="outline-dark">Go!</Button>
+							</Col>
 						</Row>
-					</Form>
 					<Row>
 						{characters.map(character => (<FighterCard character={character}/>))}
 					</Row>
