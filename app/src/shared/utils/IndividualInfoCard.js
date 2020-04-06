@@ -32,7 +32,6 @@ export const IndividualInfoCard = ({match}) => {
 	const game = useSelector(state => (
 		state.games ? state.games : null
 	));
-console.log(game);
 	//Write useSelector to grab favorites from Redux
 	const favorite = useSelector(state => (
 		state.favorites ? state.favorites : null
@@ -96,18 +95,11 @@ console.log(game);
 											</h2>
 											<Row>
 												<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">
-													<Card>
-														{/*{game.gameUrl && game.gameUrl.split(",").map(gameUrl => ({gameUrl}))}*/}
-													<CardImg id="game-link" alt="Game Pictures" src={game.gamePictureUrl && game.gamePictureUrl.split(",").map(gamePictureUrl => (<p> {gamePictureUrl}</p>))}
-													/>
-													</Card>
+													<a href={game.gameUrl}>
+														{game.map(game => <CardImg src={game.gamePictureUrl}/>)}
+													</a>
+													{/*{game.gameUrl && game.gameUrl.split(",").map(gameUrls => (<p>{gameUrls}</p>))}*/}
 												</Col>
-												{/*<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">*/}
-												{/*	<a id="song-link" href={game.gamePictureUrl}>{game.gameUrl}</a>*/}
-												{/*</Col>*/}
-												{/*<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">*/}
-												{/*		<img className="img-fluid" id="game-pic-1" src={GameImage}/>*/}
-												{/*</Col>*/}
 											</Row>
 										</Card.Body>
 									</Card>

@@ -7,14 +7,16 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useDispatch, useSelector} from "react-redux";
-import {getProfileByProfileId} from "../shared/actions/character-action";
+import {getProfileByProfileId, getAllFavorites, getFavoritesByFavoriteCharacterId} from "../shared/actions/character-action";
 import {UseJwtProfileId} from "../shared/utils/JwtHelpers";
+
 
 export const Favorites = () => {
 
 	const dispatch = useDispatch();
 // grab the jwt and username for logged in users
 	const profileId = UseJwtProfileId();
+	console.log(profileId);
 
 	useEffect(() => {
 		dispatch(getProfileByProfileId(profileId))
@@ -52,7 +54,10 @@ export const Favorites = () => {
 							<Card className="border-0" id="card-4">
 								<Card.Body>
 									<CardDeck>
-										Placeholder
+										<h2>
+											Feature Coming Soon!
+										</h2>
+										{/*{characters.map}*/}
 									</CardDeck>
 								</Card.Body>
 							</Card>
