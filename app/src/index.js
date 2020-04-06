@@ -26,7 +26,6 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {faHeart} from '@fortawesome/free-solid-svg-icons'
 
 
-httpConfig.get("/apis/earl-grey");
 const store = createStore(combinedReducers, applyMiddleware(thunk));
 
 library.add(faHeart);
