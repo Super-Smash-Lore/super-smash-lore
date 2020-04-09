@@ -1,8 +1,8 @@
 <?php
-require_once dirname(__DIR__, 2) . "/lib/uuid.php";
-require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
-require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
-require_once (dirname(__DIR__,2) . "/Classes/autoloader.php");
+require_once ("uuid.php");
+require_once ("xsrf.php");
+require_once(dirname(__DIR__, 1) . "/vendor/autoload.php");
+require_once (dirname(__DIR__,1) . "/Classes/autoloader.php");
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 use SuperSmashLore\SuperSmashLore\{Character, Game};
 //author @Ryan Torske
