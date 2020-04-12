@@ -9,7 +9,7 @@ export const NavBar = () => {
 	return (
 		<>
 			<Navbar sticky="top" bg="dark" variant="dark" collapseOnSelect expand="lg">
-				<Navbar.Brand href="/"><img id="Logo-2" className="ml-5" src={Image} alt="nav-logo"/></Navbar.Brand>
+				<Navbar.Brand href="/"><img id="Logo-2" src={Image} alt="nav-logo"/></Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<div className="navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">

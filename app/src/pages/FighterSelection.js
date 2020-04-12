@@ -7,12 +7,14 @@ import {FighterCard} from "../shared/utils/FighterCard"
 import {useDispatch, useSelector} from "react-redux";
 import {getAllCharacters} from "../shared/actions/character-action";
 import Col from "react-bootstrap/Col";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 export const FighterSelection = () => {
 
 	const [searchWord, setSearchWord] = useState('');
 
+	// functions help setting up the search are below
 	const setWord = (e) => {
 		e.preventDefault();
 
@@ -39,7 +41,7 @@ export const FighterSelection = () => {
 				<Container fluid="true" className="container-fluid text-center text-md-center">
 					<Row>
 						<h2 className="text-lg-left col-lg-9"><strong>CHOOSE YOUR FIGHTER:</strong></h2>
-						{/*search bar is below*/}
+						{/*search bar for the fighter page is below*/}
 							<Col>
 								<input id="search-box" className="pr-5"
 										 type="text"
@@ -48,10 +50,11 @@ export const FighterSelection = () => {
 										 setSearchWord={setSearchWord}
 										 onChange={setWord}
 								/>
-							<Button className="btn btn-primary" variant="outline-dark">Go!</Button>
+								<FontAwesomeIcon icon="search"/>
 							</Col>
 						</Row>
 					<Row>
+						{/*characters mapped from our database are called below*/}
 						{characters.map(character => (<FighterCard character={character}/>))}
 					</Row>
 				</Container>
