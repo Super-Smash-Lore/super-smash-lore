@@ -7,6 +7,7 @@ import {FighterCard} from "../shared/utils/FighterCard"
 import {useDispatch, useSelector} from "react-redux";
 import {getAllCharacters} from "../shared/actions/character-action";
 import Col from "react-bootstrap/Col";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
@@ -50,7 +51,9 @@ export const FighterSelection = () => {
 										 setSearchWord={setSearchWord}
 										 onChange={setWord}
 								/>
-								<FontAwesomeIcon icon="search"/>
+								<span>
+									<FontAwesomeIcon icon={faSearch}/>
+								</span>
 							</Col>
 						</Row>
 					<Row>

@@ -4,10 +4,8 @@ import {httpConfig} from "../misc/http-config";
 import {UseJwt} from "./JwtHelpers";
 import {isEmpty} from "../misc/js-object-helpers";
 import {handleSessionTimeout} from "../misc/handle-session-timeout";
-
 import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-// import Badge from "react-bootstrap/Badge";
 
 //Based on Example from Rochelle Lewis
 
