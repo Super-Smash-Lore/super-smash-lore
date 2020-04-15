@@ -1,8 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Image from "../img/Odyssey-Of-Ultimate-Banner.png"
-import Row from "react-bootstrap/Row";
-import {NavBar} from "../shared/utils/NavBar";
 import "../index.css"
 
 export const AboutUs = () => {
@@ -11,13 +9,13 @@ export const AboutUs = () => {
 			<main className="my-5 text-white">
 				<div className="container-fluid text-center text-md-left">
 
-						<div id="about-image"  className="col-lg-12">
+						<div id="about-image" className="offset-lg-1 col-lg-10">
 							<Card.Img src={Image} id="Banner" alt="banner"/>
 						</div>
 						<div className="col-lg-12">
 							<Card className="border-0 text-dark text-shadow-dark text-lg-left" id="about-us-text">
 								<Card.Body>
-									<h4>About Odyssey Of Ultimate:</h4>
+									<h4 id="about-title">About Odyssey Of Ultimate:</h4>
 									<p>We are a dedicated team who enjoys the finer games in life. We were tired of seeing the same old
 										Wiki-form pages for Super Smash Bros. Games and wanted to change it. We have all characters as soon as they are released. If you
 										enjoy a certain character, there is a section at each page bottom with other games they have been in.</p>
@@ -30,6 +28,11 @@ export const AboutUs = () => {
 										we will be adding further functionality to it later. Look forward to see you join the page and start adding characters to your roster.</p>
 								</Card.Body>
 							</Card>
+							<div className="text-center my-1">
+								<button className="border-dark rounded bg-dark">
+									<a type="button" href='/fighter-selection' className="home-button btn btn-lg text-white">Let's get started!</a>
+								</button>
+							</div>
 						</div>
 
 					</div>
