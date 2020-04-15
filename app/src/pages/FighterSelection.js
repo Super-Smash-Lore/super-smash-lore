@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import "../index.css"
 import {FighterCard} from "../shared/utils/FighterCard"

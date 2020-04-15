@@ -13,16 +13,19 @@ import Image from "../img/homemade-2.jpg";
 export const Home = () => (
 	<div className="home">
 		<Container fluid={true}>
-				<div className="col-lg-12 text-center">
+				<div className="col-lg-12 text-center" id="main-title">
 					<h1>Odyssey of Ultimate</h1>
 				</div>
 				<div className="text-lg-center">
 					<p id="developed-by">
-						Developed By: Deep Diving for Nintendo
+						Developed By:
+					</p>
+					<p id="developed-by-2">
+						Deep Diving for Nintendo
 					</p>
 				</div>
 			<Row>
-				<div className="col-8 offset-2  text-center mt-2">
+				<div className="col-lg-8 offset-lg-2 col-sm-10 offset-sm-1 text-center mt-2">
 					<Card>
 						<Card.Img className="rounded" variant="top" src={splash} alt="odyssey"/>
 					</Card>
