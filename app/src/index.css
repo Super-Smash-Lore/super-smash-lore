@@ -10,6 +10,9 @@ h1 {
 #learn-text {
 	font-size: 3vw;
 }
+#about {
+	font-size: 3vw;
+}
 #Logo-2 {
 	height: 3rem;
 }
@@ -35,47 +38,6 @@ h1 {
 #started {
 	font-size: 4vw;
 	font-weight: bold;
-}
-/*smaller screens*/
-@media screen and (max-width: 1500px) {
-
-	h1 {
-		text-align: center;
-		font-size: 3rem;
-	}
-	#home-info {
-		font-size: 1.25rem;
-		display: block;
-		margin: auto;
-		margin-top: 1rem;
-	}
-	#Of {
-		text-align: center;
-	}
-	#title-top {
-		padding-top: 4rem;
-	}
-	#developed-by {
-		margin-top: 1.5rem;
-		text-align: center;
-		font-size: 1.5rem;
-	}
-	#developed-by-2 {
-		margin-top: -1rem;
-		text-align: center;
-		font-size: 1.5rem;
-	}
-	#started {
-	font-size: 2rem;
-		font-weight: bold;
-		text-align: center;
-		margin-top: 10vw;
-	}
-	#about-title {
-		font-size: 2rem;
-		text-align: center;
-		margin-bottom: 1rem;
-	}
 }
 #logo {
 	height: 12vw;
@@ -104,9 +66,6 @@ font-size: 3vw;
 }
 #debut-character {
 	font-size: 1.5vw;
-}
-#about {
-	font-size: 3vw;
 }
 #about-image {
 	margin: auto;
@@ -149,6 +108,85 @@ font-size: 3vw;
 
 #game-click {
 	width: 5vw;
+}
+
+/*smaller screens*/
+@media screen and (max-width: 1500px) {
+
+	h1 {
+		text-align: center;
+		font-size: 3rem;
+	}
+	#home-info {
+		font-size: 1.25rem;
+		display: block;
+		margin: auto;
+		margin-top: 1rem;
+	}
+	#Of {
+		text-align: center;
+	}
+	#title-top {
+		padding-top: 4rem;
+	}
+	#developed-by {
+		margin-top: 1.5rem;
+		text-align: center;
+		font-size: 1.5rem;
+	}
+	#developed-by-2 {
+		margin-top: -1rem;
+		text-align: center;
+		font-size: 1.5rem;
+	}
+	#started {
+		font-size: 2rem;
+		font-weight: bold;
+		text-align: center;
+		margin-top: 10vw;
+	}
+	#about-title {
+		font-size: 2rem;
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+	#about {
+		font-size: 2rem;
+	}
+	#about-character {
+		font-size: 1rem;
+	}
+	#universe {
+		font-size: 2rem;
+	}
+	#universe-character {
+		font-size: 1rem;
+	}
+	#debut {
+		font-size: 2rem;
+	}
+	#debut-character {
+		font-size: 1rem;
+	}
+	#song {
+		font-size: 2rem;
+	}
+	#song-link {
+		font-size: 1rem;
+	}
+	#quotes {
+		font-size: 2rem;
+	}
+	#carousel {
+		font-size: 1rem;
+	}
+	#games {
+		font-size: 2rem;
+	}
+	#character-name {
+		font-size: 2rem;
+	}
+
 }
 
 @media screen and (min-width: 992px) {

@@ -59,7 +59,7 @@ export const IndividualInfoCard = ({match}) => {
 						</Container>
 						<Container fluid="true" className="container-fluid" id="whole-row">
 							<Row>
-								<Col className="col-6 offset-3 offset-lg-0 col-lg-3 fighter-img-panel">
+								<Col className="col-12 offset-lg-0 col-lg-3 fighter-img-panel">
 									<Card className="card-body border-0 text-center" id="card-1">
 										<CardImg src={character.characterPictureUrl}/>
 									</Card>
