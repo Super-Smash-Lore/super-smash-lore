@@ -109,7 +109,9 @@ font-size: 3vw;
 #game-click {
 	width: 5vw;
 }
-
+#smash-fighter {
+	height: 30vh;
+}
 /*smaller screens*/
 @media screen and (max-width: 1500px) {
 
@@ -252,10 +254,6 @@ font-size: 3vw;
 #backToTop {
 	color: darkblue;
 	float: right;
-}
-
-#smash-fighter {
-	height: 30vh;
 }
 #search-box {
 	border-left: none;

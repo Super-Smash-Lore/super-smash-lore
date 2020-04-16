@@ -7,7 +7,7 @@ import {Route} from "react-router";
 export const FighterCard = ({character, history}) => {
 	return (
 		<Route render={ ({history}) => (
-		<Card className="card-body col-sm-4 col-md-4 col-lg-2 mb-2 border-0"
+		<Card className="card-body col-md-4 col-lg-2 mb-2 border-0"
 					key={character.characterId} onClick={() => {history.push(`character/${character.characterId}`)}}>
 				<Card.Img id ="smash-fighter" variant="top" src={character.characterPictureUrl}/>
 				<Card.Body>
