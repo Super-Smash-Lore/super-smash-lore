@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import  "../../index.css"
 import Image from "../../img/OoD-Logo-v2.png";
 
+// This is the navbar which will show up at the top of every page.
 
 export const NavBar = () => {
 	return (

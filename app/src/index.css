@@ -1,3 +1,5 @@
+/*CSS for all of Odyssey of Ultimate Frontend.*/
+/*home page CSS*/
 h1 {
 	font-size: 8vw;
 	font-weight: bold;
@@ -34,7 +36,6 @@ h1 {
 #home-text {
 	font-size: 2vw;
 }
-
 #started {
 	font-size: 4vw;
 	font-weight: bold;
@@ -42,12 +43,15 @@ h1 {
 #logo {
 	height: 12vw;
 }
+
 #sign-up-text {
 	font-size: 2.5vw;
 }
 #branding-1 {
 	width: 6vw;
 }
+
+/*character page info*/
 #character-name {
 	font-size: 4vw;
 	text-align: right;
@@ -65,12 +69,6 @@ font-size: 3vw;
 	font-size: 1.5vw;
 }
 #debut-character {
-	font-size: 1.5vw;
-}
-#about-image {
-	margin: auto;
-}
-#about-us-text {
 	font-size: 1.5vw;
 }
 #debut {
@@ -91,19 +89,19 @@ font-size: 3vw;
 #carousel {
 	font-size: 1.5vw;
 }
-#background-fighter {
-}
-#card-1 {
-}
-#card-2 {
-	margin-top: 1vw;
-}
-#whole-row {
-
-}
-
 #games {
 	font-size: 3vw;
+}
+/*About us page*/
+#about-image {
+	margin: auto;
+}
+#about-us-text {
+	font-size: 1.5vw;
+}
+
+#card-2 {
+	margin-top: 1vw;
 }
 
 #game-click {
@@ -191,6 +189,7 @@ font-size: 3vw;
 
 }
 
+/*larger screens*/
 @media screen and (min-width: 992px) {
 	.fighter-img-panel {
 		position: fixed;
@@ -227,6 +226,7 @@ font-size: 3vw;
 	}
 }
 
+/*Smaller than large size*/
 @media screen and (max-width: 992px) {
 	#sign-up-image {
 		border: none;
@@ -239,6 +239,8 @@ font-size: 3vw;
 		font-size: 1.5rem;
 	}
 }
+
+/*Smaller than small size (cell phone)*/
 @media screen and (max-width: 575px) {
 	#sign-up-image {
 		margin-top: 5vw;

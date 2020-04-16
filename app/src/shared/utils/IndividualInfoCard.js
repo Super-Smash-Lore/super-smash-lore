@@ -37,6 +37,7 @@ export const IndividualInfoCard = ({match}) => {
 		state.favorites ? state.favorites : null
 	));
 
+	// this will check to see if the user is signed-in and will have the ability to favorite characters.
 	const profileId = UseJwtProfileId();
 
 	return (
@@ -59,6 +60,7 @@ export const IndividualInfoCard = ({match}) => {
 						</Container>
 						<Container fluid="true" className="container-fluid" id="whole-row">
 							<Row>
+								{/*This calls to get the specific character's picture for their page.*/}
 								<Col className="col-12 offset-lg-0 col-lg-3 fighter-img-panel">
 									<Card className="card-body border-0 text-center" id="card-1">
 										<CardImg src={character.characterPictureUrl}/>
@@ -67,6 +69,7 @@ export const IndividualInfoCard = ({match}) => {
 								<Col className="col-12 offset-lg-3 col-lg-9 fighter-text-panel">
 									<Card className="border-0" id="card-2">
 										<Card.Body>
+											{/*Everything below calls to our database to populate each individual character's information. */}
 											<h2 id="about">
 												About:
 											</h2>
@@ -94,6 +97,7 @@ export const IndividualInfoCard = ({match}) => {
 												Games:
 											</h2>
 											<Row>
+												{/*TODO: Make games show 3 games and make each clickable to a link on Amazon.*/}
 												<Col className="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 mb-5">
 													<a href={game.gameUrl}>
 														{game.map(game => <CardImg src={game.gamePictureUrl}/>)}
